@@ -1,6 +1,6 @@
 <?php
 
-namespace Silex\Extension;
+namespace Leyelectoral;
 
 use Silex\Application;
 use Silex\ExtensionInterface;
