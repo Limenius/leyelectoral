@@ -12,31 +12,17 @@
 </style>
 <div id="holder"></div>
 <script>
-(function (raphael) {
-    $(function () {
-        var values = [],
-            labels = [];
-        {% for party, results in votes %}
-            values.push(parseInt("{{results}}", 10));
-            labels.push("{{parties[party]|raw}}");
-        {% endfor %}
-        raphael("holder", 700, 700).pieChart(350, 350, 200, values, labels, "#fff");
-    });
-})(Raphael.ninja());
 
-$(function(){
+
+
+$(document).ready(function(){
+    {% for party, results in votes %}
     DataStore.add({
-        people:     {{stats['Censo']}},
-        votes:      {{stats['Votantes']}},
-        blank:      {{stats['VBlanco']}},
-        invalid:    {{stats['VNulos']}},
-        parties:    {
-            {% for party, results in votes %}
-                "{{parties[party]|raw}}" : parseInt({{results}}, 10),
-            {% endfor %}
-        }
-
+        label: "{{parties[party]|raw}}",
+        amount: parseInt({{results}}, 10),
     });
+    {% endfor %}
+    DataStore.trigger("redraw");
 });
 
 </script>
