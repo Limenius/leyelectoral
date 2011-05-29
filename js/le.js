@@ -20,7 +20,7 @@ Raphael.fn.pieChart = function (cx, cy, r, values, labels, stroke) {
                 ms = 500,
                 delta = 30,
                 bcolor = "hsb(" + start + ", 1, 1)",
-                p = sector(cx, cy, r, angle, angle + angleplus, {gradient: "90-" + bcolor + "-" + color, stroke: stroke, "stroke-width": 3}),
+                p = sector(cx, cy, r, angle, angle + angleplus, {gradient: "90-" + bcolor + "-" + color, stroke: stroke, "stroke-width": 2}),
                 txt = paper.text(cx + (r + delta + 55) * Math.cos(-popangle * rad), cy + (r + delta + 25) * Math.sin(-popangle * rad), labels[j]).attr({fill: bcolor, stroke: "none", opacity: 0, "font-family": 'Fontin-Sans, Arial', "font-size": "20px"});
             p.mouseover(function () {
                 p.animate({scale: [1.1, 1.1, cx, cy]}, ms, "elastic");
@@ -42,3 +42,58 @@ Raphael.fn.pieChart = function (cx, cy, r, values, labels, stroke) {
     }
     return chart;
 };
+
+
+$(function(){
+    window.Data = Backbone.Model.extend({
+
+        initialize: function() {
+            if (!this.get("people")) {
+                this.set({"people": 0});
+            }
+            if (!this.get("votes")) {
+                this.set({"votes": 0});
+            }
+            if (!this.get("blank")) {
+                this.set({"blank": 0});
+            }
+            if (!this.get("invalid")) {
+                this.set({"invalid": 0});
+            }
+            if (!this.get("parties")) {
+                this.set({parties:{}});
+            }
+        },
+
+    });
+
+    window.DataView = Backbone.View.extend({
+        events: {
+        },
+        initialize: function() {
+            _.bindAll(this, 'render');
+            this.model.view = this;
+
+        },
+        render: function() {
+            return this;
+        },
+    });
+
+    window.DataList = Backbone.Collection.extend({
+        model: Data,
+        url: "/data",
+    });
+
+    window.DataListView = Backbone.View.extend({
+        el: $("#holder"),
+
+        initialize: function() {
+            _.bindAll(this);
+        },
+    });
+
+    window.DataStore = new DataList;
+    window.App = new DataListView;
+});
+

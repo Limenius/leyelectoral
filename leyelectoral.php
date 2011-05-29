@@ -26,18 +26,11 @@ $app->get('/', function () use ($app) {
     $row = $cursor->getNext();
     $votes = array_slice($row, 13);
     $content = array_slice($row, 7, 6);
-    return $app['twig']->render('hello.twig', array(
+    return $app['twig']->render('main.twig', array(
         'parties' => $app['parties'],
         'stats'   => $content,
         'votes'   => $votes,
     ));
 });
-
-$app->get('/hello/{name}', function ($name) use ($app) {
-    return $app['twig']->render('hello.twig', array(
-        'name' => $name,
-    ));
-});
-
 
 $app->run();

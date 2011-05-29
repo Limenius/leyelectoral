@@ -9,11 +9,6 @@
   position: absolute;
   top: 50%;
 }
-body {
-    background: #333;
-    color: #fff;
-    font: 300 100.1% "Helvetica Neue", Helvetica, "Arial Unicode MS", Arial, sans-serif;
-}
 </style>
 <div id="holder"></div>
 <script>
@@ -28,5 +23,21 @@ body {
         raphael("holder", 700, 700).pieChart(350, 350, 200, values, labels, "#fff");
     });
 })(Raphael.ninja());
+
+$(function(){
+    DataStore.add({
+        people:     {{stats['Censo']}},
+        votes:      {{stats['Votantes']}},
+        blank:      {{stats['VBlanco']}},
+        invalid:    {{stats['VNulos']}},
+        parties:    {
+            {% for party, results in votes %}
+                "{{parties[party]|raw}}" : parseInt({{results}}, 10),
+            {% endfor %}
+        }
+
+    });
+});
+
 </script>
 {% endblock %}
