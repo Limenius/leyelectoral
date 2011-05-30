@@ -20,8 +20,16 @@ $(document).ready(function(){
     DataStore.add({
         label: "{{parties[party]|raw}}",
         amount: parseInt({{results}}, 10),
+        oid: "{{party}}",
+        color: "#{{colors[party]}}"
     });
     {% endfor %}
+    DataStore.setStats({
+        total:    parseInt({{stats['Censo']}}, 10),
+        invalid:  parseInt({{stats['VNulos']}}, 10),
+        blank:    parseInt({{stats['VBlanco']}}, 10),
+        nonvote:  (parseInt({{stats['Censo']}}, 10) - parseInt({{stats['VCandidaturas']}}, 10))
+    });
     DataStore.trigger("redraw");
 });
 

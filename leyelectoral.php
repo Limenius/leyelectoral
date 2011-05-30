@@ -8,6 +8,7 @@ require_once __DIR__.'/parties.php';
 
 $app = new Silex\Application();
 $app['parties'] = $parties;
+$app['colors']  = $colors;
 
 $app->register(new Silex\Extension\TwigExtension(), array(
     'twig.path'       => __DIR__.'/views',
@@ -28,6 +29,7 @@ $app->get('/', function () use ($app) {
     $content = array_slice($row, 7, 6);
     return $app['twig']->render('main.twig', array(
         'parties' => $app['parties'],
+        'colors'  => $app['colors'],
         'stats'   => $content,
         'votes'   => $votes,
     ));

@@ -1,4 +1,12 @@
 <?
+function random_color(){
+    mt_srand((double)microtime()*1000000);
+    $c = '';
+    while(strlen($c)<6){
+        $c .= sprintf("%02X", mt_rand(0, 255));
+    }
+    return $c;
+}
 
 $parties = array(
     "p-s-o-e" => "P.S.O.E.",
@@ -100,3 +108,13 @@ $parties = array(
     "m-f-e" => "M.F.E.",
     "phache" => "PHache"
 );
+
+$colors = array();
+
+foreach (array_keys($parties) as $party){
+    $colors[$party] = random_color();
+
+}
+
+$colors["p-s-o-e"] = "aa0000";
+$colors["p-p"]     = "0000aa";
