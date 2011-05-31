@@ -11,6 +11,7 @@ Raphael.fn.g.piechart = function (cx, cy, r, values, ids, opts) {
         covers = this.set(),
         chart = this.set(),
         series = this.set(),
+        accessor = new Array(),
         order = [],
         len = values.length,
         angle = 0,
@@ -71,16 +72,18 @@ Raphael.fn.g.piechart = function (cx, cy, r, values, ids, opts) {
             }
             var path = sector(cx, cy, r, angle, angle -= 360 * values[i] / total);
             var p = this.path(opts.init ? ipath : path).attr({fill: values[i].color || this.g.colors[i] || "#666", stroke: opts.stroke || "#fff", "stroke-width": (opts.strokewidth == null ? 1 : opts.strokewidth), "stroke-linejoin": "round"});
+            p.node.id = values[i].id;
             p.value = values[i];
             p.middle = path.middle;
             p.mangle = mangle;
             sectors.push(p);
             series.push(p);
             opts.init && p.animate({path: path.join(",")}, (+opts.init - 1) || 1000, ">");
+            accessor[values[i].id] = i;
         }
         for (i = 0; i < len; i++) {
             p = paper.path(sectors[i].attr("path")).attr(this.g.shim);
-            $(p.node).attr("id", values[i].id);
+            p.node.id = values[i].id+"cover";
             opts.href && opts.href[i] && p.attr({href: opts.href[i]});
             p.attr = function () {};
             covers.push(p);
@@ -202,5 +205,6 @@ Raphael.fn.g.piechart = function (cx, cy, r, values, ids, opts) {
     chart.push(series, covers);
     chart.series = series;
     chart.covers = covers;
+    chart.accessor = accessor;
     return chart;
 };

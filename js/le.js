@@ -13,19 +13,19 @@ $(document).ready(function(){
             }
         },
 
-    });
+});
 
-    window.DataView = Backbone.View.extend({
-        events: {
-        },
-        initialize: function() {
-            _.bindAll(this, 'render');
-            this.model.view = this;
+window.DataView = Backbone.View.extend({
+    events: {
+    },
+    initialize: function() {
+        _.bindAll(this, 'render');
+        this.model.view = this;
 
-        },
-        render: function() {
-            return this;
-        },
+    },
+    render: function() {
+        return this;
+    },
     });
 
     window.DataList = Backbone.Collection.extend({
@@ -66,10 +66,25 @@ $(document).ready(function(){
         el: $("#holder"),
 
         initialize: function() {
-            _.bindAll(this, "render");
+            _.bindAll(this, "render", "removeNonvoters");
             DataStore.bind('redraw', this.render);
+            DataStore.bind('removeNonvoters', this.removeNonvoters);
             this.paper = Raphael("holder", 800, 800);
             this.render();
+            this.cx = 350;
+            this.cy = 350;
+        },
+
+        fade: function(obj){
+            return function () {
+                obj.animate({fill: "#eee"}, 500).animate({opacity: 0}, 2000);
+            };
+        },
+
+        removeNonvoters: function() {
+            var obj = this.pie.series[this.pie.accessor['Abstencion']];
+            obj.animate({translation: "10,10"}, 1000, ">", this.fade(obj));
+
         },
 
         render: function() {
@@ -90,17 +105,20 @@ $(document).ready(function(){
             values.push(DataStore.getInvalid());
             labels.push('Nulos');
             colors.push('#444');
+            ids.push('Nulos');
 
             values.push(DataStore.getBlank());
             labels.push('En blanco');
             colors.push('#eee');
+            ids.push('Blanco');
 
             values.push(DataStore.getNonvote());
             labels.push('Abstención');
             colors.push('#000')
+            ids.push('Abstencion');
 
             this.paper.g.txtattr.font = "12px 'Fontin Sans', Fontin-Sans, sans-serif";
-            this.pie = this.paper.g.piechart(350, 350, 150, values, ids, {legend: labels, legendpos: "east", legendmark: "flower", legendothers: "Otros", colors: colors, stroke: '#ccc'});
+            this.pie = this.paper.g.piechart(this.cx, this.cy, 150, values, ids, {legend: labels, legendpos: "east", legendmark: "flower", legendothers: "Otros", colors: colors, stroke: '#ccc'});
             this.pie.hover(function () {
                 this.sector.stop();
                 this.sector.scale(1.1, 1.1, this.cx, this.cy);
@@ -109,7 +127,8 @@ $(document).ready(function(){
                     this.label[0].scale(1.5);
                     this.label[1].attr({"font-weight": 800});
                 }
-            }, function () {
+            }, 
+            function () {
                 this.sector.animate({scale: [1, 1, this.cx, this.cy]}, 500, "bounce");
                 if (this.label) {
                     this.label[0].animate({scale: 1}, 500, "bounce");
