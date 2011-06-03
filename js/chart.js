@@ -1,10 +1,4 @@
-/*
- * g.Raphael 0.4.1 - Charting library, based on Raphaël
- *
- * Copyright (c) 2009 Dmitry Baranovskiy (http://g.raphaeljs.com)
- * Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.
- */
-Raphael.fn.g.piechart = function (cx, cy, r, values, ids, opts) {
+Raphael.fn.g.piechart = function (cx, cy, r, rvalues, ids, opts) {
     opts = opts || {};
     var paper = this,
         sectors = [],
@@ -12,8 +6,9 @@ Raphael.fn.g.piechart = function (cx, cy, r, values, ids, opts) {
         chart = this.set(),
         series = this.set(),
         accessor = new Array(),
+        values = new Array(),
         order = [],
-        len = values.length,
+        len = rvalues.length,
         angle = 0,
         total = 0,
         others = 0,
@@ -23,8 +18,8 @@ Raphael.fn.g.piechart = function (cx, cy, r, values, ids, opts) {
     if (len == 1) {
         series.push(this.circle(cx, cy, r).attr({fill: this.g.colors[0], stroke: opts.stroke || "#fff", "stroke-width": opts.strokewidth == null ? 1 : opts.strokewidth}));
         covers.push(this.circle(cx, cy, r).attr(this.g.shim));
-        total = values[0];
-        values[0] = {value: values[0], order: 0, valueOf: function () { return this.value; }};
+        total = rvalues[0];
+        values[0] = {value: rvalues[0], order: 0, valueOf: function () { return this.value; }};
         series[0].middle = {x: cx, y: cy};
         series[0].mangle = 180;
     } else {
@@ -41,12 +36,16 @@ Raphael.fn.g.piechart = function (cx, cy, r, values, ids, opts) {
             return res;
         }
         for (var i = 0; i < len; i++) {
-            total += values[i];
-            values[i] = {value: values[i], id: ids[i], color: opts.colors[i], order: i, valueOf: function () { return this.value; }};
+            total += rvalues[i];
+            values[i] = {value: rvalues[i], id: ids[i], color: opts.colors[i], order: i, valueOf: function () { return this.value; }};
         }
         values.sort(function (a, b) {
             return b.value - a.value;
         });
+        rvalues.sort(function (a,b) {
+            return b - a;
+        });
+
         for (i = 0; i < len; i++) {
             if (defcut && values[i] * 360 / total <= 1.5) {
                 cut = i;
@@ -118,6 +117,117 @@ Raphael.fn.g.piechart = function (cx, cy, r, values, ids, opts) {
         }
         return this;
     };
+
+    chart.animationElements = [];
+    chart.animateSector = function(index, newPath, ms){
+        console.log(index);
+        var that = this;
+        var animationElements = chart.animationElements;
+        animation = function () {
+            var Now = +new Date;
+            for (var l = 0; l < animationElements.length; l++) {
+                var e = animationElements[l];
+                if (e.stop || e.el.removed) {
+                    continue;
+                }
+                var time = Now - e.start,
+                    ms = e.ms,
+                    easing = e.easing,
+                    from = e.from,
+                    diff = e.diff,
+                    to = e.to,
+                    t = e.t,
+                    that = e.el,
+                    set = {},
+                    now;
+                if (time < ms) {
+                    var pos = time / ms;
+                    for (var attr in from) {
+                        now = [];
+                        for (var i = 0, ii = from[attr].length; i < ii; i++) {
+                            now[i] = [from[attr][i][0]];
+                            for (var j = 1, jj = from[attr][i].length; j < jj; j++) {
+                                now[i][j] = +from[attr][i][j] + pos * ms * diff[attr][i][j];
+                            }
+                            now[i] = now[i].join(" ");
+                        }
+                        now = now.join(" ");
+                        set[attr] = now;
+                    }
+                    that.attr(set);
+                    that._run && that._run.call(that);
+                }else{
+                    that.attr(to);
+                    animationElements.splice(l--,1);
+                }
+            }
+            this.svg && that && that.paper && that.paper.safari();
+            animationElements[length] && setTimeout(animation);
+        },
+
+
+        from = {};
+        to = {};
+        el = this.series[index];
+        from['path'] = el.attr("path");
+        newPath = [["M",newPath[1],newPath[2]],["L",newPath[4],newPath[5]],["A",newPath[7],newPath[8],newPath[9],newPath[10],newPath[11],newPath[12],newPath[13]],["Z"]];
+        to["path"] = newPath;
+        diff = {};
+        diff["path"] = [];
+        for (var i = 0, ii = from["path"].length; i < ii; i++) {
+            diff["path"][i] = [0];
+            for (var j = 1, jj = from["path"][i].length; j < jj; j++) {
+                diff["path"][i][j] = (newPath[i][j] - from["path"][i][j]) / ms;
+            }
+        }
+        animationElements.push({
+            start: +new Date,
+            ms: ms,
+            easing: ">",
+            from: from,
+            diff: diff,
+            to: to,
+            el: this.series[index],
+            t: {x: 0, y: 0}
+        });
+        setTimeout(animation);
+
+    };
+
+    chart.remove = function (id){
+        var that = this;
+        nSector = accessor[id];
+        rSector = this.series[nSector];
+        rSector.animate({"80%":{translation: ((rSector.middle.x-cx)/3)+","+((rSector.middle.cy)/3), easing: ">"}, "100%":{fill: "#eee", opacity: "0", easing: ">"}} ,1000);
+        this.series.items.splice(nSector,1);
+        values.splice(nSector,1);
+        total = 0;
+        len--;
+        for (var i = 0; i < len; i++) {
+            total += values[i];
+        }
+        values.sort(function (a, b) {
+            return b.value - a.value;
+        });
+        angle = 10;
+        for (var i = 0; i < len; i++) {
+            var mangle = angle - 360 * values[i] / total / 2;
+            if (!i) {
+                angle = 90 - mangle;
+                mangle = angle - 360 * values[i] / total / 2;
+            }
+            newSector = sector(cx, cy, r, angle, angle -= 360 * values[i] / total);
+            this.series[i].path = newSector;
+            if(i>=nSector){
+                var j = i+1;
+            }else{
+                var j = i;
+            }
+            this.animateSector(j, newSector, 1000);
+        }
+
+    };
+
     // x: where label could be put
     // y: where label could be put
     // value: value to show

@@ -75,16 +75,8 @@ window.DataView = Backbone.View.extend({
             this.cy = 350;
         },
 
-        fade: function(obj){
-            return function () {
-                obj.animate({fill: "#eee"}, 500).animate({opacity: 0}, 2000);
-            };
-        },
-
         removeNonvoters: function() {
-            var obj = this.pie.series[this.pie.accessor['Abstencion']];
-            obj.animate({translation: "10,10"}, 1000, ">", this.fade(obj));
-
+            this.pie.remove('Abstencion');
         },
 
         render: function() {
