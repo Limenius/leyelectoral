@@ -13,19 +13,19 @@ $(document).ready(function(){
             }
         },
 
-});
+    });
 
-window.DataView = Backbone.View.extend({
-    events: {
-    },
-    initialize: function() {
-        _.bindAll(this, 'render');
-        this.model.view = this;
-
-    },
-    render: function() {
-        return this;
-    },
+    window.DataView = Backbone.View.extend({
+        events: {
+        },
+        initialize: function() {
+            _.bindAll(this, 'render');
+            this.model.view = this;
+    
+        },
+        render: function() {
+            return this;
+        },
     });
 
     window.DataList = Backbone.Collection.extend({
