@@ -120,8 +120,19 @@ Raphael.fn.g.piechart = function (cx, cy, r, rvalues, ids, opts) {
 
     chart.animationElements = [];
     chart.animateSector = function(index, newPath, ms){
-        console.log(index);
         var that = this;
+        var sectorangle = function(x0,y0){
+            if (x0 > 350 && y0 < 350) {
+                var angle = - Math.asin((y0-350)/150) * (180/Math.PI);
+            }else if(x0 > 350 && y0 > 350){
+                var angle = - Math.asin((y0-350)/150) * (180/Math.PI);
+            }else if(x0 < 350 && y0 < 350){
+                var angle = 180 + Math.asin((y0-350)/150) * (180/Math.PI);
+            }else{
+                var angle = -180 + Math.asin((y0-350)/150) * (180/Math.PI);
+            }
+            return angle;
+        }
         var animationElements = chart.animationElements;
         animation = function () {
             var Now = +new Date;
@@ -140,52 +151,10 @@ Raphael.fn.g.piechart = function (cx, cy, r, rvalues, ids, opts) {
                     that = e.el,
                     set = {},
                     now;
-                var y0_init = from['path'][1][2];
-                var x0_init = from['path'][1][1];
-                if (x0_init > 350 && y0_init < 350) {
-                    var initangle0 = - Math.asin((y0_init-350)/150) * (180/Math.PI);
-                }else if(x0_init > 350 && y0_init > 350){
-                    var initangle0 = - Math.asin((y0_init-350)/150) * (180/Math.PI);
-                }else if(x0_init < 350 && y0_init < 350){
-                    var initangle0 = 180 + Math.asin((y0_init-350)/150) * (180/Math.PI);
-                }else{
-                    var initangle0 = -180 + Math.asin((y0_init-350)/150) * (180/Math.PI);
-                }
-                var y0_final = from['path'][2][7];
-                var x0_final = from['path'][2][6];
-                if (x0_final > 350 && y0_final < 350) {
-                    var finalangle0 = - Math.asin((y0_final-350)/150) * (180/Math.PI);
-                }else if(x0_final > 350 && y0_final > 350){
-                    var finalangle0 = - Math.asin((y0_final-350)/150) * (180/Math.PI);
-                }else if(x0_final < 350 && y0_final < 350){
-                    var finalangle0 = 180 + Math.asin((y0_final-350)/150) * (180/Math.PI);
-                }else{
-                    var finalangle0 = -180 + Math.asin((y0_final-350)/150) * (180/Math.PI);
-                }
-                var y1_init = to['path'][1][2];
-                var x1_init = to['path'][1][1];
-                if (x1_init > 350 && y1_init < 350) {
-                    var initangle1 = - Math.asin((y1_init-350)/150) * (180/Math.PI);
-                }else if(x1_init > 350 && y1_init > 350){
-                    var initangle1 = - Math.asin((y1_init-350)/150) * (180/Math.PI);
-                }else if(x1_init < 350 && y1_init < 350){
-                    var initangle1 = 180 + Math.asin((y1_init-350)/150) * (180/Math.PI);
-                }else{
-                    var initangle1 = -180 + Math.asin((y1_init-350)/150) * (180/Math.PI);
-                }
-                var y1_final = to['path'][2][7];
-                var x1_final = to['path'][2][6];
-                if (x1_final > 350 && y1_final < 350) {
-                    var finalangle1 = - Math.asin((y1_final-350)/150) * (180/Math.PI);
-                }else if(x1_final > 350 && y1_final > 350){
-                    var finalangle1 = - Math.asin((y1_final-350)/150) * (180/Math.PI);
-                }else if(x1_final < 350 && y1_final < 350){
-                    var finalangle1 = 180 + Math.asin((y1_final-350)/150) * (180/Math.PI);
-                }else{
-                    var finalangle1 = -180 + Math.asin((y1_final-350)/150) * (180/Math.PI);
-                }
-                
-                //console.log(y0_init + " " + initangle0 + " " + finalangle0 + " " + initangle1 + " " + finalangle1);
+                var initangle0 = sectorangle(from['path'][1][1],from['path'][1][2]);
+                var finalangle0 = sectorangle(from['path'][2][6],from['path'][2][7]);
+                var initangle1 = sectorangle(to['path'][1][1],to['path'][1][2]);
+                var finalangle1 = sectorangle(to['path'][2][6],to['path'][2][7]);
                 
                 var diffinitangle = ((initangle1 - initangle0));
                 if(diffinitangle>180){diffinitangle = diffinitangle - 360}
@@ -206,30 +175,13 @@ Raphael.fn.g.piechart = function (cx, cy, r, rvalues, ids, opts) {
                     if(nowfinalangle>180){nowfinalangle = nowfinalangle - 360}
                     if(nowfinalangle<-180){nowfinalangle = nowfinalangle + 360}
                     nowSector = sector(cx, cy, r, nowinitangle, nowfinalangle).join(" ");
-                    //console.log(y0_init + " " + nowSector);
-                    console.log(y0_init + " " + diffinitangle + " " + difffinalangle + " " + initangle1 + " " + finalangle1);
                     //console.log(y0_init + " " + initangle0 + " " + finalangle0 + " " + initangle1 + " " + finalangle1 + " " + nowinitangle + " " + nowfinalangle);
-                    //var pos = time / ms;
-                    //for (var attr in from) {
-                    //    now = [];
-                    //    for (var i = 0, ii = from[attr].length; i < ii; i++) {
-                    //        now[i] = [from[attr][i][0]];
-                    //        for (var j = 1, jj = from[attr][i].length; j < jj; j++) {
-                    //            now[i][j] = +from[attr][i][j] + pos * ms * diff[attr][i][j];
-                    //        }
-                    //        now[i] = now[i].join(" ");
-                    //    }
-                    //    now = now.join(" ");
-                    //    set[attr] = now;
-                    //}
-                    //that.attr(set);
-                    //that._run && that._run.call(that);
                     set['path'] = nowSector;
                     that.attr(set);
                     that._run && that._run.call(that);
                 }else{
-                    //that.attr(to);
-                    //animationElements.splice(l--,1);
+                    that.attr(to);
+                    animationElements.splice(l--,1);
                 }
             }
             this.svg && that && that.paper && that.paper.safari();
@@ -242,7 +194,6 @@ Raphael.fn.g.piechart = function (cx, cy, r, rvalues, ids, opts) {
         el = this.series[index];
         from['path'] = el.attr("path");
         newPath = [["M",newPath[1],newPath[2]],["L",newPath[4],newPath[5]],["A",newPath[7],newPath[8],newPath[9],newPath[10],newPath[11],newPath[12],newPath[13]],["Z"]];
-        //console.log(newPath);
         to["path"] = newPath;
         diff = {};
         diff["path"] = [];
@@ -270,7 +221,7 @@ Raphael.fn.g.piechart = function (cx, cy, r, rvalues, ids, opts) {
         var that = this;
         nSector = accessor[id];
         rSector = this.series[nSector];
-        rSector.animate({"80%":{translation: ((rSector.middle.x-cx)/3)+","+((rSector.middle.cy)/3), easing: ">"}, "100%":{fill: "#eee", opacity: "0", easing: ">"}} ,1000);
+        rSector.animate({"50%":{translation: ((rSector.middle.x-cx)/1)+","+((rSector.middle.cy)/1), easing: ">"}, "100%":{fill: "#eee", opacity: "0", easing: ">"}} ,1000);
         this.series.items.splice(nSector,1);
         values.splice(nSector,1);
         total = 0;
