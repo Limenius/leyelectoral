@@ -84,9 +84,7 @@ Raphael.fn.g.piechart = function (cx, cy, r, rvalues, ids, opts) {
             p = paper.path(sectors[i].attr("path")).attr(this.g.shim);
             p.node.id = values[i].id+"cover";
             opts.href && opts.href[i] && p.attr({href: opts.href[i]});
-            p.attr = function () {};
             covers.push(p);
-            series.push(p);
         }
     }
 
@@ -158,10 +156,10 @@ Raphael.fn.g.piechart = function (cx, cy, r, rvalues, ids, opts) {
                 
                 var diffinitangle = ((initangle1 - initangle0));
                 if(diffinitangle>180){diffinitangle = diffinitangle - 360}
-                if(diffinitangle<-180){diffinitangle = diffinitangle + 360}
+                else if(diffinitangle<-180){diffinitangle = diffinitangle + 360}
                 var difffinalangle = ((finalangle1 - finalangle0));
                 if(difffinalangle>180){difffinalangle = difffinalangle - 360}
-                if(difffinalangle<-180){difffinalangle = difffinalangle + 360}
+                else if(difffinalangle<-180){difffinalangle = difffinalangle + 360}
                 var nowinitangle0 = 0;
                 var nowfinalangle0 = 0;
                 
@@ -170,12 +168,13 @@ Raphael.fn.g.piechart = function (cx, cy, r, rvalues, ids, opts) {
                     var pos = time / ms;
                     nowinitangle = (diffinitangle * pos + initangle0);
                     if(nowinitangle>180){nowinitangle = nowinitangle - 360}
-                    if(nowinitangle<-180){nowinitangle = nowinitangle + 360}
+                    else if(nowinitangle<-180){nowinitangle = nowinitangle + 360}
                     nowfinalangle = (difffinalangle * pos + finalangle0) % 360;
                     if(nowfinalangle>180){nowfinalangle = nowfinalangle - 360}
-                    if(nowfinalangle<-180){nowfinalangle = nowfinalangle + 360}
+                    else if(nowfinalangle<-180){nowfinalangle = nowfinalangle + 360}
                     nowSector = sector(cx, cy, r, nowinitangle, nowfinalangle).join(" ");
-                    //console.log(y0_init + " " + initangle0 + " " + finalangle0 + " " + initangle1 + " " + finalangle1 + " " + nowinitangle + " " + nowfinalangle);
+                    //console.log(from['path'][1][2] + " " + initangle0 + " " + finalangle0 + " " + initangle1 + " " + finalangle1 + " " + nowinitangle + " " + nowfinalangle);
+                    //console.log(from['path'] + " " + to['path']);
                     set['path'] = nowSector;
                     that.attr(set);
                     that._run && that._run.call(that);
@@ -219,35 +218,42 @@ Raphael.fn.g.piechart = function (cx, cy, r, rvalues, ids, opts) {
 
     chart.remove = function (id){
         var that = this;
-        nSector = accessor[id];
-        rSector = this.series[nSector];
-        rSector.animate({"50%":{translation: ((rSector.middle.x-cx)/1)+","+((rSector.middle.cy)/1), easing: ">"}, "100%":{fill: "#eee", opacity: "0", easing: ">"}} ,1000);
-        this.series.items.splice(nSector,1);
-        values.splice(nSector,1);
-        total = 0;
-        len--;
-        for (var i = 0; i < len; i++) {
-            total += values[i];
-        }
-        values.sort(function (a, b) {
-            return b.value - a.value;
-        });
-        angle = 10;
-        for (var i = 0; i < len; i++) {
-            var mangle = angle - 360 * values[i] / total / 2;
-            if (!i) {
-                angle = 90 - mangle;
-                mangle = angle - 360 * values[i] / total / 2;
+        var nSector = accessor[id];
+        var rSector = this.series[nSector];
+        rSector.animate({"60%":{translation: ((rSector.middle.x-cx)/1.5)+","+((rSector.middle.cy)/1.5), easing: ">", callback: function(){
+            that.series[nSector].remove();
+            that.covers[nSector].remove();
+            that.series.items.splice(nSector,1);
+            that.covers.items.splice(nSector,1);
+            values.splice(nSector,1);
+            total = 0;
+            len--;
+            for (var i = 0; i < len; i++) {
+                total += values[i];
             }
-            newSector = sector(cx, cy, r, angle, angle -= 360 * values[i] / total);
-            this.series[i].path = newSector;
-            if(i>=nSector){
-                var j = i+1;
-            }else{
-                var j = i;
+            //values.sort(function (a, b) {
+            //    return b.value - a.value;
+            //});
+            angle = 10;
+            for (var i = 0; i < len; i++) {
+                var mangle = angle - 360 * values[i] / total / 2;
+                if (!i) {
+                    angle = 90 - mangle;
+                    mangle = angle - 360 * values[i] / total / 2;
+                }
+                newSector = sector(cx, cy, r, angle, angle -= 360 * values[i] / total);
+                if(i>=nSector){
+                    var j = i+1;
+                }else{
+                    var j = i;
+                }
+                that.covers[j].attr('path', newSector);
+                that.animateSector(j, newSector, 1100);
             }
-            this.animateSector(j, newSector, 1500);
-        }
+            
+        
+        
+        }}, "100%":{fill: "#eee", opacity: "0", easing: ">"}} ,1000);
 
     };
 
