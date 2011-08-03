@@ -10,7 +10,9 @@
   top: 50%;
 }
 </style>
-<div id="holder"></div>
+<div id="holder">
+<div id="gonext">Next</div>
+</div>
 <script>
 
 
@@ -31,7 +33,6 @@ $(document).ready(function(){
         nonvote:  (parseInt({{stats['Censo']}}, 10) - parseInt({{stats['VCandidaturas']}}, 10))
     });
     DataStore.trigger("redraw");
-    DataStore.trigger("removeNonvoters");
 });
 
 </script>

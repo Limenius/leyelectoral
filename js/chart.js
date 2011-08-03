@@ -12,7 +12,7 @@ Raphael.fn.g.piechart = function (cx, cy, r, rvalues, ids, opts) {
         angle = 0,
         total = 0,
         others = 0,
-        cut = 9,
+        cut = 1000,
         defcut = true;
     chart.covers = covers;
     if (len == 1) {
@@ -117,7 +117,7 @@ Raphael.fn.g.piechart = function (cx, cy, r, rvalues, ids, opts) {
     };
 
     chart.animationElements = [];
-    chart.animateSector = function(index, newPath, ms){
+    chart.animateSector = function(index, newPath, ms, callback){
         var that = this;
         var sectorangle = function(x0,y0){
             if (x0 > 350 && y0 < 350) {
@@ -153,7 +153,7 @@ Raphael.fn.g.piechart = function (cx, cy, r, rvalues, ids, opts) {
                 var finalangle0 = sectorangle(from['path'][2][6],from['path'][2][7]);
                 var initangle1 = sectorangle(to['path'][1][1],to['path'][1][2]);
                 var finalangle1 = sectorangle(to['path'][2][6],to['path'][2][7]);
-                
+
                 var diffinitangle = ((initangle1 - initangle0));
                 if(diffinitangle>180){diffinitangle = diffinitangle - 360}
                 else if(diffinitangle<-180){diffinitangle = diffinitangle + 360}
@@ -162,8 +162,8 @@ Raphael.fn.g.piechart = function (cx, cy, r, rvalues, ids, opts) {
                 else if(difffinalangle<-180){difffinalangle = difffinalangle + 360}
                 var nowinitangle0 = 0;
                 var nowfinalangle0 = 0;
-                
-    
+
+
                 if (time < ms) {
                     var pos = time / ms;
                     nowinitangle = (diffinitangle * pos + initangle0);
@@ -181,6 +181,9 @@ Raphael.fn.g.piechart = function (cx, cy, r, rvalues, ids, opts) {
                 }else{
                     that.attr(to);
                     animationElements.splice(l--,1);
+                    if (animationElements.length === 0){
+                        callback();
+                    }
                 }
             }
             this.svg && that && that.paper && that.paper.safari();
@@ -210,13 +213,14 @@ Raphael.fn.g.piechart = function (cx, cy, r, rvalues, ids, opts) {
             diff: diff,
             to: to,
             el: this.series[index],
-            t: {x: 0, y: 0}
+            t: {x: 0, y: 0},
+            callback: callback
         });
         setTimeout(animation);
 
     };
 
-    chart.remove = function (id){
+    chart.remove = function (id, callback){
         var that = this;
         var nSector = accessor[id];
         var rSector = this.series[nSector];
@@ -234,7 +238,7 @@ Raphael.fn.g.piechart = function (cx, cy, r, rvalues, ids, opts) {
             //values.sort(function (a, b) {
             //    return b.value - a.value;
             //});
-            angle = 10;
+            angle = 0;
             for (var i = 0; i < len; i++) {
                 var mangle = angle - 360 * values[i] / total / 2;
                 if (!i) {
@@ -248,7 +252,7 @@ Raphael.fn.g.piechart = function (cx, cy, r, rvalues, ids, opts) {
                     var j = i;
                 }
                 that.covers[j].attr('path', newSector);
-                that.animateSector(j, newSector, 1000);
+                that.animateSector(j, newSector, 1000, callback);
             }
         };
         rSector.animate({"80%":{translation: ((rSector.middle.x-cx)/1.5)+","+((rSector.middle.y-cy)/1.5), easing: ">"}, "100%":{fill: "#eee", opacity: "0", easing: ">", callback: reorder}} ,1000);

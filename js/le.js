@@ -65,22 +65,51 @@ $(document).ready(function(){
     window.DataListView = Backbone.View.extend({
         el: $("#holder"),
 
+        events: {
+            "click #gonext":  "goNext"
+        },
+
         initialize: function() {
-            _.bindAll(this, "render", "removeNonvoters");
+            _.bindAll(this, "render", "remove", "initial", "setupPaper", "goNext");
             DataStore.bind('redraw', this.render);
-            DataStore.bind('removeNonvoters', this.removeNonvoters);
             this.paper = Raphael("holder", 800, 800);
-            this.render();
             this.cx = 350;
             this.cy = 350;
         },
 
-        removeNonvoters: function() {
-            this.pie.remove('Abstencion');
+        goNext: function() {
+            this.advance();
         },
 
-        render: function() {
+
+        remove: function(id, callback) {
+            that = this;
+            this.pie.remove(id, callback);
+        },
+
+        setupPaper: function(values, ids, labels, colors) {
             this.paper.clear();
+            this.paper.g.txtattr.font = "12px 'Fontin Sans', Fontin-Sans, sans-serif";
+            this.pie = this.paper.g.piechart(this.cx, this.cy, 150, values, ids, {legend: labels, legendpos: "east", legendmark: "flower", legendothers: "Otros", colors: colors, stroke: '#eee', strokewidth: 1});
+            this.pie.hover(function () {
+                this.sector.stop();
+                this.sector.scale(1.1, 1.1, this.cx, this.cy);
+                if (this.label) {
+                    this.label[0].stop();
+                    this.label[0].scale(1.5);
+                    this.label[1].attr({"font-weight": 800});
+                }
+            },
+            function () {
+                this.sector.animate({scale: [1, 1, this.cx, this.cy]}, 500, "bounce");
+                if (this.label) {
+                    this.label[0].animate({scale: 1}, 500, "bounce");
+                    this.label[1].attr({"font-weight": 400});
+                }
+            });
+        },
+
+        initial: function() {
             var values = [];
             var labels = [];
             var colors = [];
@@ -109,25 +138,48 @@ $(document).ready(function(){
             colors.push('#000')
             ids.push('Abstencion');
 
-            this.paper.g.txtattr.font = "12px 'Fontin Sans', Fontin-Sans, sans-serif";
-            this.pie = this.paper.g.piechart(this.cx, this.cy, 150, values, ids, {legend: labels, legendpos: "east", legendmark: "flower", legendothers: "Otros", colors: colors, stroke: '#ccc'});
-            this.pie.hover(function () {
-                this.sector.stop();
-                this.sector.scale(1.1, 1.1, this.cx, this.cy);
-                if (this.label) {
-                    this.label[0].stop();
-                    this.label[0].scale(1.5);
-                    this.label[1].attr({"font-weight": 800});
-                }
-            }, 
-            function () {
-                this.sector.animate({scale: [1, 1, this.cx, this.cy]}, 500, "bounce");
-                if (this.label) {
-                    this.label[0].animate({scale: 1}, 500, "bounce");
-                    this.label[1].attr({"font-weight": 400});
+            this.setupPaper(values, ids, labels, colors);
+
+            var that = this;
+
+            this.currentState = this.initial;
+            this.advance = function(){ return that.remove("Abstencion", function(){ return that.step2();});};
+        },
+
+        step2: function() {
+            var values = [];
+            var labels = [];
+            var colors = [];
+            var ids    = [];
+            DataStore.each(function (data){
+                values.push(data.get('amount'));
+                labels.push(data.get('label'));
+                ids.push(data.get('oid'));
+                if(data.get('color')){
+                    colors.push(data.get('color'));
                 }
             });
-        }
+
+            values.push(DataStore.getInvalid());
+            labels.push('Nulos');
+            colors.push('#444');
+            ids.push('Nulos');
+
+            values.push(DataStore.getBlank());
+            labels.push('En blanco');
+            colors.push('#eee');
+            ids.push('Blanco');
+
+            this.setupPaper(values, ids, labels, colors);
+            var that = this;
+
+            this.currentState = function(){ return that.step2();};
+            this.advance = function(){ return that.remove("Blanco");};
+        },
+
+        render: function() {
+            this.initial();
+        },
     });
 
     window.App = new DataListView;
