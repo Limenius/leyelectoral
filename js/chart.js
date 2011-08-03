@@ -251,7 +251,7 @@ Raphael.fn.g.piechart = function (cx, cy, r, rvalues, ids, opts) {
                 that.animateSector(j, newSector, 1000);
             }
         };
-        rSector.animate({"80%":{translation: ((rSector.middle.x-cx)/1.5)+","+((rSector.middle.cy)/1.5), easing: ">"}, "100%":{fill: "#eee", opacity: "0", easing: ">", callback: reorder}} ,1000);
+        rSector.animate({"80%":{translation: ((rSector.middle.x-cx)/1.5)+","+((rSector.middle.y-cy)/1.5), easing: ">"}, "100%":{fill: "#eee", opacity: "0", easing: ">", callback: reorder}} ,1000);
 
     };
 
