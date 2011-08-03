@@ -220,7 +220,7 @@ Raphael.fn.g.piechart = function (cx, cy, r, rvalues, ids, opts) {
         var that = this;
         var nSector = accessor[id];
         var rSector = this.series[nSector];
-        rSector.animate({"60%":{translation: ((rSector.middle.x-cx)/1.5)+","+((rSector.middle.cy)/1.5), easing: ">", callback: function(){
+        var reorder = function(){
             that.series[nSector].remove();
             that.covers[nSector].remove();
             that.series.items.splice(nSector,1);
@@ -248,12 +248,10 @@ Raphael.fn.g.piechart = function (cx, cy, r, rvalues, ids, opts) {
                     var j = i;
                 }
                 that.covers[j].attr('path', newSector);
-                that.animateSector(j, newSector, 1100);
+                that.animateSector(j, newSector, 1000);
             }
-            
-        
-        
-        }}, "100%":{fill: "#eee", opacity: "0", easing: ">"}} ,1000);
+        };
+        rSector.animate({"80%":{translation: ((rSector.middle.x-cx)/1.5)+","+((rSector.middle.cy)/1.5), easing: ">"}, "100%":{fill: "#eee", opacity: "0", easing: ">", callback: reorder}} ,1000);
 
     };
 

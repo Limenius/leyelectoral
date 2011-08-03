@@ -115,5 +115,9 @@ foreach (array_keys($parties) as $party){
 
 }
 
-$colors["p-s-o-e"] = "aa0000";
-$colors["p-p"]     = "0000aa";
+$colors["p-s-o-e"] = "d41d05";
+$colors["p-p"]     = "019ee5";
+$colors["ciu"]     = "000e62";
+$colors["i-u"]     = "016e52";
+$colors["esquerra"]     = "e5aa01";
+$colors["c-s"]     = "ff6e2d";
