@@ -142,7 +142,6 @@ $(document).ready(function(){
 
             var that = this;
 
-            this.currentState = this.initial;
             this.advance = function(){ return that.remove("Abstencion", function(){ return that.step2();});};
         },
 
@@ -173,8 +172,51 @@ $(document).ready(function(){
             this.setupPaper(values, ids, labels, colors);
             var that = this;
 
-            this.currentState = function(){ return that.step2();};
-            this.advance = function(){ return that.remove("Blanco");};
+            this.advance = function(){ return that.remove("Blanco", function(){ return that.step2bis();});};
+        },
+
+        step2bis: function() {
+            var values = [];
+            var labels = [];
+            var colors = [];
+            var ids    = [];
+            DataStore.each(function (data){
+                values.push(data.get('amount'));
+                labels.push(data.get('label'));
+                ids.push(data.get('oid'));
+                if(data.get('color')){
+                    colors.push(data.get('color'));
+                }
+            });
+
+            values.push(DataStore.getInvalid());
+            labels.push('Nulos');
+            colors.push('#444');
+            ids.push('Nulos');
+
+            this.setupPaper(values, ids, labels, colors);
+            this.remove("Nulos", function(){that.step3()});
+
+            var that = this;
+        },
+        step3: function() {
+            var values = [];
+            var labels = [];
+            var colors = [];
+            var ids    = [];
+            DataStore.each(function (data){
+                values.push(data.get('amount'));
+                labels.push(data.get('label'));
+                ids.push(data.get('oid'));
+                if(data.get('color')){
+                    colors.push(data.get('color'));
+                }
+            });
+
+            this.setupPaper(values, ids, labels, colors);
+            var that = this;
+
+            this.advance = function(){ return that.remove("Blanco", function(){ return that.step2bis();});};
         },
 
         render: function() {

@@ -181,7 +181,7 @@ Raphael.fn.g.piechart = function (cx, cy, r, rvalues, ids, opts) {
                 }else{
                     that.attr(to);
                     animationElements.splice(l--,1);
-                    if (animationElements.length === 0){
+                    if (animationElements.length === 0 && callback){
                         callback();
                     }
                 }
