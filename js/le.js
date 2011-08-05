@@ -72,8 +72,8 @@ $(document).ready(function(){
         initialize: function() {
             _.bindAll(this, "render", "remove", "initial", "setupPaper", "goNext");
             DataStore.bind('redraw', this.render);
-            this.paper = Raphael("holder", 800, 800);
-            this.cx = 350;
+            this.paper = Raphael("holder", 960, 800);
+            this.cx = 200
             this.cy = 350;
         },
 
@@ -90,10 +90,8 @@ $(document).ready(function(){
         setupPaper: function(values, ids, labels, colors) {
             this.paper.clear();
             this.paper.g.txtattr.font = "12px 'Fontin Sans', Fontin-Sans, sans-serif";
-            this.pie = this.paper.g.piechart(this.cx, this.cy, 150, values, ids, {legend: labels, legendpos: "east", legendmark: "flower", legendothers: "Otros", colors: colors, stroke: '#eee', strokewidth: 1});
+            this.pie = this.paper.g.piechart(this.cx, this.cy, 120, values, ids, {legend: labels, legendpos: "east", legendmark: "flower", legendothers: "Otros", colors: colors, stroke: '#eee', strokewidth: 1});
             this.pie.hover(function () {
-                this.sector.stop();
-                this.sector.scale(1.1, 1.1, this.cx, this.cy);
                 if (this.label) {
                     this.label[0].stop();
                     this.label[0].scale(1.5);
@@ -204,6 +202,9 @@ $(document).ready(function(){
             var labels = [];
             var colors = [];
             var ids    = [];
+
+            parvalues = [];
+
             DataStore.each(function (data){
                 values.push(data.get('amount'));
                 labels.push(data.get('label'));
@@ -211,9 +212,14 @@ $(document).ready(function(){
                 if(data.get('color')){
                     colors.push(data.get('color'));
                 }
+                var val = Math.floor(data.get('amount')/5000);
+                if (val !=0 ){
+                    parvalues.push({ value: val, color: data.get('color')} );
+                }
             });
 
             this.setupPaper(values, ids, labels, colors);
+            parliament = this.paper.g.parliament(650, 450, 200, 70, parvalues, {});
             var that = this;
 
             this.advance = function(){ return that.remove("Blanco", function(){ return that.step2bis();});};

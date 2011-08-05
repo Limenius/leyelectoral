@@ -122,14 +122,14 @@ Raphael.fn.g.piechart = function (cx, cy, r, rvalues, ids, opts) {
     chart.animateSector = function(index, newPath, ms, callback){
         var that = this;
         var sectorangle = function(x0,y0){
-            if (x0 > 350 && y0 < 350) {
-                var angle = - Math.asin((y0-350)/150) * (180/Math.PI);
-            }else if(x0 > 350 && y0 > 350){
-                var angle = - Math.asin((y0-350)/150) * (180/Math.PI);
-            }else if(x0 < 350 && y0 < 350){
-                var angle = 180 + Math.asin((y0-350)/150) * (180/Math.PI);
+            if (x0 > cx && y0 < cy) {
+                var angle = - Math.asin((y0-cy)/r) * (180/Math.PI);
+            }else if(x0 > cx && y0 > cy){
+                var angle = - Math.asin((y0-cy)/r) * (180/Math.PI);
+            }else if(x0 < cx && y0 < cy){
+                var angle = 180 + Math.asin((y0-cy)/r) * (180/Math.PI);
             }else{
-                var angle = -180 + Math.asin((y0-350)/150) * (180/Math.PI);
+                var angle = -180 + Math.asin((y0-cy)/r) * (180/Math.PI);
             }
             return angle;
         }
