@@ -23,7 +23,7 @@ $app->get('/', function () use ($app) {
     $name = $app['request']->get('name');
 
     $db = $app['db']();
-    $cursor = $db->find(array("Municipio" => "Barcelona"));
+    $cursor = $db->find(array("Municipio" => "Madrid"));
     $row = $cursor->getNext();
     $votes = array_slice($row, 13);
     $content = array_slice($row, 7, 6);
