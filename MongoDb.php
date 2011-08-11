@@ -18,8 +18,8 @@ class MongoExtension implements ExtensionInterface
 
         $app['db'] = $app->protect(function () use ($app){
             $connection = new \Mongo();
-            $db = $connection->elecciones;//$app['db.options']['db'];
-            $collection = $db->elecciones;//$app['db.options']['collection'];
+            $db = $connection->{$app['db.options']['db']};
+            $collection = $db->{$app['db.options']['collection']};
             return $collection;
         });
 

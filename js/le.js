@@ -1,16 +1,56 @@
 $(document).ready(function(){
-    window.Data = Backbone.Model.extend({
+    Backbone.Partyres = function(attributes, options) {
+        attributes || (attributes = {});
+        this.attributes = {};
+        this.set(attributes);
+        if (!this.get("label")) {
+            this.set({title: "undefined"});
+        }
+        if (!this.get("amount")) {
+            this.set({amount: 0});
+        }
+        if (!this.get("statistical")) {
+            this.set({statistical: false});
+        }
+        if (!this.get("oid")) {
+            this.set({oid: ""});
+        }
 
+    };
+
+    _.extend(Backbone.Partyres.prototype, {
+
+        get : function(attr) {
+            return this.attributes[attr];
+        },
+
+        set : function(attrs, options) {
+            for (var attr in attrs) {
+                this.attributes[attr] = attrs[attr];
+            }
+
+            return this;
+        },
+
+    });
+
+    window.Data = Backbone.Model.extend({
         initialize: function() {
-            if (!this.get("label")) {
+            if (!this.get("provincia")) {
                 this.set({title: "undefined"});
             }
-            if (!this.get("amount")) {
-                this.set({amount: 0});
-            }
-            if (!this.get("oid")) {
-                this.set({oid: ""});
-            }
+            this.rows = [];
+        },
+
+        addRow : function(attributes) {
+            this.rows.push(new Backbone.Partyres(attributes));
+
+        },
+        getRow: function(oid) {
+            return _.detect(this.rows, function(data){
+                var dat = data.get('oid');
+                return data.get('oid') === oid;
+            });
         },
 
     });
@@ -21,7 +61,7 @@ $(document).ready(function(){
         initialize: function() {
             _.bindAll(this, 'render');
             this.model.view = this;
-    
+
         },
         render: function() {
             return this;
@@ -32,32 +72,52 @@ $(document).ready(function(){
         model: Data,
         url: "/data",
         initialize: function() {
-            _.bindAll(this, "setStats", "removeNull");
-        },
-        comparator: function(data) {
-            return data.get("amount");
-        },
-        setStats: function(stats) {
-            this.total = stats.total;
-            this.invalid = stats.invalid;
-            this.blank = stats.blank;
-            this.nonvote = stats.nonvote;
-        },
-        getTotal: function() {
-            return this.total;
-        },
-        getInvalid: function() {
-            return this.invalid;
-        },
-        getBlank: function() {
-            return this.blank;
-        },
-        getNonvote: function() {
-            return this.nonvote;
+            _.bindAll(this,"getTotal", "getExceptTotal", "calculateTotal", "getProv");
         },
 
-        removeNull: function(){
+        getProv: function(name) {
+            return this.detect(function(data){
+                return data.get('provincia') === name;
+            });
+        },
+
+        getTotal: function() {
+            return this.detect(function(data){
+                return data.get('provincia') === 'total';
+            });
+        },
+
+        getExceptTotal: function() {
+            return this.reject(function(data){ return data.get('provincia') === 'total' });
+        },
+
+        calculateTotal: function() {
+            if (!this.getTotal()) {
+                var total = {};
+                this.add({
+                    provincia : "total"
+                });
+                var total = this.getTotal();
+                this.each(function(data) {
+                    for (var i = 0; i < data.rows.length; i++) {
+
+                        var result = _.detect(total.rows, function(row) {return row.get('oid') === data.rows[i].get("oid");})
+                        if (result) {
+                            result.set({"amount": result.get("amount") + data.rows[i].get("amount")});
+                        } else {
+                            total.addRow({
+                                label: data.rows[i].get("label"),
+                                color: data.rows[i].get("color"),
+                                amount: data.rows[i].get("amount"),
+                                oid: data.rows[i].get("oid"),
+                                statistical: data.rows[i].get("statistical"),
+                            });
+                        }
+                    };
+                });
+            }
         }
+
     });
 
     window.DataStore = new DataList;
@@ -112,26 +172,31 @@ $(document).ready(function(){
             var labels = [];
             var colors = [];
             var ids    = [];
-            DataStore.each(function (data){
-                values.push(data.get('amount'));
-                labels.push(data.get('label'));
-                ids.push(data.get('oid'));
-                if(data.get('color')){
-                    colors.push(data.get('color'));
+            DataStore.calculateTotal();
+            var total = DataStore.getTotal();
+            var parties = _.select(total.rows, function (row){
+                return row.get('statistical') == false;
+            });
+            _.each(parties, function(party) {
+                values.push(party.get('amount'));
+                labels.push(party.get('label'));
+                ids.push(party.get('oid'));
+                if(party.get('color')){
+                    colors.push(party.get('color'));
                 }
             });
 
-            values.push(DataStore.getInvalid());
+            values.push(total.getRow('invalid').get('amount'));
             labels.push('Nulos');
             colors.push('#444');
             ids.push('Nulos');
 
-            values.push(DataStore.getBlank());
+            values.push(total.getRow('blank').get('amount'));
             labels.push('En blanco');
             colors.push('#eee');
             ids.push('Blanco');
 
-            values.push(DataStore.getNonvote());
+            values.push(total.getRow('nonvote').get('amount'));
             labels.push('Abstención');
             colors.push('#000')
             ids.push('Abstencion');

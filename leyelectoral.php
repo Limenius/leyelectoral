@@ -16,17 +16,21 @@ $app->register(new Silex\Extension\TwigExtension(), array(
 ));
 
 $app->register(new Leyelectoral\MongoExtension(), array(
-    'db.options' => array('db'=>'elecciones', 'collection'=>'elecciones'),
+    'db.options' => array('db'=>'elecciones', 'collection'=>'provincias'),
 ));
 
 $app->get('/', function () use ($app) {
     $name = $app['request']->get('name');
 
     $db = $app['db']();
-    $cursor = $db->find(array("Municipio" => "Madrid"));
-    $row = $cursor->getNext();
-    $votes = array_slice($row, 13);
-    $content = array_slice($row, 7, 6);
+    $cursor = $db->find();
+    $votes = array();
+    $content = array();
+    foreach ($cursor as $row) {
+        $votes[$row['Provincia']] = array_slice($row, 13);
+        $content[$row['Provincia']] = array_slice($row, 7, 6);
+
+    }
     return $app['twig']->render('main.twig', array(
         'parties' => $app['parties'],
         'colors'  => $app['colors'],

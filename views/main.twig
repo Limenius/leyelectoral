@@ -18,20 +18,44 @@
 
 
 $(document).ready(function(){
-    {% for party, results in votes %}
-    DataStore.add({
-        label: "{{parties[party]|raw}}",
-        amount: parseInt({{results}}, 10),
-        oid: "{{party}}",
-        color: "#{{colors[party]}}"
-    });
+    {% for provincia, results in votes %}
+        DataStore.add({
+            provincia : "{{provincia}}",
+        });
+        var prov = DataStore.detect(function(data){ return data.get('provincia') == '{{provincia}}'; });
+        {% for party, result in results %}
+            prov.addRow({
+                label: "{{parties[party]|raw}}",
+                amount: parseInt({{result}}, 10),
+                oid: "{{party}}",
+                color: "#{{colors[party]}}"
+             });
+        {% endfor %}
+        prov.addRow({
+           label:    "total",
+           amount:    parseInt({{stats[provincia]['Censo']}}, 10),
+           oid:      "total",
+           statistical: true
+        });
+        prov.addRow({
+           label:    "invalid",
+           amount:    parseInt({{stats[provincia]['VNulos']}}, 10),
+           oid:      "invalid",
+           statistical: true
+        });
+        prov.addRow({
+           label:    "blank",
+           amount:    parseInt({{stats[provincia]['VBlanco']}}, 10),
+           oid:      "blank",
+           statistical: true
+        });
+        prov.addRow({
+           label:    "nonvote",
+           amount:  (parseInt({{stats[provincia]['Censo']}}, 10) - parseInt({{stats[provincia]['VCandidaturas']}}, 10)),
+           oid:      "nonvote",
+           statistical: true
+        });
     {% endfor %}
-    DataStore.setStats({
-        total:    parseInt({{stats['Censo']}}, 10),
-        invalid:  parseInt({{stats['VNulos']}}, 10),
-        blank:    parseInt({{stats['VBlanco']}}, 10),
-        nonvote:  (parseInt({{stats['Censo']}}, 10) - parseInt({{stats['VCandidaturas']}}, 10))
-    });
     DataStore.trigger("redraw");
 });
 

@@ -11,6 +11,9 @@ function uncommize($text){
 }
 
 $row = 1;
+
+$provincias = array();
+
 if (($handle = fopen("02_200803_1.csv", "r")) !== FALSE) {
     $data = fgetcsv($handle, 2000, ",");
     $num = count($data);
@@ -36,14 +39,37 @@ if (($handle = fopen("02_200803_1.csv", "r")) !== FALSE) {
             'VBlanco'    => uncommize(trim($data[11])),
             'VNulos'     => uncommize(trim($data[12])),
         );
+
+        if(!isset($provincias[$result['Provincia']])){
+            $provincias[$result['Provincia']] = unserialize(serialize($result));
+        }else{
+            $provincias[$result['Provincia']]['Población'] += $result['Población'];
+            $provincias[$result['Provincia']]['Mesas'] += $result['Mesas'];
+            $provincias[$result['Provincia']]['Censo'] += $result['Censo'];
+            $provincias[$result['Provincia']]['Votantes'] += $result['Votantes'];
+            $provincias[$result['Provincia']]['Válidos'] += $result['Válidos'];
+            $provincias[$result['Provincia']]['VCandidaturas'] += $result['VCandidaturas'];
+            $provincias[$result['Provincia']]['VBlanco'] += $result['VBlanco'];
+            $provincias[$result['Provincia']]['VNulos'] += $result['VNulos'];
+        }
         for ($c=13; $c < $num; $c++) {
             $result[$partidos[$c]] = uncommize(trim($data[$c]));
+            if (isset($provincias[$result['Provincia']][$partidos[$c]] )) {
+                $provincias[$result['Provincia']][$partidos[$c]] += $result[$partidos[$c]];
+            }else{
+                $provincias[$result['Provincia']][$partidos[$c]] = $result[$partidos[$c]];
+            }
         }
         $connection = new Mongo();
         $db = $connection->elecciones;
         $collection = $db->elecciones;
         $collection->save($result);
 
+    }
+
+    foreach ($provincias as $provincia) {
+        $collection = $db->provincias;
+        $collection->save($provincia);
     }
     fclose($handle);
 }
