@@ -31,7 +31,9 @@ Raphael.fn.g.piechart = function (cx, cy, r, rvalues, ids, opts) {
                 y1 = cy + r * Math.sin(-startAngle * rad),
                 y2 = cy + r * Math.sin(-endAngle * rad),
                 ym = cy + r / 2 * Math.sin(-(startAngle + (endAngle - startAngle) / 2) * rad),
-                res = ["M", cx, cy, "L", x1, y1, "A", r, r, 0, +((endAngle - startAngle) < -180), 1, x2, y2, "z"];
+                diffangle = Math.abs((-360 + endAngle - startAngle)%360),
+                res = ["M", cx, cy, "L", x1, y1, "A", r, r, 0, +(diffangle > 180), 1, x2, y2, "z"];
+
             res.middle = {x: xm, y: ym};
             return res;
         }

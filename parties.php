@@ -121,3 +121,4 @@ $colors["ciu"]     = "000e62";
 $colors["i-u"]     = "016e52";
 $colors["esquerra"]     = "e5aa01";
 $colors["c-s"]     = "ff6e2d";
+$colors["upyd"]     = "e4007b";
