@@ -5,6 +5,8 @@ Raphael.fn.g.parliament = function (cx, cy, rmax, rmin, values, opts) {
     var dymin = 1.2;
     var dymax = 2;
     var dx = 1.7;
+    var covers = [];
+    var cover2legends = [];
 
     var nt = 0;
     var nf = 1;
@@ -126,6 +128,9 @@ Raphael.fn.g.parliament = function (cx, cy, rmax, rmin, values, opts) {
         var cir = paper.circle(seat[i]['posx'] * seat[i]['rrow']+ cx , -seat[i]['posy'] * seat[i]['rrow']+ cy , rp);
         cir.attr({fill: color});
         cir.attr({stroke: "#888"});
+        var cir2cover = 
+        covers.push(paper.circle(seat[i]['posx'] * seat[i]['rrow']+ cx , -seat[i]['posy'] * seat[i]['rrow']+ cy , rp * 2 ).attr(this.g.shim));
+        cover2legends.push(coloridx);
 
     }
 
@@ -153,5 +158,29 @@ Raphael.fn.g.parliament = function (cx, cy, rmax, rmin, values, opts) {
     }
 
     legend(legends, 'flower', 'east');
+    chart.covers = covers;
+    chart.hover = function(fin, fout) {
+        fout = fout || function () {};
+        var that = this;
+        for (var i = 0; i < covers.length; i++) {
+            (function (cover, j) {
+                var o = {
+                    cover: cover,
+                    cx: cx,
+                    cy: cy,
+                    value: values[j],
+                    label: that.labels && that.labels[cover2legends[j]],
+                };
+                cover.mouseover(function () {
+                    fin.call(o);
+                }).mouseout(function () {
+                    fout.call(o);
+                });
+            })(covers[i], i);
+        }
+        return this;
+    }
+
+    return chart;
 
 }

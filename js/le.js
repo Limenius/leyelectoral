@@ -214,7 +214,6 @@ $(document).ready(function(){
                 }
             },
             function () {
-                this.sector.animate({scale: [1, 1, this.cx, this.cy]}, 500, "bounce");
                 if (this.label) {
                     this.label[0].animate({scale: 1}, 500, "bounce");
                     this.label[1].attr({"font-weight": 400});
@@ -355,10 +354,35 @@ $(document).ready(function(){
             parvalues = this.dhont();
 
             this.setupPaper(drawable);
-            parliament = this.paper.g.parliament(650, 450, 200, 70, parvalues, {});
             var that = this;
 
-            this.advance = function(){ return that.remove("Blanco", function(){ return that.step2bis();});};
+            this.advance = function(){ return that.step4();};
+        },
+        step4: function() {
+            var drawable = this.drawParties();
+            this.setupPaper(drawable);
+            var that = this;
+
+            parvalues = this.dhont();
+
+            this.setupPaper(drawable);
+            parliament = this.paper.g.parliament(650, 450, 200, 70, parvalues, {});
+            parliament.hover(function () {
+                if (this.label) {
+                    this.label[0].stop();
+                    this.label[0].scale(1.5);
+                    this.label[1].attr({"font-weight": 800});
+                }
+            },
+            function () {
+                if (this.label) {
+                    this.label[0].animate({scale: 1}, 500, "bounce");
+                    this.label[1].attr({"font-weight": 400});
+                }
+            });
+            var that = this;
+
+            this.advance = function(){ return that.step4s();};
         },
 
         render: function() {
