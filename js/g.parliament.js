@@ -113,16 +113,45 @@ Raphael.fn.g.parliament = function (cx, cy, rmax, rmin, values, opts) {
 
     var color = values[coloridx]['color'];
 
+    var legends = [];
+    legends.push(values[coloridx]['label']);
+
     for (var i = 0; i < total; i++) {
-        if (i > nextstop) {
+        if (i === nextstop) {
             coloridx ++;
             nextstop += values[coloridx]['value'];
             color = values[coloridx]['color'];
+            legends.push(values[coloridx]['label']);
         }
         var cir = paper.circle(seat[i]['posx'] * seat[i]['rrow']+ cx , -seat[i]['posy'] * seat[i]['rrow']+ cy , rp);
         cir.attr({fill: color});
         cir.attr({stroke: "#888"});
 
     }
+
+    var legend = function(labels, mark, dir){
+        var x = cx + rmax + rmax / 5,
+            y = cy,
+            h = y + 10;
+        labels = labels || [];
+        dir = (dir && dir.toLowerCase && dir.toLowerCase()) || "east";
+        mark = paper.g.markers[mark && mark.toLowerCase()] || "disc";
+        chart.labels = paper.set(); 
+        for (var i = 0; i < labels.length; i++) {
+            var percent = values[i]['value'] * 100/total;
+            var clr = values[i]['color'],
+                txt;
+            chart.labels.push(paper.set());
+            chart.labels[i].push(paper.g[mark](x + 5, h, 5).attr({fill: clr, stroke: "none"}));
+            chart.labels[i].push(txt = paper.text(x + 20, h, labels[i] + ": " + values[i]['value'] + " - " + percent.toFixed(2) +"%").attr(paper.g.txtattr).attr({fill: "#000", "text-anchor": "start"}));
+            h += txt.getBBox().height * 1.2;
+        }
+        var bb = chart.labels.getBBox(),
+            tr = [-50, -bb.height ];
+        chart.labels.translate.apply(chart.labels, tr);
+        chart.push(chart.labels);
+    }
+
+    legend(legends, 'flower', 'east');
 
 }

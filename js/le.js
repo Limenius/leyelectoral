@@ -244,6 +244,7 @@ $(document).ready(function(){
                                     value : party.get("amount") / i,
                                     color : party.get("color"),
                                     oid   : party.get("oid"),
+                                    label : party.get("label"),
                                 });
                             };
                         }
@@ -253,11 +254,11 @@ $(document).ready(function(){
                     }).reverse();
 
                     for (var i = 0; i < circunscripciones[prov.get('provincia')]; i++) {
-                        console.log(prov.get('provincia'));
                         electedseats.push({
                             value: possiblepar[i]['value'],
                             color: possiblepar[i]['color'],
-                            oid  : possiblepar[i]['oid']
+                            oid  : possiblepar[i]['oid'],
+                            label: possiblepar[i]['label'],
                         });
                     };
                 }
@@ -274,12 +275,13 @@ $(document).ready(function(){
                     varpar.push({
                         'oid' :electedseats[i]['oid'],
                         'value' : 1,
-                        'color': electedseats[i]['color']
+                        'color': electedseats[i]['color'],
+                        'label': electedseats[i]['label']
                     });
                 }
             };
 
-            return _.sortBy(varpar,function (party) { return party['value']; });
+            return _.sortBy(varpar,function (party) { return party['value']; }).reverse();
 
         },
 
