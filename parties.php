@@ -117,9 +117,16 @@ foreach (array_keys($parties) as $party){
 
 $colors["p-s-o-e"] = "d41d05";
 $colors["p-p"]     = "019ee5";
-$colors["ciu"]     = "000e62";
 $colors["i-u"]     = "016e52";
-$colors["esquerra"]     = "e5aa01";
-$colors["c-s"]     = "ff6e2d";
+$colors["ciu"]     = "000e62";
 $colors["upyd"]     = "e4007b";
+$colors["eaj-pnv"]     = "b2bb1e";
+$colors["esquerra"]     = "e5aa01";
+$colors["b-n-g"]     = "b4d0e7";
+$colors["cc-pnc"]     = "ffec01";
+$colors["ca"]     = "70814d";
+$colors["na-bai"]     = "8c4d97";
+$colors["ea"]     = "6db23e";
+$colors["c-s"]     = "ff6e2d";
 $colors["lv-gv"]     = "028d34";
+$colors["cha"]     = "a8021a";
