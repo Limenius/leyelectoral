@@ -1,4 +1,59 @@
 $(document).ready(function(){
+    var circunscripciones = {
+        "Burgos": 4,
+        "León": 5,
+        "Palencia": 3,
+        "Salamanca": 4,
+        "Segovia": 3,
+        "Soria": 2,
+        "Valladolid": 5,
+        "Zamora": 3,
+        "Girona": 6,
+        "Lleida": 4,
+        "Tarragona": 6,
+        "Badajoz": 6,
+        "Cáceres": 4,
+        "A Coruña": 8,
+        "Ourense": 4,
+        "Pontevedra": 7,
+        "Madrid": 35,
+        "Navarra": 5,
+        "Álava": 4,
+        "Guipúzcoa": 6,
+        "Vizcaya": 8,
+        "Murcia": 10,
+        "La Rioja": 4,
+        "Alicante / Alacant": 12,
+        "Castellón / Castelló": 5,
+        "Valencia / València": 16,
+        "Ceuta": 1,
+        "Melilla": 1,
+        "Almería": 6,
+        "Cádiz": 9,
+        "Córdoba": 6,
+        "Granada": 7,
+        "Huelva": 5,
+        "Jaén": 6,
+        "Málaga": 10,
+        "Sevilla": 12,
+        "Huesca": 3,
+        "Teruel": 3,
+        "Zaragoza": 7,
+        "Asturias": 8,
+        "Illes Balears": 8,
+        "Las Palmas": 8,
+        "Santa Cruz de Tenerife": 7,
+        "Cantabria": 5,
+        "Albacete": 4,
+        "Ciudad Real": 5,
+        "Cuenca": 3,
+        "Guadalajara": 3,
+        "Toledo": 6,
+        "Ávila": 3,
+        "Barcelona": 31,
+        "Lugo": 4,
+    }
+
     Backbone.Partyres = function(attributes, options) {
         attributes || (attributes = {});
         this.attributes = {};
@@ -130,7 +185,7 @@ $(document).ready(function(){
         },
 
         initialize: function() {
-            _.bindAll(this, "render", "remove", "initial", "setupPaper", "goNext");
+            _.bindAll(this, "render", "remove", "initial", "setupPaper", "goNext", "drawParties", "dhont");
             DataStore.bind('redraw', this.render);
             this.paper = Raphael("holder", 960, 800);
             this.cx = 200
@@ -147,10 +202,10 @@ $(document).ready(function(){
             this.pie.remove(id, callback);
         },
 
-        setupPaper: function(values, ids, labels, colors) {
+        setupPaper: function(drawable) {
             this.paper.clear();
             this.paper.g.txtattr.font = "12px 'Fontin Sans', Fontin-Sans, sans-serif";
-            this.pie = this.paper.g.piechart(this.cx, this.cy, 120, values, ids, {legend: labels, legendpos: "east", legendmark: "flower", legendothers: "Otros", colors: colors, stroke: '#eee', strokewidth: 1});
+            this.pie = this.paper.g.piechart(this.cx, this.cy, 120, drawable['values'], drawable['ids'], {legend: drawable['labels'], legendpos: "east", legendmark: "flower", legendothers: "Otros", colors: drawable['colors'], stroke: '#eee', strokewidth: 1});
             this.pie.hover(function () {
                 if (this.label) {
                     this.label[0].stop();
@@ -167,123 +222,137 @@ $(document).ready(function(){
             });
         },
 
-        initial: function() {
-            var values = [];
-            var labels = [];
-            var colors = [];
-            var ids    = [];
+        dhont: function() {
+            var electedseats = [];
+            DataStore.each(function(prov){
+                if(prov.get('provincia') !== 'total') {
+                    var total = 0;
+                    _.each(prov.rows, function(row) {
+                        if(!row.get("statistical") || row.get('oid') === 'invalid' || row.get('oid') === 'blank') {
+                            total += row.get("amount");
+                        }
+                    });
+                    var minval = total*0.03;
+                    var parties = _.reject(prov.rows, function(row) {
+                        return row.get("amount") < minval || row.get("statistical") === true;
+                    });
+                    var possiblepar = [];
+                    _.each(parties, function(party){
+                        if (!party.get("statistical")) {
+                            for (var i = 1; i <= circunscripciones[prov.get('provincia')]; i++) {
+                                possiblepar.push({
+                                    value : party.get("amount") / i,
+                                    color : party.get("color"),
+                                    oid   : party.get("oid"),
+                                });
+                            };
+                        }
+                    });
+                    possiblepar = _.sortBy(possiblepar, function(res) {
+                        return res["value"];
+                    }).reverse();
+
+                    for (var i = 0; i < circunscripciones[prov.get('provincia')]; i++) {
+                        console.log(prov.get('provincia'));
+                        electedseats.push({
+                            value: possiblepar[i]['value'],
+                            color: possiblepar[i]['color'],
+                            oid  : possiblepar[i]['oid']
+                        });
+                    };
+                }
+            });
+
+            var varpar = [];
+            for (var i = 0; i < electedseats.length; i++) {
+                thisvarpar = _.detect(varpar, function(party) {
+                    return party['oid'] === electedseats[i]['oid'];
+                });
+                if (thisvarpar){
+                    thisvarpar['value'] ++;
+                } else {
+                    varpar.push({
+                        'oid' :electedseats[i]['oid'],
+                        'value' : 1,
+                        'color': electedseats[i]['color']
+                    });
+                }
+            };
+
+            return _.sortBy(varpar,function (party) { return party['value']; });
+
+        },
+
+
+        drawParties: function() {
+            var drawable = {
+                values : [],
+                labels : [],
+                colors : [],
+                ids    : []
+            }
             DataStore.calculateTotal();
             var total = DataStore.getTotal();
             var parties = _.select(total.rows, function (row){
                 return row.get('statistical') == false;
             });
             _.each(parties, function(party) {
-                values.push(party.get('amount'));
-                labels.push(party.get('label'));
-                ids.push(party.get('oid'));
+                drawable['values'].push(party.get('amount'));
+                drawable['labels'].push(party.get('label'));
+                drawable['ids'].push(party.get('oid'));
                 if(party.get('color')){
-                    colors.push(party.get('color'));
+                    drawable['colors'].push(party.get('color'));
                 }
             });
+            return drawable;
+        },
 
-            values.push(total.getRow('invalid').get('amount'));
-            labels.push('Nulos');
-            colors.push('#444');
-            ids.push('Nulos');
+        drawStat: function(drawable, oid, color, label) {
+            var total = DataStore.getTotal();
+            drawable['values'].push(total.getRow(oid).get('amount'));
+            drawable['labels'].push(label);
+            drawable['colors'].push(color);
+            drawable['ids'].push(label);
+            return drawable;
+        },
 
-            values.push(total.getRow('blank').get('amount'));
-            labels.push('En blanco');
-            colors.push('#eee');
-            ids.push('Blanco');
-
-            values.push(total.getRow('nonvote').get('amount'));
-            labels.push('Abstención');
-            colors.push('#000')
-            ids.push('Abstencion');
-
-            this.setupPaper(values, ids, labels, colors);
-
+        initial: function() {
+            var drawable = this.drawParties();
+            var drawable = this.drawStat(drawable, 'invalid', '#444', 'Nulos');
+            var drawable = this.drawStat(drawable, 'blank', '#eee', 'En blanco');
+            var drawable = this.drawStat(drawable, 'nonvote', '#000', 'Abstención');
+            this.setupPaper(drawable);
             var that = this;
-
-            this.advance = function(){ return that.remove("Abstencion", function(){ return that.step2();});};
+            this.advance = function(){ return that.remove("Abstención", function(){ return that.step2();});};
         },
 
         step2: function() {
-            var values = [];
-            var labels = [];
-            var colors = [];
-            var ids    = [];
-            DataStore.each(function (data){
-                values.push(data.get('amount'));
-                labels.push(data.get('label'));
-                ids.push(data.get('oid'));
-                if(data.get('color')){
-                    colors.push(data.get('color'));
-                }
-            });
-
-            values.push(DataStore.getInvalid());
-            labels.push('Nulos');
-            colors.push('#444');
-            ids.push('Nulos');
-
-            values.push(DataStore.getBlank());
-            labels.push('En blanco');
-            colors.push('#eee');
-            ids.push('Blanco');
-
-            this.setupPaper(values, ids, labels, colors);
+            var drawable = this.drawParties();
+            var drawable = this.drawStat(drawable, 'invalid', '#444', 'Nulos');
+            var drawable = this.drawStat(drawable, 'blank', '#eee', 'En blanco');
+            this.setupPaper(drawable);
             var that = this;
 
-            this.advance = function(){ return that.remove("Blanco", function(){ return that.step2bis();});};
+            this.advance = function(){ return that.remove("En blanco", function(){ return that.step2bis();});};
         },
 
         step2bis: function() {
-            var values = [];
-            var labels = [];
-            var colors = [];
-            var ids    = [];
-            DataStore.each(function (data){
-                values.push(data.get('amount'));
-                labels.push(data.get('label'));
-                ids.push(data.get('oid'));
-                if(data.get('color')){
-                    colors.push(data.get('color'));
-                }
-            });
-
-            values.push(DataStore.getInvalid());
-            labels.push('Nulos');
-            colors.push('#444');
-            ids.push('Nulos');
-
-            this.setupPaper(values, ids, labels, colors);
-            this.remove("Nulos", function(){that.step3()});
-
+            var drawable = this.drawParties();
+            var drawable = this.drawStat(drawable, 'invalid', '#444', 'Nulos');
+            this.setupPaper(drawable);
             var that = this;
+
+            this.remove("Nulos", function(){that.step3()});
         },
+
         step3: function() {
-            var values = [];
-            var labels = [];
-            var colors = [];
-            var ids    = [];
+            var drawable = this.drawParties();
+            this.setupPaper(drawable);
+            var that = this;
 
-            parvalues = [];
+            parvalues = this.dhont();
 
-            DataStore.each(function (data){
-                values.push(data.get('amount'));
-                labels.push(data.get('label'));
-                ids.push(data.get('oid'));
-                if(data.get('color')){
-                    colors.push(data.get('color'));
-                }
-                var val = Math.floor(data.get('amount')/5000);
-                if (val !=0 ){
-                    parvalues.push({ value: val, color: data.get('color')} );
-                }
-            });
-
-            this.setupPaper(values, ids, labels, colors);
+            this.setupPaper(drawable);
             parliament = this.paper.g.parliament(650, 450, 200, 70, parvalues, {});
             var that = this;
 
