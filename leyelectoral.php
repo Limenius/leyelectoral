@@ -5,10 +5,16 @@ error_reporting(E_ALL);
 require_once __DIR__.'/silex.phar';
 require_once __DIR__.'/MongoDb.php';
 require_once __DIR__.'/parties.php';
+require_once __DIR__.'/markdown.php';
+
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 $app = new Silex\Application();
 $app['parties'] = $parties;
 $app['colors']  = $colors;
+$app['content_dir'] = __DIR__.'/content/';
 
 $app->register(new Silex\Extension\TwigExtension(), array(
     'twig.path'       => __DIR__.'/views',
@@ -22,6 +28,22 @@ $app->register(new Leyelectoral\MongoExtension(), array(
 $app->get('/', function () use ($app) {
     $name = $app['request']->get('name');
 
+    $explanations  = array();
+    $files = array();
+    if ($handle = opendir($app['content_dir'].'/short')) {
+        while (false !== ($file = readdir($handle))) {
+            if ($file != "." && $file != "..") {
+                array_push($files, $file);
+            }
+        }
+        closedir($handle);
+    }
+
+    foreach($files as $file){
+        $fcontent = file_get_contents($app['content_dir'].'/short/'.$file);
+        $explanations[str_replace(".md","" , $file)] = Markdown($fcontent);
+    }
+
     $db = $app['db']();
     $cursor = $db->find();
     $votes = array();
@@ -32,11 +54,21 @@ $app->get('/', function () use ($app) {
 
     }
     return $app['twig']->render('main.twig', array(
-        'parties' => $app['parties'],
-        'colors'  => $app['colors'],
-        'stats'   => $content,
-        'votes'   => $votes,
+        'parties'      => $app['parties'],
+        'colors'       => $app['colors'],
+        'stats'        => $content,
+        'votes'        => $votes,
+        'explanations' => $explanations
     ));
+});
+
+$app->error(function (\Exception $e) {
+    if ($e instanceof NotFoundHttpException) {
+        return new Response('La página que buscas no está aquí.', 404);
+    }
+
+    $code = ($e instanceof HttpException) ? $e->getStatusCode() : 500;
+    return new Response('Algo ha fallado en nuestra sala de máquinas.', $code);
 });
 
 $app->run();

@@ -1,58 +1,4 @@
 $(document).ready(function(){
-    var circunscripciones = {
-        "Burgos": 4,
-        "León": 5,
-        "Palencia": 3,
-        "Salamanca": 4,
-        "Segovia": 3,
-        "Soria": 2,
-        "Valladolid": 5,
-        "Zamora": 3,
-        "Girona": 6,
-        "Lleida": 4,
-        "Tarragona": 6,
-        "Badajoz": 6,
-        "Cáceres": 4,
-        "A Coruña": 8,
-        "Ourense": 4,
-        "Pontevedra": 7,
-        "Madrid": 35,
-        "Navarra": 5,
-        "Álava": 4,
-        "Guipúzcoa": 6,
-        "Vizcaya": 8,
-        "Murcia": 10,
-        "La Rioja": 4,
-        "Alicante / Alacant": 12,
-        "Castellón / Castelló": 5,
-        "Valencia / València": 16,
-        "Ceuta": 1,
-        "Melilla": 1,
-        "Almería": 6,
-        "Cádiz": 9,
-        "Córdoba": 6,
-        "Granada": 7,
-        "Huelva": 5,
-        "Jaén": 6,
-        "Málaga": 10,
-        "Sevilla": 12,
-        "Huesca": 3,
-        "Teruel": 3,
-        "Zaragoza": 7,
-        "Asturias": 8,
-        "Illes Balears": 8,
-        "Las Palmas": 8,
-        "Santa Cruz de Tenerife": 7,
-        "Cantabria": 5,
-        "Albacete": 4,
-        "Ciudad Real": 5,
-        "Cuenca": 3,
-        "Guadalajara": 3,
-        "Toledo": 6,
-        "Ávila": 3,
-        "Barcelona": 31,
-        "Lugo": 4,
-    }
 
     Backbone.Partyres = function(attributes, options) {
         attributes || (attributes = {});
@@ -89,6 +35,17 @@ $(document).ready(function(){
 
     });
 
+    window.Content = Backbone.Model.extend({
+        initialize: function() {
+            if (!this.get("key")) {
+                this.set({title: "undefined"});
+            }
+            if (!this.get("value")) {
+                this.set({title: "undefined"});
+            }
+        },
+    });
+
     window.Data = Backbone.Model.extend({
         initialize: function() {
             if (!this.get("provincia")) {
@@ -122,6 +79,22 @@ $(document).ready(function(){
             return this;
         },
     });
+
+    window.ContentList = Backbone.Collection.extend({
+        model: Content,
+        initialize: function() {
+            _.bindAll(this, 'getByKey');
+        },
+
+        getByKey : function(key) {
+            return this.detect(function(content) {
+                return key === content.get('key');
+            });
+        }
+
+    });
+
+    window.ContentStore = new ContentList;
 
     window.DataList = Backbone.Collection.extend({
         model: Data,
@@ -323,6 +296,7 @@ $(document).ready(function(){
             var drawable = this.drawStat(drawable, 'blank', '#eee', 'En blanco');
             var drawable = this.drawStat(drawable, 'nonvote', '#000', 'Abstención');
             this.setupPaper(drawable);
+            $('#notes').html(ContentStore.getByKey("hola").get("value"));
             var that = this;
             this.advance = function(){ return that.remove("Abstención", function(){ return that.step2();});};
         },
@@ -351,11 +325,6 @@ $(document).ready(function(){
             this.setupPaper(drawable);
             var that = this;
 
-            parvalues = this.dhont();
-
-            this.setupPaper(drawable);
-            var that = this;
-
             this.advance = function(){ return that.step4();};
         },
         step4: function() {
@@ -366,7 +335,7 @@ $(document).ready(function(){
             parvalues = this.dhont();
 
             this.setupPaper(drawable);
-            parliament = this.paper.g.parliament(650, 450, 200, 70, parvalues, {});
+            parliament = this.paper.g.parliament(650, 440, 200, 70, parvalues, {});
             parliament.hover(function () {
                 if (this.label) {
                     this.label[0].stop();
@@ -387,9 +356,65 @@ $(document).ready(function(){
 
         render: function() {
             this.initial();
+
         },
     });
 
     window.App = new DataListView;
+
+    var circunscripciones = {
+        "Burgos": 4,
+        "León": 5,
+        "Palencia": 3,
+        "Salamanca": 4,
+        "Segovia": 3,
+        "Soria": 2,
+        "Valladolid": 5,
+        "Zamora": 3,
+        "Girona": 6,
+        "Lleida": 4,
+        "Tarragona": 6,
+        "Badajoz": 6,
+        "Cáceres": 4,
+        "A Coruña": 8,
+        "Ourense": 4,
+        "Pontevedra": 7,
+        "Madrid": 35,
+        "Navarra": 5,
+        "Álava": 4,
+        "Guipúzcoa": 6,
+        "Vizcaya": 8,
+        "Murcia": 10,
+        "La Rioja": 4,
+        "Alicante / Alacant": 12,
+        "Castellón / Castelló": 5,
+        "Valencia / València": 16,
+        "Ceuta": 1,
+        "Melilla": 1,
+        "Almería": 6,
+        "Cádiz": 9,
+        "Córdoba": 6,
+        "Granada": 7,
+        "Huelva": 5,
+        "Jaén": 6,
+        "Málaga": 10,
+        "Sevilla": 12,
+        "Huesca": 3,
+        "Teruel": 3,
+        "Zaragoza": 7,
+        "Asturias": 8,
+        "Illes Balears": 8,
+        "Las Palmas": 8,
+        "Santa Cruz de Tenerife": 7,
+        "Cantabria": 5,
+        "Albacete": 4,
+        "Ciudad Real": 5,
+        "Cuenca": 3,
+        "Guadalajara": 3,
+        "Toledo": 6,
+        "Ávila": 3,
+        "Barcelona": 31,
+        "Lugo": 4,
+    }
 });
 

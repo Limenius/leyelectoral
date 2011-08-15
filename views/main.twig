@@ -1,5 +1,10 @@
 {% extends "layout.html" %}
 {% block content %}
+
+{% for key, explanation in explanations %}
+<div id="shortcontent-{{key}}" class="shortcontent" style="visibility:hidden">{{ explanation | raw }}</div>
+{% endfor %}
+
 <style type="text/css" media="screen">
 #holder {
   margin: -350px 0 0 -350px;
@@ -12,6 +17,7 @@
 </style>
 <div id="holder">
 <div id="gonext">Next</div>
+<div id="notes"></div>
 </div>
 <script>
 
@@ -56,6 +62,14 @@ $(document).ready(function(){
            statistical: true
         });
     {% endfor %}
+
+
+    $('.shortcontent').each(function(index) {
+        ContentStore.add({
+            key: "hola",
+            value: $(this).text()
+        });
+    });
     DataStore.trigger("redraw");
 });
 
