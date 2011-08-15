@@ -1,6 +1,18 @@
 {% extends "layout.html" %}
 {% block content %}
 <style type="text/css" media="screen">
+body,html{
+  margin:0;
+  background-color: #f4f4f4;
+}
+#header {
+  height: 59px;
+  background: url('views/header.png') repeat-x;
+}
+#logo{
+  height: 50px;
+  background: url('views/logo.png') no-repeat;
+}
 #wrapper {
   width: 1000px;
   margin: 0 auto;
@@ -14,7 +26,9 @@
   margin: -300px 0;
 }
 </style>
+<div id="header"></div>
 <div id="wrapper">
+    <div id="logo"></div>
   <div id="holder">
       <div id="gonext">Next</div>
   </div>
