@@ -335,7 +335,7 @@ $(document).ready(function(){
             parvalues = this.dhont();
 
             this.setupPaper(drawable);
-            parliament = this.paper.g.parliament(650, 440, 200, 70, parvalues, {});
+            parliament = this.paper.g.parliament(190, 720, 200, 70, parvalues, {});
             parliament.hover(function () {
                 if (this.label) {
                     this.label[0].stop();

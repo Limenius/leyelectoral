@@ -135,7 +135,7 @@ Raphael.fn.g.parliament = function (cx, cy, rmax, rmin, values, opts) {
     }
 
     var legend = function(labels, mark, dir){
-        var x = cx + rmax + rmax / 5,
+        var x = cx + rmax + rmax / 3,
             y = cy,
             h = y + 10;
         labels = labels || [];
