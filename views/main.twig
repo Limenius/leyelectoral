@@ -1,20 +1,23 @@
 {% extends "layout.html" %}
 {% block content %}
 <style type="text/css" media="screen">
+#wrapper {
+  width: 1000px;
+  margin: 0 auto;
+}
 #holder {
-  margin: -450px 0 0 -550px;
+  margin: -200px 0;
   width: 1000px;
   height: 700px;
-  left: 50%;
-  position: absolute;
-  top: 50%;
 }
 #gonext {
-  margin: -300px 0 0 0;
+  margin: -300px 0;
 }
 </style>
-<div id="holder">
-<div id="gonext">Next</div>
+<div id="wrapper">
+  <div id="holder">
+      <div id="gonext">Next</div>
+  </div>
 </div>
 <script>
 
