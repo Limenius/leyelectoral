@@ -160,8 +160,8 @@ $(document).ready(function(){
         initialize: function() {
             _.bindAll(this, "render", "remove", "initial", "setupPaper", "goNext", "drawParties", "dhont");
             DataStore.bind('redraw', this.render);
-            this.paper = Raphael("holder", 960, 800);
-            this.cx = 200
+            this.paper = Raphael("holder", 1000, 800);
+            this.cx = 150
             this.cy = 350;
         },
 

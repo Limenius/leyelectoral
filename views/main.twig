@@ -6,18 +6,37 @@
 {% endfor %}
 
 <style type="text/css" media="screen">
+body,html{
+  margin:0;
+  background-color: #f4f4f4;
+}
+#header {
+  height: 59px;
+  background: url('views/header.png') repeat-x;
+}
+#logo{
+  height: 50px;
+  background: url('views/logo.png') no-repeat;
+}
+#wrapper {
+  width: 1000px;
+  margin: 0 auto;
+}
 #holder {
-  margin: -350px 0 0 -350px;
-  width: 700px;
+  margin: -200px 0;
+  width: 1000px;
   height: 700px;
-  left: 50%;
-  position: absolute;
-  top: 50%;
+}
+#gonext {
+  margin: -300px 0;
 }
 </style>
-<div id="holder">
-<div id="gonext">Next</div>
-<div id="notes"></div>
+<div id="header"></div>
+<div id="wrapper">
+    <div id="logo"></div>
+  <div id="holder">
+      <div id="gonext">Next</div>
+  </div>
 </div>
 <script>
 
