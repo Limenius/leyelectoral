@@ -1,10 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
 
-{% for key, explanation in explanations %}
-<div id="shortcontent-{{key}}" class="shortcontent" style="visibility:hidden">{{ explanation | raw }}</div>
-{% endfor %}
-
 <style type="text/css" media="screen">
 body,html{
   margin:0;
@@ -30,18 +26,27 @@ body,html{
 #gonext {
   margin: -300px 0;
 }
+#notes {
+  float: right;
+  width: 500px;
+  height: 300px;
+  margin-right: 20px;
+}
 </style>
 <div id="header"></div>
 <div id="wrapper">
     <div id="logo"></div>
   <div id="holder">
       <div id="gonext">Next</div>
+      <div id="notes">Next</div>
   </div>
 </div>
+
+{% for key, explanation in explanations %}
+<div id="shortcontent-{{key}}" class="shortcontent" style="visibility:hidden">{{ explanation | raw }}</div>
+{% endfor %}
+
 <script>
-
-
-
 $(document).ready(function(){
     {% for provincia, results in votes %}
         DataStore.add({
