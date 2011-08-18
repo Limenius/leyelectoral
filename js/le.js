@@ -154,11 +154,12 @@ $(document).ready(function(){
         el: $("#holder"),
 
         events: {
-            "click #gonext":  "goNext"
+            "click #gonext":  "goNext",
+            "click #goprev":  "goPrev"
         },
 
         initialize: function() {
-            _.bindAll(this, "render", "remove", "initial", "setupPaper", "goNext", "drawParties", "dhont");
+            _.bindAll(this, "render", "remove", "initial", "setupPaper", "goNext", "goPrev", "drawParties", "dhont");
             DataStore.bind('redraw', this.render);
             this.paper = Raphael("holder", 1000, 800);
             this.cx = 150
@@ -167,6 +168,10 @@ $(document).ready(function(){
 
         goNext: function() {
             this.advance();
+        },
+        
+        goPrev: function() {
+            this.goback();
         },
 
 
@@ -178,7 +183,7 @@ $(document).ready(function(){
         setupPaper: function(drawable) {
             this.paper.clear();
             this.paper.g.txtattr.font = "12px 'Fontin Sans', Fontin-Sans, sans-serif";
-            this.pie = this.paper.g.piechart(this.cx, this.cy, 120, drawable['values'], drawable['ids'], {legend: drawable['labels'], legendpos: "east", legendmark: "flower", legendothers: "Otros", colors: drawable['colors'], stroke: '#eee', strokewidth: 1});
+            this.pie = this.paper.g.piechart(this.cx, this.cy, 110, drawable['values'], drawable['ids'], {legend: drawable['labels'], legendpos: "east", legendmark: "flower", legendothers: "Otros", colors: drawable['colors'], stroke: '#eee', strokewidth: 1});
             this.pie.hover(function () {
                 if (this.label) {
                     this.label[0].stop();
@@ -296,9 +301,22 @@ $(document).ready(function(){
             var drawable = this.drawStat(drawable, 'blank', '#eee', 'En blanco');
             var drawable = this.drawStat(drawable, 'nonvote', '#000', 'Abstención');
             this.setupPaper(drawable);
-            $('#notes').html(ContentStore.getByKey("hola").get("value"));
+            $('#notes').html(ContentStore.getByKey("inicial").get("value"));
+            var that = this;
+            this.advance = function(){ return that.step1();};
+            this.goback = function(){ return that.initial();};
+        },
+        
+        step1: function() {
+            var drawable = this.drawParties();
+            var drawable = this.drawStat(drawable, 'invalid', '#444', 'Nulos');
+            var drawable = this.drawStat(drawable, 'blank', '#eee', 'En blanco');
+            var drawable = this.drawStat(drawable, 'nonvote', '#000', 'Abstención');
+            this.setupPaper(drawable);
+            $('#notes').html(ContentStore.getByKey("preabstencion").get("value"));
             var that = this;
             this.advance = function(){ return that.remove("Abstención", function(){ return that.step2();});};
+            this.goback = function(){ return that.initial();};
         },
 
         step2: function() {
@@ -306,18 +324,21 @@ $(document).ready(function(){
             var drawable = this.drawStat(drawable, 'invalid', '#444', 'Nulos');
             var drawable = this.drawStat(drawable, 'blank', '#eee', 'En blanco');
             this.setupPaper(drawable);
+            $('#notes').html(ContentStore.getByKey("abstencion").get("value"));
             var that = this;
 
-            this.advance = function(){ return that.remove("En blanco", function(){ return that.step2bis();});};
+            this.advance = function(){ return that.remove("Nulos", function(){ return that.step2bis();});};
+            this.goback = function(){ return that.step1();};
         },
 
         step2bis: function() {
             var drawable = this.drawParties();
-            var drawable = this.drawStat(drawable, 'invalid', '#444', 'Nulos');
+            var drawable = this.drawStat(drawable, 'blank', '#eee', 'En blanco');
             this.setupPaper(drawable);
+            $('#notes').html(ContentStore.getByKey("nulos").get("value"));
             var that = this;
 
-            this.remove("Nulos", function(){that.step3()});
+            this.remove("En blanco", function(){that.step3()});
         },
 
         step3: function() {
@@ -326,8 +347,18 @@ $(document).ready(function(){
             var that = this;
 
             this.advance = function(){ return that.step4();};
+            this.goback = function(){ return that.step2();};
         },
         step4: function() {
+            var drawable = this.drawParties();
+            this.setupPaper(drawable);
+            $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
+            var that = this;
+
+            this.advance = function(){ return that.step5();};
+            this.goback = function(){ return that.step3();};
+        },
+        step5: function() {
             var drawable = this.drawParties();
             this.setupPaper(drawable);
             var that = this;
@@ -335,6 +366,30 @@ $(document).ready(function(){
             parvalues = this.dhont();
 
             this.setupPaper(drawable);
+            $('#notes').html(ContentStore.getByKey("postparliament").get("value"));
+            parliament = this.paper.g.parliament(160, 650, 170, 50, parvalues, {});
+            parliament.hover(function () {
+                if (this.label) {
+                    this.label[0].stop();
+                    this.label[0].scale(1.5);
+                    this.label[1].attr({"font-weight": 800});
+                }
+            },
+            function () {
+                if (this.label) {
+                    this.label[0].animate({scale: 1}, 500, "bounce");
+                    this.label[1].attr({"font-weight": 400});
+                }
+            });
+            var that = this;
+
+            this.advance = function(){ return that.step6();};
+            this.goback = function(){ return that.step4();};
+        },
+        step6: function() {
+            var drawable = this.drawParties();
+            this.setupPaper(drawable);
+            $('#notes').html(ContentStore.getByKey("conclusiones").get("value"));
             parliament = this.paper.g.parliament(190, 720, 200, 70, parvalues, {});
             parliament.hover(function () {
                 if (this.label) {
@@ -351,7 +406,31 @@ $(document).ready(function(){
             });
             var that = this;
 
-            this.advance = function(){ return that.step4s();};
+            this.advance = function(){ return that.stepFin();};
+            this.goback = function(){ return that.step5();};
+        },
+        stepFin: function() {
+            var drawable = this.drawParties();
+            this.setupPaper(drawable);
+            $('#notes').html(ContentStore.getByKey("fin").get("value"));
+            parliament = this.paper.g.parliament(190, 720, 200, 70, parvalues, {});
+            parliament.hover(function () {
+                if (this.label) {
+                    this.label[0].stop();
+                    this.label[0].scale(1.5);
+                    this.label[1].attr({"font-weight": 800});
+                }
+            },
+            function () {
+                if (this.label) {
+                    this.label[0].animate({scale: 1}, 500, "bounce");
+                    this.label[1].attr({"font-weight": 400});
+                }
+            });
+            var that = this;
+
+            this.advance = function(){ return that.stepFin();};
+            this.goback = function(){ return that.step6();};
         },
 
         render: function() {

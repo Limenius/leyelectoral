@@ -5,6 +5,7 @@
 body,html{
   margin:0;
   background-color: #f4f4f4;
+  font-family: "Trebuchet MS";
 }
 #header {
   height: 59px;
@@ -19,26 +20,38 @@ body,html{
   margin: 0 auto;
 }
 #holder {
-  margin: -200px 0;
+  margin: -215px 0;
   width: 1000px;
   height: 700px;
 }
+#chartbuttons{
+  margin: -340px 0;
+  width: 100px;
+}
 #gonext {
-  margin: -300px 0;
+  width: 50px;
+  cursor: pointer;
+}
+#goprev {
+  width: 50px;
+  cursor: pointer;
 }
 #notes {
   float: right;
   width: 500px;
   height: 300px;
-  margin-right: 20px;
+  margin: 55px 20px 0 0;
 }
 </style>
 <div id="header"></div>
 <div id="wrapper">
     <div id="logo"></div>
   <div id="holder">
-      <div id="gonext">Next</div>
-      <div id="notes">Next</div>
+      <div id="chartbuttons">
+        <div id="gonext">>></div>
+        <div id="goprev"><<</div>
+      </div>
+      <div id="notes"></div>
   </div>
 </div>
 
@@ -90,8 +103,8 @@ $(document).ready(function(){
 
     $('.shortcontent').each(function(index) {
         ContentStore.add({
-            key: "hola",
-            value: $(this).text()
+            key: $(this).attr('id').replace("shortcontent-", ""),
+            value: $(this).html()
         });
     });
     DataStore.trigger("redraw");
