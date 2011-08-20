@@ -1,4 +1,4 @@
-Ahora la tarta está compuesta solo por los votos válidos que respaldan a algún partido. Es el momento de transformar esos votos en escaños. Actualmente esa transformación se realiza siguiendo las siguientes reglas:
+La tarta está compuesta solo por los votos válidos que respaldan a algún partido. Es el momento de transformar los votos en escaños. Actualmente esa transformación sigue las siguientes reglas:
 
 * La circunscripción es la provincia.
 * Hay 350 escaños en el Congreso.

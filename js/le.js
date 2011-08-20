@@ -298,7 +298,7 @@ $(document).ready(function(){
         initial: function() {
             var drawable = this.drawParties();
             var drawable = this.drawStat(drawable, 'invalid', '#444', 'Nulos');
-            var drawable = this.drawStat(drawable, 'blank', '#eee', 'En blanco');
+            var drawable = this.drawStat(drawable, 'blank', '#fff', 'En blanco');
             var drawable = this.drawStat(drawable, 'nonvote', '#000', 'Abstención');
             this.setupPaper(drawable);
             $('#notes').html(ContentStore.getByKey("inicial").get("value"));
@@ -367,7 +367,7 @@ $(document).ready(function(){
 
             this.setupPaper(drawable);
             $('#notes').html(ContentStore.getByKey("postparliament").get("value"));
-            parliament = this.paper.g.parliament(160, 650, 170, 50, parvalues, {});
+            parliament = this.paper.g.parliament(640, 680, 170, 50, parvalues, {});
             parliament.hover(function () {
                 if (this.label) {
                     this.label[0].stop();
