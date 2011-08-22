@@ -183,7 +183,7 @@ $(document).ready(function(){
         setupPaper: function(drawable) {
             this.paper.clear();
             this.paper.g.txtattr.font = "12px 'Fontin Sans', Fontin-Sans, sans-serif";
-            this.pie = this.paper.g.piechart(this.cx, this.cy, 110, drawable['values'], drawable['ids'], {legend: drawable['labels'], legendpos: "east", legendmark: "flower", legendothers: "Otros", colors: drawable['colors'], stroke: '#eee', strokewidth: 1});
+            this.pie = this.paper.g.piechart(this.cx, this.cy, 110, drawable['values'], drawable['ids'], {legend: drawable['labels'], legendpos: "east", legendmark: "flower", legendothers: "Otros", colors: drawable['colors'], stroke: '#d4d4d4', strokewidth: 1});
             this.pie.hover(function () {
                 if (this.label) {
                     this.label[0].stop();

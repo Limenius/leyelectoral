@@ -20,37 +20,44 @@ body,html{
   margin: 0 auto;
 }
 #holder {
+  float: left;
   margin: -215px 0;
   width: 1000px;
   height: 700px;
 }
-#chartbuttons{
-  margin: -340px 0;
-  width: 100px;
-}
 #gonext {
-  width: 50px;
+  width: 30px;
   cursor: pointer;
+  margin: -610px 0 0 540px;
 }
 #goprev {
-  width: 50px;
+  width: 30px;
   cursor: pointer;
+  margin: -20px 0 0 500px;
 }
 #notes {
   float: right;
   width: 500px;
   height: 280px;
-  margin: 45px 20px 0 0;
+  margin: 0;
+}
+#piebackground {
+  width: 440px;
+  height: 280px;
+  float:left;
+  margin: -585px 0 0 0;
+  background-color: #969696;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;  
 }
 </style>
 <div id="header"></div>
 <div id="wrapper">
     <div id="logo"></div>
   <div id="holder">
-      <div id="chartbuttons">
-        <div id="gonext">>></div>
-        <div id="goprev"><<</div>
-      </div>
+      <div id="gonext">>></div>
+      <div id="goprev"><<</div>
       <div id="notes"></div>
   </div>
 </div>
