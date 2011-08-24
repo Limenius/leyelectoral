@@ -1,4 +1,4 @@
-Es el momento de transformar votos en escaños. Actualmente esa transformación sigue las siguientes reglas:
+Actualmente esa transformación sigue las siguientes reglas:
 
 * La circunscripción es la provincia.
 * Hay 350 escaños en el congreso.

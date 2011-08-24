@@ -340,16 +340,18 @@ $(document).ready(function(){
             $('#notes').html(ContentStore.getByKey("nulos").get("value"));
             var that = this;
 
-            this.remove("En blanco", function(){that.step3()});
+            this.advance = function(){ return that.remove("En blanco", function(){ return that.step3();});};
+            this.goback = function(){ return that.step2();};
         },
 
         step3: function() {
             var drawable = this.drawParties();
             this.setupPaper(drawable);
+            $('#notes').html(ContentStore.getByKey("enblanco").get("value"));
             var that = this;
 
             this.advance = function(){ return that.step4();};
-            this.goback = function(){ return that.step2();};
+            this.goback = function(){ return that.step2bis();};
         },
         step4: function() {
             var drawable = this.drawParties();
@@ -371,7 +373,7 @@ $(document).ready(function(){
             this.setupPaper(drawable);
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
             $('#notes2').html(ContentStore.getByKey("postparliament1").get("value"));
-            parliament = this.paper.g.parliament(660, 675, 170, 50, parvalues, {});
+            parliament = this.paper.g.parliament(630, 675, 170, 50, parvalues, {});
             parliament.hover(function () {
                 if (this.label) {
                     this.label[0].stop();
@@ -397,7 +399,7 @@ $(document).ready(function(){
             $('#notes2').html(ContentStore.getByKey("conclusiones").get("value"));
             $('#gonext').css("color","#000");
             $('#gonext').css("cursor","pointer");
-            parliament = this.paper.g.parliament(660, 675, 170, 50, parvalues, {});
+            parliament = this.paper.g.parliament(630, 675, 170, 50, parvalues, {});
             parliament.hover(function () {
                 if (this.label) {
                     this.label[0].stop();
@@ -423,7 +425,7 @@ $(document).ready(function(){
             $('#notes2').html(ContentStore.getByKey("fin").get("value"));
             $('#gonext').css("color","#f4f4f4");
             $('#gonext').css("cursor","default");
-            parliament = this.paper.g.parliament(660, 675, 170, 50, parvalues, {});
+            parliament = this.paper.g.parliament(630, 675, 170, 50, parvalues, {});
             parliament.hover(function () {
                 if (this.label) {
                     this.label[0].stop();

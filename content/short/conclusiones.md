@@ -23,4 +23,4 @@ Estos son los votos que cuesta un escaño a cada partido:
 </tr>
 </table>
 
-A IU un escaño le cuesta 9 veces más que al PNV y 7 veces más que al PP o al PSOE. A UPyD el escaño le cuesta 6 veces más que al PNV y 4 más que a PP o PSOE.
+Los partidos más perjudicados son los partidos minoritarios con votantes dispersos geográficamente.
