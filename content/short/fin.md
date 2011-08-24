@@ -1,1 +1,3 @@
-Fin
+A lo largo de los últimos años se han ido proponiendo diversas reformas que tratan de mejorar la forma de traducir los votos a escaños. 
+
+A continuación mostramos los resultados que se obtendrían con algunas de esas propuestas.

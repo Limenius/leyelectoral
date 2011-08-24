@@ -302,6 +302,7 @@ $(document).ready(function(){
             var drawable = this.drawStat(drawable, 'nonvote', '#000', 'Abstención');
             this.setupPaper(drawable);
             $('#notes').html(ContentStore.getByKey("inicial").get("value"));
+            $('#goprev').hide();
             var that = this;
             this.advance = function(){ return that.step1();};
             this.goback = function(){ return that.initial();};
@@ -314,6 +315,7 @@ $(document).ready(function(){
             var drawable = this.drawStat(drawable, 'nonvote', '#000', 'Abstención');
             this.setupPaper(drawable);
             $('#notes').html(ContentStore.getByKey("preabstencion").get("value"));
+            $('#goprev').show();
             var that = this;
             this.advance = function(){ return that.remove("Abstención", function(){ return that.step2();});};
             this.goback = function(){ return that.initial();};
@@ -353,6 +355,7 @@ $(document).ready(function(){
             var drawable = this.drawParties();
             this.setupPaper(drawable);
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
+            $('#notes2').html(ContentStore.getByKey("blank").get("value"));
             var that = this;
 
             this.advance = function(){ return that.step5();};
@@ -366,8 +369,9 @@ $(document).ready(function(){
             parvalues = this.dhont();
 
             this.setupPaper(drawable);
-            $('#notes').html(ContentStore.getByKey("postparliament").get("value"));
-            parliament = this.paper.g.parliament(640, 680, 170, 50, parvalues, {});
+            $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
+            $('#notes2').html(ContentStore.getByKey("postparliament1").get("value"));
+            parliament = this.paper.g.parliament(660, 675, 170, 50, parvalues, {});
             parliament.hover(function () {
                 if (this.label) {
                     this.label[0].stop();
@@ -389,8 +393,11 @@ $(document).ready(function(){
         step6: function() {
             var drawable = this.drawParties();
             this.setupPaper(drawable);
-            $('#notes').html(ContentStore.getByKey("conclusiones").get("value"));
-            parliament = this.paper.g.parliament(190, 720, 200, 70, parvalues, {});
+            $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
+            $('#notes2').html(ContentStore.getByKey("conclusiones").get("value"));
+            $('#gonext').css("color","#000");
+            $('#gonext').css("cursor","pointer");
+            parliament = this.paper.g.parliament(660, 675, 170, 50, parvalues, {});
             parliament.hover(function () {
                 if (this.label) {
                     this.label[0].stop();
@@ -412,8 +419,11 @@ $(document).ready(function(){
         stepFin: function() {
             var drawable = this.drawParties();
             this.setupPaper(drawable);
-            $('#notes').html(ContentStore.getByKey("fin").get("value"));
-            parliament = this.paper.g.parliament(190, 720, 200, 70, parvalues, {});
+            $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
+            $('#notes2').html(ContentStore.getByKey("fin").get("value"));
+            $('#gonext').css("color","#f4f4f4");
+            $('#gonext').css("cursor","default");
+            parliament = this.paper.g.parliament(660, 675, 170, 50, parvalues, {});
             parliament.hover(function () {
                 if (this.label) {
                     this.label[0].stop();
