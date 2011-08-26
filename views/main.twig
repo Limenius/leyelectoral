@@ -27,39 +27,75 @@ body,html{
   width: 960px;
   height: 700px;
 }
-#gonext {
+.gonext {
   width: 10px;
   cursor: pointer;
-  margin: -610px 0 0 925px;
+}
+.goprev {
+  width: 10px;
+  cursor: pointer;
+}
+#gonext {
+  margin: -595px 0 0 925px;
 }
 #goprev {
-  width: 10px;
-  cursor: pointer;
   margin: -20px 0 0 895px;
+}
+#gonext2 {
+  margin: 240px 0 0 413px;
+}
+#goprev2 {
+  margin: -20px 0 0 383px;
 }
 #notes {
   float: right;
   width: 470px;
   height: 280px;
-  margin-top: 10px;
   padding-right: 20px;
+  margin-top: -5px;
 }
 #notes2 {
   clear: left;
   width: 430px;
-  height: 280px;
-  padding-top: 2px;
+  height: 220px;
+  padding-top: 1px;
+}
+#notes3 {
+  height: 50px;
+}
+#reform1 {
+  height: 200px;
+}
+.reformrules {
+  float:left;
+  width: 450px;
+}
+.reformparlament {
+  float:left;
+  width: 450px;
+  height: 200px;
+}
+.reformresults {
+  float:left;
+  width: 130px;
+}
+h2{
+  margin-bottom: 0;
 }
 </style>
 <div id="header"></div>
 <div id="wrapper">
     <div id="logo"></div>
   <div id="holder">
-      <div id="gonext">>></div>
-      <div id="goprev"><<</div>
+      <div class="gonext" id="gonext">>></div>
+      <div class="goprev" id="goprev"><<</div>
       <div id="notes"></div>
+      <div class="gonext" id="gonext2">>></div>
+      <div class="goprev" id="goprev2"><<</div>
   </div>
   <div id="notes2"></div>
+  <div id="notes3"></div>
+  <div id="reform1"></div>
 </div>
 
 {% for key, explanation in explanations %}

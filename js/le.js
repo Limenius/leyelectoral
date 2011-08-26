@@ -154,8 +154,8 @@ $(document).ready(function(){
         el: $("#holder"),
 
         events: {
-            "click #gonext":  "goNext",
-            "click #goprev":  "goPrev"
+            "click .gonext":  "goNext",
+            "click .goprev":  "goPrev"
         },
 
         initialize: function() {
@@ -301,8 +301,14 @@ $(document).ready(function(){
             var drawable = this.drawStat(drawable, 'blank', '#fff', 'En blanco');
             var drawable = this.drawStat(drawable, 'nonvote', '#000', 'Abstención');
             this.setupPaper(drawable);
-            $('#notes').html(ContentStore.getByKey("inicial").get("value"));
+            $('#gonext').hide();
             $('#goprev').hide();
+            $('#goprev2').hide();
+            $('#gonext2').hide();
+            $('#notes').hide('fast', function(){
+                $('#notes').html(ContentStore.getByKey("inicial").get("value")).fadeIn(2000);
+                $('#gonext').fadeIn(2000);
+            });
             var that = this;
             this.advance = function(){ return that.step1();};
             this.goback = function(){ return that.initial();};
@@ -314,8 +320,10 @@ $(document).ready(function(){
             var drawable = this.drawStat(drawable, 'blank', '#eee', 'En blanco');
             var drawable = this.drawStat(drawable, 'nonvote', '#000', 'Abstención');
             this.setupPaper(drawable);
-            $('#notes').html(ContentStore.getByKey("preabstencion").get("value"));
-            $('#goprev').show();
+            $('#notes').fadeOut(300, function(){
+                $('#notes').html(ContentStore.getByKey("preabstencion").get("value")).fadeIn(1500);
+                $('#goprev').fadeIn(1500);
+            });
             var that = this;
             this.advance = function(){ return that.remove("Abstención", function(){ return that.step2();});};
             this.goback = function(){ return that.initial();};
@@ -326,7 +334,9 @@ $(document).ready(function(){
             var drawable = this.drawStat(drawable, 'invalid', '#444', 'Nulos');
             var drawable = this.drawStat(drawable, 'blank', '#eee', 'En blanco');
             this.setupPaper(drawable);
-            $('#notes').html(ContentStore.getByKey("abstencion").get("value"));
+            $('#notes').fadeOut(300, function(){
+                $('#notes').html(ContentStore.getByKey("abstencion").get("value")).fadeIn(1500);
+            });
             var that = this;
 
             this.advance = function(){ return that.remove("Nulos", function(){ return that.step2bis();});};
@@ -337,7 +347,9 @@ $(document).ready(function(){
             var drawable = this.drawParties();
             var drawable = this.drawStat(drawable, 'blank', '#eee', 'En blanco');
             this.setupPaper(drawable);
-            $('#notes').html(ContentStore.getByKey("nulos").get("value"));
+            $('#notes').fadeOut(300, function(){
+                $('#notes').html(ContentStore.getByKey("nulos").get("value")).fadeIn(1500);
+            });
             var that = this;
 
             this.advance = function(){ return that.remove("En blanco", function(){ return that.step3();});};
@@ -347,7 +359,9 @@ $(document).ready(function(){
         step3: function() {
             var drawable = this.drawParties();
             this.setupPaper(drawable);
-            $('#notes').html(ContentStore.getByKey("enblanco").get("value"));
+            $('#notes').fadeOut(300, function(){
+                $('#notes').html(ContentStore.getByKey("enblanco").get("value")).fadeIn(1500);
+            });
             var that = this;
 
             this.advance = function(){ return that.step4();};
@@ -356,8 +370,12 @@ $(document).ready(function(){
         step4: function() {
             var drawable = this.drawParties();
             this.setupPaper(drawable);
-            $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
-            $('#notes2').html(ContentStore.getByKey("blank").get("value"));
+            $('#notes').fadeOut(300, function(){
+                $('#notes').html(ContentStore.getByKey("preparliament").get("value")).fadeIn(1500);
+                $('#notes2').html(ContentStore.getByKey("blank").get("value")).fadeIn(1500);
+                $('#goprev2').hide();
+                $('#gonext2').hide();
+            });
             var that = this;
 
             this.advance = function(){ return that.step5();};
@@ -372,8 +390,14 @@ $(document).ready(function(){
 
             this.setupPaper(drawable);
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
-            $('#notes2').html(ContentStore.getByKey("postparliament1").get("value"));
-            parliament = this.paper.g.parliament(630, 675, 170, 50, parvalues, {});
+            $('#notes2').hide('fast', function(){
+                $('#notes2').html(ContentStore.getByKey("postparliament1").get("value")).fadeIn(1500);
+                $('#goprev2').fadeIn(1500);
+                $('#notes2').fadeIn(1500);
+                $('#gonext2').fadeIn(1500);
+            
+            });
+            parliament = this.paper.g.parliament(630, 680, 170, 50, parvalues, {});
             parliament.hover(function () {
                 if (this.label) {
                     this.label[0].stop();
@@ -396,10 +420,11 @@ $(document).ready(function(){
             var drawable = this.drawParties();
             this.setupPaper(drawable);
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
-            $('#notes2').html(ContentStore.getByKey("conclusiones").get("value"));
-            $('#gonext').css("color","#000");
-            $('#gonext').css("cursor","pointer");
-            parliament = this.paper.g.parliament(630, 675, 170, 50, parvalues, {});
+            $('#notes3').html(ContentStore.getByKey("blank").get("value"));
+            $('#notes2').fadeOut(300, function(){
+                $('#notes2').html(ContentStore.getByKey("conclusiones").get("value")).fadeIn(1500);
+            });
+            parliament = this.paper.g.parliament(630, 680, 170, 50, parvalues, {});
             parliament.hover(function () {
                 if (this.label) {
                     this.label[0].stop();
@@ -422,10 +447,39 @@ $(document).ready(function(){
             var drawable = this.drawParties();
             this.setupPaper(drawable);
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
-            $('#notes2').html(ContentStore.getByKey("fin").get("value"));
-            $('#gonext').css("color","#f4f4f4");
-            $('#gonext').css("cursor","default");
-            parliament = this.paper.g.parliament(630, 675, 170, 50, parvalues, {});
+            $('#notes2').html(ContentStore.getByKey("conclusiones").get("value"));
+            $('#notes3').hide('fast', function(){
+                $('#notes3').html(ContentStore.getByKey("fin").get("value")).fadeIn(1500);
+            });
+            parliament = this.paper.g.parliament(630, 680, 170, 50, parvalues, {});
+            parliament.hover(function () {
+                if (this.label) {
+                    this.label[0].stop();
+                    this.label[0].scale(1.5);
+                    this.label[1].attr({"font-weight": 800});
+                }
+            },
+            function () {
+                if (this.label) {
+                    this.label[0].animate({scale: 1}, 500, "bounce");
+                    this.label[1].attr({"font-weight": 400});
+                }
+            });
+            var that = this;
+
+            this.advance = function(){ return that.stepReform1();};
+            this.goback = function(){ return that.step6();};
+        },
+        stepReform1: function() {
+            var drawable = this.drawParties();
+            this.setupPaper(drawable);
+            $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
+            $('#notes2').html(ContentStore.getByKey("conclusiones").get("value"));
+            $('#notes3').html(ContentStore.getByKey("fin").get("value"));
+            $('#reform1').hide('fast', function(){
+                $('#reform1').html(ContentStore.getByKey("reforma1").get("value")).fadeIn(1500);
+            });
+            parliament = this.paper.g.parliament(630, 680, 170, 50, parvalues, {});
             parliament.hover(function () {
                 if (this.label) {
                     this.label[0].stop();
@@ -442,7 +496,7 @@ $(document).ready(function(){
             var that = this;
 
             this.advance = function(){ return that.stepFin();};
-            this.goback = function(){ return that.step6();};
+            this.goback = function(){ return that.stepReform1();};
         },
 
         render: function() {
