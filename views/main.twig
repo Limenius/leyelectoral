@@ -25,7 +25,7 @@ body,html{
   float: left;
   margin: -215px 0;
   width: 960px;
-  height: 700px;
+  height: 1700px;
 }
 .gonext {
   width: 10px;
@@ -36,7 +36,7 @@ body,html{
   cursor: pointer;
 }
 #gonext {
-  margin: -595px 0 0 925px;
+  margin: -995px 0 0 925px;
 }
 #goprev {
   margin: -20px 0 0 895px;
@@ -46,6 +46,13 @@ body,html{
 }
 #goprev2 {
   margin: -20px 0 0 383px;
+}
+#golast {
+  position: absolute;
+  width: 10px;
+  top: 10px;
+  left: 10px;
+  cursor: pointer;
 }
 #notes {
   float: right;
@@ -65,6 +72,7 @@ body,html{
 }
 #reform1 {
   height: 200px;
+  width: 450px;
 }
 .reformrules {
   float:left;
@@ -92,10 +100,10 @@ h2{
       <div id="notes"></div>
       <div class="gonext" id="gonext2">>></div>
       <div class="goprev" id="goprev2"><<</div>
+      <div id="notes2"></div>
+      <div id="notes3"></div>
+      <div id="reform1"></div>
   </div>
-  <div id="notes2"></div>
-  <div id="notes3"></div>
-  <div id="reform1"></div>
 </div>
 
 {% for key, explanation in explanations %}

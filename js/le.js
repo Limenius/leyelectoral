@@ -155,14 +155,15 @@ $(document).ready(function(){
 
         events: {
             "click .gonext":  "goNext",
-            "click .goprev":  "goPrev"
+            "click .goprev":  "goPrev",
+            "click #golast":  "goLast",
         },
 
         initialize: function() {
-            _.bindAll(this, "render", "remove", "initial", "setupPaper", "goNext", "goPrev", "drawParties", "dhont");
+            _.bindAll(this, "render", "remove", "initial", "setupPaper", "goNext", "goPrev", "goLast", "drawParties", "dhont");
             DataStore.bind('redraw', this.render);
-            this.paper = Raphael("holder", 1000, 800);
-            this.cx = 150
+            this.paper = Raphael("holder", 1000, 1200);
+            this.cx = 150;
             this.cy = 350;
         },
 
@@ -172,6 +173,10 @@ $(document).ready(function(){
         
         goPrev: function() {
             this.goback();
+        },
+        
+        goLast: function() {
+            this.golast();
         },
 
 
@@ -262,6 +267,68 @@ $(document).ready(function(){
 
         },
 
+        hare: function() {
+            var electedseats = [];
+            DataStore.each(function(prov){
+                if(prov.get('provincia') !== 'total') {
+                    var total = 0;
+                    _.each(prov.rows, function(row) {
+                        if(!row.get("statistical") || row.get('oid') === 'invalid' || row.get('oid') === 'blank') {
+                            total += row.get("amount");
+                        }
+                    });
+                    var minval = total*0.03;
+                    var parties = _.reject(prov.rows, function(row) {
+                        return row.get("amount") < minval || row.get("statistical") === true;
+                    });
+                    var possiblepar = [];
+                    _.each(parties, function(party){
+                        if (!party.get("statistical")) {
+                            for (var i = 1; i <= circunscripciones1[prov.get('provincia')]; i++) {
+                                possiblepar.push({
+                                    value : party.get("amount") / i,
+                                    color : party.get("color"),
+                                    oid   : party.get("oid"),
+                                    label : party.get("label"),
+                                });
+                            };
+                        }
+                    });
+                    possiblepar = _.sortBy(possiblepar, function(res) {
+                        return res["value"];
+                    }).reverse();
+
+                    for (var i = 0; i < circunscripciones1[prov.get('provincia')]; i++) {
+                        electedseats.push({
+                            value: possiblepar[i]['value'],
+                            color: possiblepar[i]['color'],
+                            oid  : possiblepar[i]['oid'],
+                            label: possiblepar[i]['label'],
+                        });
+                    };
+                }
+            });
+
+            var varpar = [];
+            for (var i = 0; i < electedseats.length; i++) {
+                thisvarpar = _.detect(varpar, function(party) {
+                    return party['oid'] === electedseats[i]['oid'];
+                });
+                if (thisvarpar){
+                    thisvarpar['value'] ++;
+                } else {
+                    varpar.push({
+                        'oid' :electedseats[i]['oid'],
+                        'value' : 1,
+                        'color': electedseats[i]['color'],
+                        'label': electedseats[i]['label']
+                    });
+                }
+            };
+
+            return _.sortBy(varpar,function (party) { return party['value']; }).reverse();
+
+        },
 
         drawParties: function() {
             var drawable = {
@@ -306,12 +373,13 @@ $(document).ready(function(){
             $('#goprev2').hide();
             $('#gonext2').hide();
             $('#notes').hide('fast', function(){
-                $('#notes').html(ContentStore.getByKey("inicial").get("value")).fadeIn(2000);
-                $('#gonext').fadeIn(2000);
+                $('#notes').html(ContentStore.getByKey("inicial").get("value")).fadeIn(2500);
+                $('#gonext').fadeIn(2500);
             });
             var that = this;
             this.advance = function(){ return that.step1();};
             this.goback = function(){ return that.initial();};
+            this.golast = function(){ return that.stepReform1();};
         },
         
         step1: function() {
@@ -388,7 +456,6 @@ $(document).ready(function(){
 
             parvalues = this.dhont();
 
-            this.setupPaper(drawable);
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
             $('#notes2').hide('fast', function(){
                 $('#notes2').html(ContentStore.getByKey("postparliament1").get("value")).fadeIn(1500);
@@ -473,6 +540,7 @@ $(document).ready(function(){
         stepReform1: function() {
             var drawable = this.drawParties();
             this.setupPaper(drawable);
+            parvalues2 = this.hare();
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
             $('#notes2').html(ContentStore.getByKey("conclusiones").get("value"));
             $('#notes3').html(ContentStore.getByKey("fin").get("value"));
@@ -480,7 +548,8 @@ $(document).ready(function(){
                 $('#reform1').html(ContentStore.getByKey("reforma1").get("value")).fadeIn(1500);
             });
             parliament = this.paper.g.parliament(630, 680, 170, 50, parvalues, {});
-            parliament.hover(function () {
+            parliament2 = this.paper.g.parliament(630, 1030, 170, 50, parvalues2, {});
+            parliament2.hover(function () {
                 if (this.label) {
                     this.label[0].stop();
                     this.label[0].scale(1.5);
@@ -560,6 +629,60 @@ $(document).ready(function(){
         "Ávila": 3,
         "Barcelona": 31,
         "Lugo": 4,
-    }
+    };
+    var circunscripciones1 = {
+        "Burgos": 4,
+        "León": 5,
+        "Palencia": 2,
+        "Salamanca": 4,
+        "Segovia": 2,
+        "Soria": 2,
+        "Valladolid": 5,
+        "Zamora": 2,
+        "Girona": 6,
+        "Lleida": 4,
+        "Tarragona": 7,
+        "Badajoz": 6,
+        "Cáceres": 4,
+        "A Coruña": 10,
+        "Ourense": 4,
+        "Pontevedra": 8,
+        "Madrid": 48,
+        "Navarra": 6,
+        "Álava": 3,
+        "Guipúzcoa": 6,
+        "Vizcaya": 10,
+        "Murcia": 12,
+        "La Rioja": 3,
+        "Alicante / Alacant": 15,
+        "Castellón / Castelló": 5,
+        "Valencia / València": 20,
+        "Ceuta": 2,
+        "Melilla": 2,
+        "Almería": 6,
+        "Cádiz": 10,
+        "Córdoba": 7,
+        "Granada": 8,
+        "Huelva": 5,
+        "Jaén": 6,
+        "Málaga": 13,
+        "Sevilla": 15,
+        "Huesca": 3,
+        "Teruel": 2,
+        "Zaragoza": 8,
+        "Asturias": 9,
+        "Illes Balears": 9,
+        "Las Palmas": 9,
+        "Santa Cruz de Tenerife": 9,
+        "Cantabria": 5,
+        "Albacete": 4,
+        "Ciudad Real": 5,
+        "Cuenca": 3,
+        "Guadalajara": 3,
+        "Toledo": 6,
+        "Ávila": 2,
+        "Barcelona": 42,
+        "Lugo": 4,
+    };
 });
 
