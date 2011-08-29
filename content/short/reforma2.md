@@ -1,11 +1,10 @@
-Propuesta de reforma 1
+Propuesta de reforma 2
 ----------------------
 
 <div class="reformrules">
 <ul>
 <li>Se aumenta de 350 a 400 diputados</li>
-<li>Solo un diputado mínimo por provincia, en lugar de dos</li>
-<li>Se reparte con la ley de Hare, en vez de Hont</li>
+<li>Los 50 escaños adicionales van a los partidos con más votos "sobrantes" (votos que aún no han servido para conseguir escaño)</li>
 </ul>
 <table style="margin: 5px 10px;">
 <tr>

@@ -162,7 +162,7 @@ $(document).ready(function(){
         initialize: function() {
             _.bindAll(this, "render", "remove", "initial", "setupPaper", "goNext", "goPrev", "goLast", "drawParties", "dhont");
             DataStore.bind('redraw', this.render);
-            this.paper = Raphael("holder", 1000, 1200);
+            this.paper = Raphael("holder", 1000, 1600);
             this.cx = 150;
             this.cy = 350;
         },
@@ -281,31 +281,44 @@ $(document).ready(function(){
                     var parties = _.reject(prov.rows, function(row) {
                         return row.get("amount") < minval || row.get("statistical") === true;
                     });
+                    var quota = Math.floor(total/circunscripciones1[prov.get('provincia')]);
                     var possiblepar = [];
+                    var assigned = 0;
                     _.each(parties, function(party){
                         if (!party.get("statistical")) {
-                            for (var i = 1; i <= circunscripciones1[prov.get('provincia')]; i++) {
-                                possiblepar.push({
-                                    value : party.get("amount") / i,
-                                    color : party.get("color"),
-                                    oid   : party.get("oid"),
-                                    label : party.get("label"),
+                            var inquota = Math.floor(party.get("amount") / quota);
+                            for (var i = 0; i < inquota; i++) {
+                                electedseats.push({
+                                    value: party.get('value'),
+                                    color: party.get('color'),
+                                    oid  : party.get('oid'),
+                                    label: party.get('label'),
                                 });
+                                assigned = assigned + 1;
                             };
+
+                            possiblepar.push({
+                                value: party.get("amount") % quota,
+                                color: party.get('color'),
+                                oid  : party.get('oid'),
+                                label: party.get('label'),
+                            });
+
+                            
                         }
                     });
                     possiblepar = _.sortBy(possiblepar, function(res) {
                         return res["value"];
                     }).reverse();
 
-                    for (var i = 0; i < circunscripciones1[prov.get('provincia')]; i++) {
+                    for (var i = 0; i < circunscripciones1[prov.get('provincia')] -assigned; i++) {
                         electedseats.push({
                             value: possiblepar[i]['value'],
                             color: possiblepar[i]['color'],
                             oid  : possiblepar[i]['oid'],
                             label: possiblepar[i]['label'],
                         });
-                    };
+                    }
                 }
             });
 
@@ -379,7 +392,7 @@ $(document).ready(function(){
             var that = this;
             this.advance = function(){ return that.step1();};
             this.goback = function(){ return that.initial();};
-            this.golast = function(){ return that.stepReform1();};
+            this.goLast = function(){ return that.stepReform1();};
         },
         
         step1: function() {
@@ -540,6 +553,7 @@ $(document).ready(function(){
         stepReform1: function() {
             var drawable = this.drawParties();
             this.setupPaper(drawable);
+            parvalues = this.dhont();
             parvalues2 = this.hare();
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
             $('#notes2').html(ContentStore.getByKey("conclusiones").get("value"));
@@ -548,7 +562,20 @@ $(document).ready(function(){
                 $('#reform1').html(ContentStore.getByKey("reforma1").get("value")).fadeIn(1500);
             });
             parliament = this.paper.g.parliament(630, 680, 170, 50, parvalues, {});
-            parliament2 = this.paper.g.parliament(630, 1030, 170, 50, parvalues2, {});
+            parliament2 = this.paper.g.parliament(630, 1080, 170, 50, parvalues2, {});
+            parliament.hover(function () {
+                if (this.label) {
+                    this.label[0].stop();
+                    this.label[0].scale(1.5);
+                    this.label[1].attr({"font-weight": 800});
+                }
+            },
+            function () {
+                if (this.label) {
+                    this.label[0].animate({scale: 1}, 500, "bounce");
+                    this.label[1].attr({"font-weight": 400});
+                }
+            });
             parliament2.hover(function () {
                 if (this.label) {
                     this.label[0].stop();
@@ -564,7 +591,66 @@ $(document).ready(function(){
             });
             var that = this;
 
-            this.advance = function(){ return that.stepFin();};
+            this.advance = function(){ return that.stepReform2();};
+            this.goback = function(){ return that.stepFin();};
+        },
+        stepReform2: function() {
+            var drawable = this.drawParties();
+            this.setupPaper(drawable);
+            parvalues = this.dhont();
+            parvalues2 = this.hare();
+            $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
+            $('#notes2').html(ContentStore.getByKey("conclusiones").get("value"));
+            $('#notes3').html(ContentStore.getByKey("fin").get("value"));
+            $('#reform1').html(ContentStore.getByKey("reforma1").get("value"));
+            $('#reform2').hide('fast', function(){
+                $('#reform2').html(ContentStore.getByKey("reforma2").get("value")).fadeIn(1500);
+            });
+            parliament = this.paper.g.parliament(630, 680, 170, 50, parvalues, {});
+            parliament2 = this.paper.g.parliament(630, 1080, 170, 50, parvalues2, {});
+            parliament3 = this.paper.g.parliament(630, 1420, 170, 50, parvalues2, {});
+            parliament.hover(function () {
+                if (this.label) {
+                    this.label[0].stop();
+                    this.label[0].scale(1.5);
+                    this.label[1].attr({"font-weight": 800});
+                }
+            },
+            function () {
+                if (this.label) {
+                    this.label[0].animate({scale: 1}, 500, "bounce");
+                    this.label[1].attr({"font-weight": 400});
+                }
+            });
+            parliament2.hover(function () {
+                if (this.label) {
+                    this.label[0].stop();
+                    this.label[0].scale(1.5);
+                    this.label[1].attr({"font-weight": 800});
+                }
+            },
+            function () {
+                if (this.label) {
+                    this.label[0].animate({scale: 1}, 500, "bounce");
+                    this.label[1].attr({"font-weight": 400});
+                }
+            });
+            parliament3.hover(function () {
+                if (this.label) {
+                    this.label[0].stop();
+                    this.label[0].scale(1.5);
+                    this.label[1].attr({"font-weight": 800});
+                }
+            },
+            function () {
+                if (this.label) {
+                    this.label[0].animate({scale: 1}, 500, "bounce");
+                    this.label[1].attr({"font-weight": 400});
+                }
+            });
+            var that = this;
+
+            this.advance = function(){ return that.stepReform2();};
             this.goback = function(){ return that.stepReform1();};
         },
 
