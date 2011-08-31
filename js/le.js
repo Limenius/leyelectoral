@@ -162,7 +162,7 @@ $(document).ready(function(){
         initialize: function() {
             _.bindAll(this, "render", "remove", "initial", "setupPaper", "goNext", "goPrev", "goLast", "drawParties", "dhont");
             DataStore.bind('redraw', this.render);
-            this.paper = Raphael("holder", 1000, 1600);
+            this.paper = Raphael("holder", 1000, 2400);
             this.cx = 150;
             this.cy = 350;
         },
@@ -342,6 +342,195 @@ $(document).ready(function(){
             return _.sortBy(varpar,function (party) { return party['value']; }).reverse();
 
         },
+        
+        dhontNacional: function() {
+            var electedseats = [];
+            DataStore.each(function(prov){
+                if(prov.get('provincia') == 'total') {
+                    var total = 0;
+                    _.each(prov.rows, function(row) {
+                        if(!row.get("statistical") || row.get('oid') === 'invalid' || row.get('oid') === 'blank') {
+                            total += row.get("amount");
+                        }
+                    });
+                    var minval = 0;
+                    var parties = _.reject(prov.rows, function(row) {
+                        return row.get("amount") < minval || row.get("statistical") === true;
+                    });
+                    var possiblepar = [];
+                    _.each(parties, function(party){
+                        if (!party.get("statistical")) {
+                            for (var i = 1; i <= circunscripcionUnica[prov.get('provincia')]; i++) {
+                                possiblepar.push({
+                                    value : party.get("amount") / i,
+                                    color : party.get("color"),
+                                    oid   : party.get("oid"),
+                                    label : party.get("label"),
+                                });
+                            };
+                        }
+                    });
+                    possiblepar = _.sortBy(possiblepar, function(res) {
+                        return res["value"];
+                    }).reverse();
+
+                    for (var i = 0; i < circunscripcionUnica[prov.get('provincia')]; i++) {
+                        electedseats.push({
+                            value: possiblepar[i]['value'],
+                            color: possiblepar[i]['color'],
+                            oid  : possiblepar[i]['oid'],
+                            label: possiblepar[i]['label'],
+                        });
+                    };
+                }
+            });
+
+            var varpar = [];
+            for (var i = 0; i < electedseats.length; i++) {
+                thisvarpar = _.detect(varpar, function(party) {
+                    return party['oid'] === electedseats[i]['oid'];
+                });
+                if (thisvarpar){
+                    thisvarpar['value'] ++;
+                } else {
+                    varpar.push({
+                        'oid' :electedseats[i]['oid'],
+                        'value' : 1,
+                        'color': electedseats[i]['color'],
+                        'label': electedseats[i]['label']
+                    });
+                }
+            };
+
+            return _.sortBy(varpar,function (party) { return party['value']; }).reverse();
+
+        },
+        
+        dhont50: function() {
+            var electedseats = [];
+            DataStore.each(function(prov){
+                if(prov.get('provincia') !== 'total') {
+                    var total = 0;
+                    _.each(prov.rows, function(row) {
+                        if(!row.get("statistical") || row.get('oid') === 'invalid' || row.get('oid') === 'blank') {
+                            total += row.get("amount");
+                        }
+                    });
+                    var minval = total*0.03;
+                    var parties = _.reject(prov.rows, function(row) {
+                        return row.get("amount") < minval || row.get("statistical") === true;
+                    });
+                    var possiblepar = [];
+                    _.each(parties, function(party){
+                        if (!party.get("statistical")) {
+                            for (var i = 1; i <= circunscripciones[prov.get('provincia')]; i++) {
+                                possiblepar.push({
+                                    value : party.get("amount") / i,
+                                    color : party.get("color"),
+                                    oid   : party.get("oid"),
+                                    label : party.get("label"),
+                                });
+                            };
+                        }
+                    });
+                    possiblepar = _.sortBy(possiblepar, function(res) {
+                        return res["value"];
+                    }).reverse();
+
+                    for (var i = 0; i < circunscripciones[prov.get('provincia')]; i++) {
+                        electedseats.push({
+                            value: possiblepar[i]['value'],
+                            color: possiblepar[i]['color'],
+                            oid  : possiblepar[i]['oid'],
+                            label: possiblepar[i]['label'],
+                        });
+                    };
+                }
+            });
+
+            var varpar = [];
+            for (var i = 0; i < electedseats.length; i++) {
+                thisvarpar = _.detect(varpar, function(party) {
+                    return party['oid'] === electedseats[i]['oid'];
+                });
+                if (thisvarpar){
+                    thisvarpar['value'] ++;
+                } else {
+                    varpar.push({
+                        'oid' :electedseats[i]['oid'],
+                        'value' : 1,
+                        'color': electedseats[i]['color'],
+                        'label': electedseats[i]['label']
+                    });
+                }
+            };
+
+            return _.sortBy(varpar,function (party) { return party['value']; }).reverse();
+
+        },
+        
+        dhontUG: function() {
+            var electedseats = [];
+            DataStore.each(function(prov){
+                if(prov.get('provincia') !== 'total') {
+                    var total = 0;
+                    _.each(prov.rows, function(row) {
+                        if(!row.get("statistical") || row.get('oid') === 'invalid' || row.get('oid') === 'blank') {
+                            total += row.get("amount");
+                        }
+                    });
+                    var minval = total*0.03;
+                    var parties = _.reject(prov.rows, function(row) {
+                        return row.get("amount") < minval || row.get("statistical") === true;
+                    });
+                    var possiblepar = [];
+                    _.each(parties, function(party){
+                        if (!party.get("statistical")) {
+                            for (var i = 1; i <= circunscripcionesUG[prov.get('provincia')]; i++) {
+                                possiblepar.push({
+                                    value : party.get("amount") / i,
+                                    color : party.get("color"),
+                                    oid   : party.get("oid"),
+                                    label : party.get("label"),
+                                });
+                            };
+                        }
+                    });
+                    possiblepar = _.sortBy(possiblepar, function(res) {
+                        return res["value"];
+                    }).reverse();
+
+                    for (var i = 0; i < circunscripcionesUG[prov.get('provincia')]; i++) {
+                        electedseats.push({
+                            value: possiblepar[i]['value'],
+                            color: possiblepar[i]['color'],
+                            oid  : possiblepar[i]['oid'],
+                            label: possiblepar[i]['label'],
+                        });
+                    };
+                }
+            });
+
+            var varpar = [];
+            for (var i = 0; i < electedseats.length; i++) {
+                thisvarpar = _.detect(varpar, function(party) {
+                    return party['oid'] === electedseats[i]['oid'];
+                });
+                if (thisvarpar){
+                    thisvarpar['value'] ++;
+                } else {
+                    varpar.push({
+                        'oid' :electedseats[i]['oid'],
+                        'value' : 1,
+                        'color': electedseats[i]['color'],
+                        'label': electedseats[i]['label']
+                    });
+                }
+            };
+
+            return _.sortBy(varpar,function (party) { return party['value']; }).reverse();
+
+        },
 
         drawParties: function() {
             var drawable = {
@@ -477,7 +666,7 @@ $(document).ready(function(){
                 $('#gonext2').fadeIn(1500);
             
             });
-            parliament = this.paper.g.parliament(630, 680, 170, 50, parvalues, {});
+            parliament = this.paper.g.parliament(630, 680, 180, 40, parvalues, {});
             parliament.hover(function () {
                 if (this.label) {
                     this.label[0].stop();
@@ -504,7 +693,7 @@ $(document).ready(function(){
             $('#notes2').fadeOut(300, function(){
                 $('#notes2').html(ContentStore.getByKey("conclusiones").get("value")).fadeIn(1500);
             });
-            parliament = this.paper.g.parliament(630, 680, 170, 50, parvalues, {});
+            parliament = this.paper.g.parliament(630, 680, 180, 40, parvalues, {});
             parliament.hover(function () {
                 if (this.label) {
                     this.label[0].stop();
@@ -531,7 +720,7 @@ $(document).ready(function(){
             $('#notes3').hide('fast', function(){
                 $('#notes3').html(ContentStore.getByKey("fin").get("value")).fadeIn(1500);
             });
-            parliament = this.paper.g.parliament(630, 680, 170, 50, parvalues, {});
+            parliament = this.paper.g.parliament(630, 680, 180, 40, parvalues, {});
             parliament.hover(function () {
                 if (this.label) {
                     this.label[0].stop();
@@ -561,8 +750,8 @@ $(document).ready(function(){
             $('#reform1').hide('fast', function(){
                 $('#reform1').html(ContentStore.getByKey("reforma1").get("value")).fadeIn(1500);
             });
-            parliament = this.paper.g.parliament(630, 680, 170, 50, parvalues, {});
-            parliament2 = this.paper.g.parliament(630, 1080, 170, 50, parvalues2, {});
+            parliament = this.paper.g.parliament(630, 680, 180, 40, parvalues, {});
+            parliament2 = this.paper.g.parliament(630, 1080, 180, 40, parvalues2, {});
             parliament.hover(function () {
                 if (this.label) {
                     this.label[0].stop();
@@ -599,6 +788,7 @@ $(document).ready(function(){
             this.setupPaper(drawable);
             parvalues = this.dhont();
             parvalues2 = this.hare();
+            parvalues3 = this.dhont50();
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
             $('#notes2').html(ContentStore.getByKey("conclusiones").get("value"));
             $('#notes3').html(ContentStore.getByKey("fin").get("value"));
@@ -606,9 +796,9 @@ $(document).ready(function(){
             $('#reform2').hide('fast', function(){
                 $('#reform2').html(ContentStore.getByKey("reforma2").get("value")).fadeIn(1500);
             });
-            parliament = this.paper.g.parliament(630, 680, 170, 50, parvalues, {});
-            parliament2 = this.paper.g.parliament(630, 1080, 170, 50, parvalues2, {});
-            parliament3 = this.paper.g.parliament(630, 1420, 170, 50, parvalues2, {});
+            parliament = this.paper.g.parliament(630, 680, 180, 40, parvalues, {});
+            parliament2 = this.paper.g.parliament(630, 1080, 180, 40, parvalues2, {});
+            parliament3 = this.paper.g.parliament(630, 1420, 180, 40, parvalues3, {});
             parliament.hover(function () {
                 if (this.label) {
                     this.label[0].stop();
@@ -650,8 +840,188 @@ $(document).ready(function(){
             });
             var that = this;
 
-            this.advance = function(){ return that.stepReform2();};
+            this.advance = function(){ return that.stepReform3();};
             this.goback = function(){ return that.stepReform1();};
+        },
+
+        render: function() {
+            this.initial();
+
+        },
+        
+        stepReform3: function() {
+            var drawable = this.drawParties();
+            this.setupPaper(drawable);
+            parvalues = this.dhont();
+            parvalues2 = this.hare();
+            parvalues3 = this.dhont50();
+            parvalues4 = this.dhontUG();
+            $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
+            $('#notes2').html(ContentStore.getByKey("conclusiones").get("value"));
+            $('#notes3').html(ContentStore.getByKey("fin").get("value"));
+            $('#reform1').html(ContentStore.getByKey("reforma1").get("value"));
+            $('#reform2').html(ContentStore.getByKey("reforma2").get("value"));
+            $('#reform3').hide('fast', function(){
+                $('#reform3').html(ContentStore.getByKey("reforma3").get("value")).fadeIn(1500);
+            });
+            parliament = this.paper.g.parliament(630, 680, 180, 40, parvalues, {});
+            parliament2 = this.paper.g.parliament(630, 1080, 180, 40, parvalues2, {});
+            parliament3 = this.paper.g.parliament(630, 1420, 180, 40, parvalues3, {});
+            parliament4 = this.paper.g.parliament(630, 1760, 180, 40, parvalues4, {});
+            parliament.hover(function () {
+                if (this.label) {
+                    this.label[0].stop();
+                    this.label[0].scale(1.5);
+                    this.label[1].attr({"font-weight": 800});
+                }
+            },
+            function () {
+                if (this.label) {
+                    this.label[0].animate({scale: 1}, 500, "bounce");
+                    this.label[1].attr({"font-weight": 400});
+                }
+            });
+            parliament2.hover(function () {
+                if (this.label) {
+                    this.label[0].stop();
+                    this.label[0].scale(1.5);
+                    this.label[1].attr({"font-weight": 800});
+                }
+            },
+            function () {
+                if (this.label) {
+                    this.label[0].animate({scale: 1}, 500, "bounce");
+                    this.label[1].attr({"font-weight": 400});
+                }
+            });
+            parliament3.hover(function () {
+                if (this.label) {
+                    this.label[0].stop();
+                    this.label[0].scale(1.5);
+                    this.label[1].attr({"font-weight": 800});
+                }
+            },
+            function () {
+                if (this.label) {
+                    this.label[0].animate({scale: 1}, 500, "bounce");
+                    this.label[1].attr({"font-weight": 400});
+                }
+            });
+            parliament4.hover(function () {
+                if (this.label) {
+                    this.label[0].stop();
+                    this.label[0].scale(1.5);
+                    this.label[1].attr({"font-weight": 800});
+                }
+            },
+            function () {
+                if (this.label) {
+                    this.label[0].animate({scale: 1}, 500, "bounce");
+                    this.label[1].attr({"font-weight": 400});
+                }
+            });
+            var that = this;
+
+            this.advance = function(){ return that.stepReform4();};
+            this.goback = function(){ return that.stepReform2();};
+        },
+        
+        stepReform4: function() {
+            var drawable = this.drawParties();
+            this.setupPaper(drawable);
+            parvalues = this.dhont();
+            parvalues2 = this.hare();
+            parvalues3 = this.dhont50();
+            parvalues4 = this.dhontUG();
+            parvalues5 = this.dhontNacional();
+            $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
+            $('#notes2').html(ContentStore.getByKey("conclusiones").get("value"));
+            $('#notes3').html(ContentStore.getByKey("fin").get("value"));
+            $('#reform1').html(ContentStore.getByKey("reforma1").get("value"));
+            $('#reform2').html(ContentStore.getByKey("reforma2").get("value"));
+            $('#reform3').html(ContentStore.getByKey("reforma3").get("value"));
+            $('#reform4').hide('fast', function(){
+                $('#reform4').html(ContentStore.getByKey("reforma4").get("value")).fadeIn(1500);
+            });
+            parliament = this.paper.g.parliament(630, 680, 180, 40, parvalues, {});
+            parliament2 = this.paper.g.parliament(630, 1080, 180, 40, parvalues2, {});
+            parliament3 = this.paper.g.parliament(630, 1420, 180, 40, parvalues3, {});
+            parliament4 = this.paper.g.parliament(630, 1760, 180, 40, parvalues3, {});
+            parliament5 = this.paper.g.parliament(630, 2100, 180, 40, parvalues3, {});
+            parliament.hover(function () {
+                if (this.label) {
+                    this.label[0].stop();
+                    this.label[0].scale(1.5);
+                    this.label[1].attr({"font-weight": 800});
+                }
+            },
+            function () {
+                if (this.label) {
+                    this.label[0].animate({scale: 1}, 500, "bounce");
+                    this.label[1].attr({"font-weight": 400});
+                }
+            });
+            parliament2.hover(function () {
+                if (this.label) {
+                    this.label[0].stop();
+                    this.label[0].scale(1.5);
+                    this.label[1].attr({"font-weight": 800});
+                }
+            },
+            function () {
+                if (this.label) {
+                    this.label[0].animate({scale: 1}, 500, "bounce");
+                    this.label[1].attr({"font-weight": 400});
+                }
+            });
+            parliament3.hover(function () {
+                if (this.label) {
+                    this.label[0].stop();
+                    this.label[0].scale(1.5);
+                    this.label[1].attr({"font-weight": 800});
+                }
+            },
+            function () {
+                if (this.label) {
+                    this.label[0].animate({scale: 1}, 500, "bounce");
+                    this.label[1].attr({"font-weight": 400});
+                }
+            });
+            parliament4.hover(function () {
+                if (this.label) {
+                    this.label[0].stop();
+                    this.label[0].scale(1.5);
+                    this.label[1].attr({"font-weight": 800});
+                }
+            },
+            function () {
+                if (this.label) {
+                    this.label[0].animate({scale: 1}, 500, "bounce");
+                    this.label[1].attr({"font-weight": 400});
+                }
+            });
+            parliament5.hover(function () {
+                if (this.label) {
+                    this.label[0].stop();
+                    this.label[0].scale(1.5);
+                    this.label[1].attr({"font-weight": 800});
+                }
+            },
+            function () {
+                if (this.label) {
+                    this.label[0].animate({scale: 1}, 500, "bounce");
+                    this.label[1].attr({"font-weight": 400});
+                }
+            });
+            var that = this;
+
+            this.advance = function(){ return that.stepReform4();};
+            this.goback = function(){ return that.stepReform3();};
+        },
+
+        render: function() {
+            this.initial();
+
         },
 
         render: function() {
@@ -769,6 +1139,63 @@ $(document).ready(function(){
         "Ávila": 2,
         "Barcelona": 42,
         "Lugo": 4,
+    };
+    var circunscripcionesUG = {
+        "Burgos": 4,
+        "León": 5,
+        "Palencia": 2,
+        "Salamanca": 4,
+        "Segovia": 2,
+        "Soria": 2,
+        "Valladolid": 5,
+        "Zamora": 3,
+        "Girona": 7,
+        "Lleida": 4,
+        "Tarragona": 7,
+        "Badajoz": 6,
+        "Cáceres": 4,
+        "A Coruña": 10,
+        "Ourense": 4,
+        "Pontevedra": 8,
+        "Madrid": 48,
+        "Navarra": 6,
+        "Álava": 3,
+        "Guipúzcoa": 6,
+        "Vizcaya": 10,
+        "Murcia": 12,
+        "La Rioja": 3,
+        "Alicante / Alacant": 15,
+        "Castellón / Castelló": 5,
+        "Valencia / València": 20,
+        "Ceuta": 1,
+        "Melilla": 1,
+        "Almería": 6,
+        "Cádiz": 10,
+        "Córdoba": 7,
+        "Granada": 8,
+        "Huelva": 5,
+        "Jaén": 6,
+        "Málaga": 13,
+        "Sevilla": 15,
+        "Huesca": 3,
+        "Teruel": 2,
+        "Zaragoza": 8,
+        "Asturias": 9,
+        "Illes Balears": 9,
+        "Las Palmas": 9,
+        "Santa Cruz de Tenerife": 9,
+        "Cantabria": 5,
+        "Albacete": 4,
+        "Ciudad Real": 5,
+        "Cuenca": 3,
+        "Guadalajara": 3,
+        "Toledo": 6,
+        "Ávila": 2,
+        "Barcelona": 42,
+        "Lugo": 4,
+    };
+    var circunscripcionUnica = {
+        "total": 370,
     };
 });
 
