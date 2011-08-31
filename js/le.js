@@ -159,6 +159,15 @@ $(document).ready(function(){
             "click #golast":  "goLast",
         },
 
+        parvalues: null,
+        parvalues2: null,
+        parvalues3: null,
+        parvalues4: null,
+        parliament: null,
+        parliament2: null,
+        parliament3: null,
+        parliament4: null,
+
         initialize: function() {
             _.bindAll(this, "render", "remove", "initial", "setupPaper", "goNext", "goPrev", "goLast", "drawParties", "dhont");
             DataStore.bind('redraw', this.render);
@@ -656,7 +665,7 @@ $(document).ready(function(){
             this.setupPaper(drawable);
             var that = this;
 
-            parvalues = this.dhont();
+            this.parvalues = this.parvalues || this.dhont();
 
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
             $('#notes2').hide('fast', function(){
@@ -666,47 +675,43 @@ $(document).ready(function(){
                 $('#gonext2').fadeIn(1500);
             
             });
-            parliament = this.paper.g.parliament(630, 680, 180, 40, parvalues, {});
-            parliament.hover(function () {
-                if (this.label) {
-                    this.label[0].stop();
-                    this.label[0].scale(1.5);
-                    this.label[1].attr({"font-weight": 800});
-                }
-            },
-            function () {
-                if (this.label) {
-                    this.label[0].animate({scale: 1}, 500, "bounce");
-                    this.label[1].attr({"font-weight": 400});
-                }
-            });
+            this.parliament = this.paper.g.parliament(630, 680, 180, 40, this.parvalues, {});
+            this.hoverParliament(this.parliament);
             var that = this;
 
             this.advance = function(){ return that.step6();};
             this.goback = function(){ return that.step4();};
         },
+        hoverParliament: function(parliament) {
+            parliament.hover(
+                function () {
+                    if (this.label) {
+                        this.label[0].stop();
+                        this.label[0].scale(1.5);
+                        this.label[1].attr({"font-weight": 800});
+                    }
+                },
+                function () {
+                    if (this.label) {
+                        this.label[0].animate({scale: 1}, 500, "bounce");
+                        this.label[1].attr({"font-weight": 400});
+                    }
+                }
+            );
+        },
         step6: function() {
             var drawable = this.drawParties();
             this.setupPaper(drawable);
+
+            this.parvalues = this.parvalues || this.dhont();
+
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
             $('#notes3').html(ContentStore.getByKey("blank").get("value"));
             $('#notes2').fadeOut(300, function(){
                 $('#notes2').html(ContentStore.getByKey("conclusiones").get("value")).fadeIn(1500);
             });
-            parliament = this.paper.g.parliament(630, 680, 180, 40, parvalues, {});
-            parliament.hover(function () {
-                if (this.label) {
-                    this.label[0].stop();
-                    this.label[0].scale(1.5);
-                    this.label[1].attr({"font-weight": 800});
-                }
-            },
-            function () {
-                if (this.label) {
-                    this.label[0].animate({scale: 1}, 500, "bounce");
-                    this.label[1].attr({"font-weight": 400});
-                }
-            });
+            this.parliament = this.paper.g.parliament(630, 680, 180, 40, this.parvalues, {});
+            this.hoverParliament(this.parliament);
             var that = this;
 
             this.advance = function(){ return that.stepFin();};
@@ -715,25 +720,14 @@ $(document).ready(function(){
         stepFin: function() {
             var drawable = this.drawParties();
             this.setupPaper(drawable);
+            this.parvalues = this.parvalues || this.dhont();
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
             $('#notes2').html(ContentStore.getByKey("conclusiones").get("value"));
             $('#notes3').hide('fast', function(){
                 $('#notes3').html(ContentStore.getByKey("fin").get("value")).fadeIn(1500);
             });
-            parliament = this.paper.g.parliament(630, 680, 180, 40, parvalues, {});
-            parliament.hover(function () {
-                if (this.label) {
-                    this.label[0].stop();
-                    this.label[0].scale(1.5);
-                    this.label[1].attr({"font-weight": 800});
-                }
-            },
-            function () {
-                if (this.label) {
-                    this.label[0].animate({scale: 1}, 500, "bounce");
-                    this.label[1].attr({"font-weight": 400});
-                }
-            });
+            this.parliament = this.paper.g.parliament(630, 680, 180, 40, this.parvalues, {});
+            this.hoverParliament(this.parliament);
             var that = this;
 
             this.advance = function(){ return that.stepReform1();};
@@ -742,42 +736,19 @@ $(document).ready(function(){
         stepReform1: function() {
             var drawable = this.drawParties();
             this.setupPaper(drawable);
-            parvalues = this.dhont();
-            parvalues2 = this.hare();
+            this.parvalues = this.parvalues || this.dhont();
+            this.parvalues2 = this.parvalues2 || this.hare();
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
             $('#notes2').html(ContentStore.getByKey("conclusiones").get("value"));
             $('#notes3').html(ContentStore.getByKey("fin").get("value"));
             $('#reform1').hide('fast', function(){
                 $('#reform1').html(ContentStore.getByKey("reforma1").get("value")).fadeIn(1500);
             });
-            parliament = this.paper.g.parliament(630, 680, 180, 40, parvalues, {});
-            parliament2 = this.paper.g.parliament(630, 1080, 180, 40, parvalues2, {});
-            parliament.hover(function () {
-                if (this.label) {
-                    this.label[0].stop();
-                    this.label[0].scale(1.5);
-                    this.label[1].attr({"font-weight": 800});
-                }
-            },
-            function () {
-                if (this.label) {
-                    this.label[0].animate({scale: 1}, 500, "bounce");
-                    this.label[1].attr({"font-weight": 400});
-                }
-            });
-            parliament2.hover(function () {
-                if (this.label) {
-                    this.label[0].stop();
-                    this.label[0].scale(1.5);
-                    this.label[1].attr({"font-weight": 800});
-                }
-            },
-            function () {
-                if (this.label) {
-                    this.label[0].animate({scale: 1}, 500, "bounce");
-                    this.label[1].attr({"font-weight": 400});
-                }
-            });
+            this.parliament = this.paper.g.parliament(630, 680, 180, 40, this.parvalues, {});
+            this.hoverParliament(this.parliament);
+            this.parliament2 = this.paper.g.parliament(630, 1080, 180, 40, this.parvalues2, {});
+            this.hoverParliament(this.parliament2);
+            
             var that = this;
 
             this.advance = function(){ return that.stepReform2();};
@@ -786,9 +757,9 @@ $(document).ready(function(){
         stepReform2: function() {
             var drawable = this.drawParties();
             this.setupPaper(drawable);
-            parvalues = this.dhont();
-            parvalues2 = this.hare();
-            parvalues3 = this.dhont50();
+            this.parvalues = this.parvalues || this.dhont();
+            this.parvalues2 = this.parvalues2 || this.hare();
+            this.parvalues3 = this.parvalues || this.dhont50();
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
             $('#notes2').html(ContentStore.getByKey("conclusiones").get("value"));
             $('#notes3').html(ContentStore.getByKey("fin").get("value"));
@@ -796,48 +767,13 @@ $(document).ready(function(){
             $('#reform2').hide('fast', function(){
                 $('#reform2').html(ContentStore.getByKey("reforma2").get("value")).fadeIn(1500);
             });
-            parliament = this.paper.g.parliament(630, 680, 180, 40, parvalues, {});
-            parliament2 = this.paper.g.parliament(630, 1080, 180, 40, parvalues2, {});
-            parliament3 = this.paper.g.parliament(630, 1420, 180, 40, parvalues3, {});
-            parliament.hover(function () {
-                if (this.label) {
-                    this.label[0].stop();
-                    this.label[0].scale(1.5);
-                    this.label[1].attr({"font-weight": 800});
-                }
-            },
-            function () {
-                if (this.label) {
-                    this.label[0].animate({scale: 1}, 500, "bounce");
-                    this.label[1].attr({"font-weight": 400});
-                }
-            });
-            parliament2.hover(function () {
-                if (this.label) {
-                    this.label[0].stop();
-                    this.label[0].scale(1.5);
-                    this.label[1].attr({"font-weight": 800});
-                }
-            },
-            function () {
-                if (this.label) {
-                    this.label[0].animate({scale: 1}, 500, "bounce");
-                    this.label[1].attr({"font-weight": 400});
-                }
-            });
-            parliament3.hover(function () {
-                if (this.label) {
-                    this.label[0].stop();
-                    this.label[0].scale(1.5);
-                    this.label[1].attr({"font-weight": 800});
-                }
-            },
-            function () {
-                if (this.label) {
-                    this.label[0].animate({scale: 1}, 500, "bounce");
-                    this.label[1].attr({"font-weight": 400});
-                }
-            });
+            this.parliament = this.paper.g.parliament(630, 680, 180, 40, this.parvalues, {});
+            this.hoverParliament(this.parliament);
+            this.parliament2 = this.paper.g.parliament(630, 1080, 180, 40, this.parvalues2, {});
+            this.hoverParliament(this.parliament2);
+            this.parliament3 = this.paper.g.parliament(630, 1420, 180, 40, this.parvalues3, {});
+            this.hoverParliament(this.parliament3);
+
             var that = this;
 
             this.advance = function(){ return that.stepReform3();};
@@ -852,10 +788,10 @@ $(document).ready(function(){
         stepReform3: function() {
             var drawable = this.drawParties();
             this.setupPaper(drawable);
-            parvalues = this.dhont();
-            parvalues2 = this.hare();
-            parvalues3 = this.dhont50();
-            parvalues4 = this.dhontUG();
+            this.parvalues = this.parvalues || this.dhont();
+            this.parvalues2 = this.parvalues2 || this.hare();
+            this.parvalues3 = this.parvalues || this.dhont50();
+            this.parvalues4 = this.parvalues || this.dhontUG();
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
             $('#notes2').html(ContentStore.getByKey("conclusiones").get("value"));
             $('#notes3').html(ContentStore.getByKey("fin").get("value"));
@@ -864,62 +800,15 @@ $(document).ready(function(){
             $('#reform3').hide('fast', function(){
                 $('#reform3').html(ContentStore.getByKey("reforma3").get("value")).fadeIn(1500);
             });
-            parliament = this.paper.g.parliament(630, 680, 180, 40, parvalues, {});
-            parliament2 = this.paper.g.parliament(630, 1080, 180, 40, parvalues2, {});
-            parliament3 = this.paper.g.parliament(630, 1420, 180, 40, parvalues3, {});
-            parliament4 = this.paper.g.parliament(630, 1760, 180, 40, parvalues4, {});
-            parliament.hover(function () {
-                if (this.label) {
-                    this.label[0].stop();
-                    this.label[0].scale(1.5);
-                    this.label[1].attr({"font-weight": 800});
-                }
-            },
-            function () {
-                if (this.label) {
-                    this.label[0].animate({scale: 1}, 500, "bounce");
-                    this.label[1].attr({"font-weight": 400});
-                }
-            });
-            parliament2.hover(function () {
-                if (this.label) {
-                    this.label[0].stop();
-                    this.label[0].scale(1.5);
-                    this.label[1].attr({"font-weight": 800});
-                }
-            },
-            function () {
-                if (this.label) {
-                    this.label[0].animate({scale: 1}, 500, "bounce");
-                    this.label[1].attr({"font-weight": 400});
-                }
-            });
-            parliament3.hover(function () {
-                if (this.label) {
-                    this.label[0].stop();
-                    this.label[0].scale(1.5);
-                    this.label[1].attr({"font-weight": 800});
-                }
-            },
-            function () {
-                if (this.label) {
-                    this.label[0].animate({scale: 1}, 500, "bounce");
-                    this.label[1].attr({"font-weight": 400});
-                }
-            });
-            parliament4.hover(function () {
-                if (this.label) {
-                    this.label[0].stop();
-                    this.label[0].scale(1.5);
-                    this.label[1].attr({"font-weight": 800});
-                }
-            },
-            function () {
-                if (this.label) {
-                    this.label[0].animate({scale: 1}, 500, "bounce");
-                    this.label[1].attr({"font-weight": 400});
-                }
-            });
+            this.parliament = this.paper.g.parliament(630, 680, 180, 40, this.parvalues, {});
+            this.hoverParliament(this.parliament);
+            this.parliament2 = this.paper.g.parliament(630, 1080, 180, 40, this.parvalues2, {});
+            this.hoverParliament(this.parliament2);
+            this.parliament3 = this.paper.g.parliament(630, 1420, 180, 40, this.parvalues3, {});
+            this.hoverParliament(this.parliament3);
+            this.parliament4 = this.paper.g.parliament(630, 1760, 180, 40, this.parvalues4, {});
+            this.hoverParliament(this.parliament4);
+
             var that = this;
 
             this.advance = function(){ return that.stepReform4();};
@@ -929,11 +818,11 @@ $(document).ready(function(){
         stepReform4: function() {
             var drawable = this.drawParties();
             this.setupPaper(drawable);
-            parvalues = this.dhont();
-            parvalues2 = this.hare();
-            parvalues3 = this.dhont50();
-            parvalues4 = this.dhontUG();
-            parvalues5 = this.dhontNacional();
+            this.parvalues = this.parvalues || this.dhont();
+            this.parvalues2 = this.parvalues2 || this.hare();
+            this.parvalues3 = this.parvalues || this.dhont50();
+            this.parvalues4 = this.parvalues || this.dhontUG();
+            this.parvalues5 = this.parvalues || this.dhontNacional();
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
             $('#notes2').html(ContentStore.getByKey("conclusiones").get("value"));
             $('#notes3').html(ContentStore.getByKey("fin").get("value"));
@@ -943,76 +832,17 @@ $(document).ready(function(){
             $('#reform4').hide('fast', function(){
                 $('#reform4').html(ContentStore.getByKey("reforma4").get("value")).fadeIn(1500);
             });
-            parliament = this.paper.g.parliament(630, 680, 180, 40, parvalues, {});
-            parliament2 = this.paper.g.parliament(630, 1080, 180, 40, parvalues2, {});
-            parliament3 = this.paper.g.parliament(630, 1420, 180, 40, parvalues3, {});
-            parliament4 = this.paper.g.parliament(630, 1760, 180, 40, parvalues3, {});
-            parliament5 = this.paper.g.parliament(630, 2100, 180, 40, parvalues3, {});
-            parliament.hover(function () {
-                if (this.label) {
-                    this.label[0].stop();
-                    this.label[0].scale(1.5);
-                    this.label[1].attr({"font-weight": 800});
-                }
-            },
-            function () {
-                if (this.label) {
-                    this.label[0].animate({scale: 1}, 500, "bounce");
-                    this.label[1].attr({"font-weight": 400});
-                }
-            });
-            parliament2.hover(function () {
-                if (this.label) {
-                    this.label[0].stop();
-                    this.label[0].scale(1.5);
-                    this.label[1].attr({"font-weight": 800});
-                }
-            },
-            function () {
-                if (this.label) {
-                    this.label[0].animate({scale: 1}, 500, "bounce");
-                    this.label[1].attr({"font-weight": 400});
-                }
-            });
-            parliament3.hover(function () {
-                if (this.label) {
-                    this.label[0].stop();
-                    this.label[0].scale(1.5);
-                    this.label[1].attr({"font-weight": 800});
-                }
-            },
-            function () {
-                if (this.label) {
-                    this.label[0].animate({scale: 1}, 500, "bounce");
-                    this.label[1].attr({"font-weight": 400});
-                }
-            });
-            parliament4.hover(function () {
-                if (this.label) {
-                    this.label[0].stop();
-                    this.label[0].scale(1.5);
-                    this.label[1].attr({"font-weight": 800});
-                }
-            },
-            function () {
-                if (this.label) {
-                    this.label[0].animate({scale: 1}, 500, "bounce");
-                    this.label[1].attr({"font-weight": 400});
-                }
-            });
-            parliament5.hover(function () {
-                if (this.label) {
-                    this.label[0].stop();
-                    this.label[0].scale(1.5);
-                    this.label[1].attr({"font-weight": 800});
-                }
-            },
-            function () {
-                if (this.label) {
-                    this.label[0].animate({scale: 1}, 500, "bounce");
-                    this.label[1].attr({"font-weight": 400});
-                }
-            });
+            this.parliament = this.paper.g.parliament(630, 680, 180, 40, this.parvalues, {});
+            this.hoverParliament(this.parliament);
+            this.parliament2 = this.paper.g.parliament(630, 1080, 180, 40, this.parvalues2, {});
+            this.hoverParliament(this.parliament2);
+            this.parliament3 = this.paper.g.parliament(630, 1420, 180, 40, this.parvalues3, {});
+            this.hoverParliament(this.parliament3);
+            this.parliament4 = this.paper.g.parliament(630, 1760, 180, 40, this.parvalues4, {});
+            this.hoverParliament(this.parliament4);
+            this.parliament5 = this.paper.g.parliament(630, 2100, 180, 40, this.parvalues4, {});
+            this.hoverParliament(this.parliament5);
+
             var that = this;
 
             this.advance = function(){ return that.stepReform4();};
