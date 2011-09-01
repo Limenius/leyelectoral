@@ -154,9 +154,10 @@ $(document).ready(function(){
         el: $("#holder"),
 
         events: {
-            "click #floatinggonext":  "goNext",
-            "click #floatinggoprev":  "goPrev",
+            "click #gonext":  "goNext",
+            "click #goprev":  "goPrev",
             "click #golast":  "goLast",
+            "click #gofirst":  "goFirst",
         },
 
         parvalues: null,
@@ -169,7 +170,7 @@ $(document).ready(function(){
         parliament4: null,
 
         initialize: function() {
-            _.bindAll(this, "render", "remove", "initial", "setupPaper", "goNext", "goPrev", "goLast", "drawParties", "dhont");
+            _.bindAll(this, "render", "remove", "initial", "setupPaper", "goNext", "goPrev", "goLast", "goFirst", "drawParties", "dhont");
             DataStore.bind('redraw', this.render);
             this.paper = Raphael("holder", 1000, 2400);
             this.cx = 150;
@@ -186,6 +187,10 @@ $(document).ready(function(){
 
         goLast: function() {
             this.golast();
+        },
+
+        goFirst: function() {
+            this.gofirst();
         },
 
 
@@ -583,7 +588,8 @@ $(document).ready(function(){
             var that = this;
             this.advance = function(){ return that.step1();};
             this.goback = function(){ return that.initial();};
-            this.goLast = function(){ return that.stepReform1();};
+            this.golast = function(){ return that.stepReform4();};
+            this.gofirst = function(){ return that.initial();};
         },
 
         step1: function() {

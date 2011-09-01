@@ -27,33 +27,40 @@ body,html{
   width: 960px;
   height: 1700px;
 }
-#floatingbuttons{
+#buttons{
   position:fixed;
   bottom:0;
-  left:0;
-  width: 84px;
+  left:43%;
+  width: 168px;
   background-color: red;
   border: 1px solid #000;
 }
-#floatinggoprev {
+#goprev {
   border: 1px solid #000;
   width: 40px;
   height: 40px;
   float: left;
   cursor: pointer;
 }
-#floatinggonext {
+#gonext {
   border: 1px solid #000;
   width: 40px;
   height: 40px;
-  float: right;
+  float: left;
   cursor: pointer;
 }
 #golast {
-  position: absolute;
-  width: 10px;
-  top: 10px;
-  left: 10px;
+  border: 1px solid #000;
+  width: 40px;
+  height: 40px;
+  float: left;
+  cursor: pointer;
+}
+#gofirst {
+  border: 1px solid #000;
+  width: 40px;
+  height: 40px;
+  float: left;
   cursor: pointer;
 }
 #notes {
@@ -104,9 +111,11 @@ body,html{
       <div id="reform2"></div>
       <div id="reform3"></div>
       <div id="reform4"></div>
-      <div id="floatingbuttons">
-        <div id="floatinggoprev"></div>
-        <div id="floatinggonext"></div>
+      <div id="buttons">
+        <div id="gofirst"></div>
+        <div id="goprev"></div>
+        <div id="gonext"></div>
+        <div id="golast"></div>
       </div>
   </div>
 </div>
