@@ -179,11 +179,11 @@ $(document).ready(function(){
         goNext: function() {
             this.advance();
         },
-        
+
         goPrev: function() {
             this.goback();
         },
-        
+
         goLast: function() {
             this.golast();
         },
@@ -313,7 +313,6 @@ $(document).ready(function(){
                                 label: party.get('label'),
                             });
 
-                            
                         }
                     });
                     possiblepar = _.sortBy(possiblepar, function(res) {
@@ -351,48 +350,45 @@ $(document).ready(function(){
             return _.sortBy(varpar,function (party) { return party['value']; }).reverse();
 
         },
-        
+
         dhontNacional: function() {
             var electedseats = [];
-            DataStore.each(function(prov){
-                if(prov.get('provincia') == 'total') {
-                    var total = 0;
-                    _.each(prov.rows, function(row) {
-                        if(!row.get("statistical") || row.get('oid') === 'invalid' || row.get('oid') === 'blank') {
-                            total += row.get("amount");
-                        }
-                    });
-                    var minval = 0;
-                    var parties = _.reject(prov.rows, function(row) {
-                        return row.get("amount") < minval || row.get("statistical") === true;
-                    });
-                    var possiblepar = [];
-                    _.each(parties, function(party){
-                        if (!party.get("statistical")) {
-                            for (var i = 1; i <= circunscripcionUnica[prov.get('provincia')]; i++) {
-                                possiblepar.push({
-                                    value : party.get("amount") / i,
-                                    color : party.get("color"),
-                                    oid   : party.get("oid"),
-                                    label : party.get("label"),
-                                });
-                            };
-                        }
-                    });
-                    possiblepar = _.sortBy(possiblepar, function(res) {
-                        return res["value"];
-                    }).reverse();
-
-                    for (var i = 0; i < circunscripcionUnica[prov.get('provincia')]; i++) {
-                        electedseats.push({
-                            value: possiblepar[i]['value'],
-                            color: possiblepar[i]['color'],
-                            oid  : possiblepar[i]['oid'],
-                            label: possiblepar[i]['label'],
+            var prov = DataStore.getTotal();
+            var total = 0;
+            _.each(prov.rows, function(row) {
+                if(!row.get("statistical") || row.get('oid') === 'invalid' || row.get('oid') === 'blank') {
+                    total += row.get("amount");
+                }
+            });
+            var minval = 0;
+            var parties = _.reject(prov.rows, function(row) {
+                return row.get("amount") < minval || row.get("statistical") === true;
+            });
+            var possiblepar = [];
+            _.each(parties, function(party){
+                if (!party.get("statistical")) {
+                    for (var i = 1; i <= circunscripcionUnica[prov.get('provincia')]; i++) {
+                        possiblepar.push({
+                            value : party.get("amount") / i,
+                            color : party.get("color"),
+                            oid   : party.get("oid"),
+                            label : party.get("label"),
                         });
                     };
                 }
             });
+            possiblepar = _.sortBy(possiblepar, function(res) {
+                return res["value"];
+            }).reverse();
+
+            for (var i = 0; i < circunscripcionUnica[prov.get('provincia')]; i++) {
+                electedseats.push({
+                    value: possiblepar[i]['value'],
+                    color: possiblepar[i]['color'],
+                    oid  : possiblepar[i]['oid'],
+                    label: possiblepar[i]['label'],
+                });
+            };
 
             var varpar = [];
             for (var i = 0; i < electedseats.length; i++) {
@@ -414,7 +410,7 @@ $(document).ready(function(){
             return _.sortBy(varpar,function (party) { return party['value']; }).reverse();
 
         },
-        
+
         dhont50: function() {
             var electedseats = [];
             DataStore.each(function(prov){
@@ -477,7 +473,7 @@ $(document).ready(function(){
             return _.sortBy(varpar,function (party) { return party['value']; }).reverse();
 
         },
-        
+
         dhontUG: function() {
             var electedseats = [];
             DataStore.each(function(prov){
@@ -589,7 +585,7 @@ $(document).ready(function(){
             this.goback = function(){ return that.initial();};
             this.goLast = function(){ return that.stepReform1();};
         },
-        
+
         step1: function() {
             var drawable = this.drawParties();
             var drawable = this.drawStat(drawable, 'invalid', '#444', 'Nulos');
@@ -665,7 +661,7 @@ $(document).ready(function(){
             $('#notes2').hide('fast', function(){
                 $('#notes2').html(ContentStore.getByKey("postparliament1").get("value")).fadeIn(1500);
                 $('#notes2').fadeIn(1500);
-            
+
             });
             this.parliament = this.paper.g.parliament(630, 680, 180, 40, this.parvalues, {});
             this.hoverParliament(this.parliament);
@@ -741,7 +737,7 @@ $(document).ready(function(){
             this.hoverParliament(this.parliament);
             this.parliament2 = this.paper.g.parliament(630, 1065, 180, 40, this.parvalues2, {});
             this.hoverParliament(this.parliament2);
-            
+
             var that = this;
 
             this.advance = function(){ return that.stepReform2();};
@@ -752,7 +748,7 @@ $(document).ready(function(){
             this.setupPaper(drawable);
             this.parvalues = this.parvalues || this.dhont();
             this.parvalues2 = this.parvalues2 || this.hare();
-            this.parvalues3 = this.parvalues || this.dhont50();
+            this.parvalues3 = this.parvalues3 || this.dhont50();
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
             $('#notes2').html(ContentStore.getByKey("conclusiones").get("value"));
             $('#notes3').html(ContentStore.getByKey("fin").get("value"));
@@ -777,14 +773,14 @@ $(document).ready(function(){
             this.initial();
 
         },
-        
+
         stepReform3: function() {
             var drawable = this.drawParties();
             this.setupPaper(drawable);
             this.parvalues = this.parvalues || this.dhont();
             this.parvalues2 = this.parvalues2 || this.hare();
-            this.parvalues3 = this.parvalues || this.dhont50();
-            this.parvalues4 = this.parvalues || this.dhontUG();
+            this.parvalues3 = this.parvalues3 || this.dhont50();
+            this.parvalues4 = this.parvalues4 || this.dhontUG();
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
             $('#notes2').html(ContentStore.getByKey("conclusiones").get("value"));
             $('#notes3').html(ContentStore.getByKey("fin").get("value"));
@@ -807,15 +803,15 @@ $(document).ready(function(){
             this.advance = function(){ return that.stepReform4();};
             this.goback = function(){ return that.stepReform2();};
         },
-        
+
         stepReform4: function() {
             var drawable = this.drawParties();
             this.setupPaper(drawable);
             this.parvalues = this.parvalues || this.dhont();
             this.parvalues2 = this.parvalues2 || this.hare();
-            this.parvalues3 = this.parvalues || this.dhont50();
-            this.parvalues4 = this.parvalues || this.dhontUG();
-            this.parvalues5 = this.parvalues || this.dhontNacional();
+            this.parvalues3 = this.parvalues3 || this.dhont50();
+            this.parvalues4 = this.parvalues4 || this.dhontUG();
+            this.parvalues5 = this.parvalues5 || this.dhontNacional();
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
             $('#notes2').html(ContentStore.getByKey("conclusiones").get("value"));
             $('#notes3').html(ContentStore.getByKey("fin").get("value"));
@@ -833,7 +829,7 @@ $(document).ready(function(){
             this.hoverParliament(this.parliament3);
             this.parliament4 = this.paper.g.parliament(630, 1755, 180, 40, this.parvalues4, {});
             this.hoverParliament(this.parliament4);
-            this.parliament5 = this.paper.g.parliament(630, 2070, 180, 40, this.parvalues4, {});
+            this.parliament5 = this.paper.g.parliament(630, 2070, 180, 40, this.parvalues5, {});
             this.hoverParliament(this.parliament5);
 
             var that = this;
@@ -1018,7 +1014,7 @@ $(document).ready(function(){
         "Lugo": 4,
     };
     var circunscripcionUnica = {
-        "total": 370,
+        "total": 400,
     };
 });
 
