@@ -18,7 +18,6 @@ $(document).ready(function(){
         }
 
     };
-
     _.extend(Backbone.Partyres.prototype, {
 
         get : function(attr) {
@@ -34,6 +33,16 @@ $(document).ready(function(){
         },
 
     });
+
+    window.Router = Backbone.Router.extend({
+        routes: {
+            "!jor":                 "help",    // #help
+            "search/:query":        "search",  // #search/kiwis
+            "search/:query/p:page": "search"   // #search/kiwis/p7
+        },
+    });
+
+    window.AppRouter = new Router;
 
     window.Content = Backbone.Model.extend({
         initialize: function() {
@@ -586,7 +595,7 @@ $(document).ready(function(){
                 $('#floatingbuttons').fadeIn(1500);
             });
             var that = this;
-            this.advance = function(){ return that.step1();};
+            this.advance = function(){ return AppRouter.navigate("!jor");}//that.step1();};
             this.goback = function(){ return that.initial();};
             this.golast = function(){ return that.stepReform4();};
             this.gofirst = function(){ return that.initial();};
