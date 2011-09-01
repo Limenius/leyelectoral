@@ -2,10 +2,10 @@
 
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-require_once __DIR__.'/silex.phar';
-require_once __DIR__.'/MongoDb.php';
-require_once __DIR__.'/parties.php';
-require_once __DIR__.'/markdown.php';
+require_once __DIR__.'/../silex.phar';
+require_once __DIR__.'/../MongoDb.php';
+require_once __DIR__.'/../parties.php';
+require_once __DIR__.'/../markdown.php';
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -14,15 +14,15 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 $app = new Silex\Application();
 $app['parties'] = $parties;
 $app['colors']  = $colors;
-$app['content_dir'] = __DIR__.'/content/';
+$app['content_dir'] = __DIR__.'/../content/';
 
 $staticPage = function($page, $explanations) {
     return $page;
 };
 
 $app->register(new Silex\Extension\TwigExtension(), array(
-    'twig.path'       => __DIR__.'/views',
-    'twig.class_path' => __DIR__.'/vendor/twig/lib',
+    'twig.path'       => __DIR__.'/../views',
+    'twig.class_path' => __DIR__.'/../vendor/twig/lib',
 ));
 
 $app->register(new Leyelectoral\MongoExtension(), array(
