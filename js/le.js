@@ -36,10 +36,21 @@ $(document).ready(function(){
 
     window.Router = Backbone.Router.extend({
         routes: {
-            "!jor":                 "help",    // #help
-            "search/:query":        "search",  // #search/kiwis
-            "search/:query/p:page": "search"   // #search/kiwis/p7
+            "":                 "inicial",
+            "!abstencion":      "abstencion",
+            "!nulos":           "nulos",
         },
+
+        abstencion: function() {
+            App.step1();
+        },
+        inicial: function() {
+            App.initial();
+        },
+        nulos: function() {
+            App.step2();
+        },
+
     });
 
     window.AppRouter = new Router;
@@ -595,7 +606,7 @@ $(document).ready(function(){
                 $('#floatingbuttons').fadeIn(1500);
             });
             var that = this;
-            this.advance = function(){ return AppRouter.navigate("!jor");}//that.step1();};
+            this.advance = function(){ return AppRouter.navigate("!abstencion", true);};
             this.goback = function(){ return that.initial();};
             this.golast = function(){ return that.stepReform4();};
             this.gofirst = function(){ return that.initial();};
@@ -611,7 +622,7 @@ $(document).ready(function(){
                 $('#notes').html(ContentStore.getByKey("preabstencion").get("value")).fadeIn(1500);
             });
             var that = this;
-            this.advance = function(){ return that.remove("Abstención", function(){ return that.step2();});};
+            this.advance = function(){ return that.remove("Abstención", function(){ return AppRouter.navigate("!nulos", true);});};
             this.goback = function(){ return that.initial();};
         },
 
@@ -620,6 +631,7 @@ $(document).ready(function(){
             var drawable = this.drawStat(drawable, 'invalid', '#444', 'Nulos');
             var drawable = this.drawStat(drawable, 'blank', '#eee', 'En blanco');
             this.setupPaper(drawable);
+            $('html, body').animate({scrollTop: $(document).height()}, 'slow');
             $('#notes').fadeOut(300, function(){
                 $('#notes').html(ContentStore.getByKey("abstencion").get("value")).fadeIn(1500);
             });

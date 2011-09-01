@@ -16,6 +16,10 @@ $app['parties'] = $parties;
 $app['colors']  = $colors;
 $app['content_dir'] = __DIR__.'/content/';
 
+$staticPage = function($page, $explanations) {
+    return $page;
+};
+
 $app->register(new Silex\Extension\TwigExtension(), array(
     'twig.path'       => __DIR__.'/views',
     'twig.class_path' => __DIR__.'/vendor/twig/lib',
@@ -25,9 +29,7 @@ $app->register(new Leyelectoral\MongoExtension(), array(
     'db.options' => array('db'=>'elecciones', 'collection'=>'provincias'),
 ));
 
-$app->get('/', function () use ($app) {
-    $name = $app['request']->get('name');
-
+$app->get('/', function () use ($app, $staticPage) {
     $explanations  = array();
     $files = array();
     if ($handle = opendir($app['content_dir'].'/short')) {
@@ -43,6 +45,12 @@ $app->get('/', function () use ($app) {
         $fcontent = file_get_contents($app['content_dir'].'/short/'.$file);
         $explanations[str_replace(".md","" , $file)] = Markdown($fcontent);
     }
+
+    $escapedFragment = $app['request']->get('_escaped_fragment_');
+
+    if ($escapedFragment) {
+    return $staticPage($escapedFragment, $explanations);}
+
 
     $db = $app['db']();
     $cursor = $db->find();
