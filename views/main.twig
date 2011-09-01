@@ -27,25 +27,27 @@ body,html{
   width: 960px;
   height: 1700px;
 }
-.gonext {
-  width: 10px;
+#floatingbuttons{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width: 84px;
+  background-color: red;
+  border: 1px solid #000;
+}
+#floatinggoprev {
+  border: 1px solid #000;
+  width: 40px;
+  height: 40px;
+  float: left;
   cursor: pointer;
 }
-.goprev {
-  width: 10px;
+#floatinggonext {
+  border: 1px solid #000;
+  width: 40px;
+  height: 40px;
+  float: right;
   cursor: pointer;
-}
-#gonext {
-  margin: -2195px 0 0 925px;
-}
-#goprev {
-  margin: -20px 0 0 895px;
-}
-#gonext2 {
-  margin: 240px 0 0 413px;
-}
-#goprev2 {
-  margin: -20px 0 0 383px;
 }
 #golast {
   position: absolute;
@@ -57,70 +59,55 @@ body,html{
 #notes {
   float: right;
   width: 475px;
-  height: 280px;
+  height: 270px;
   padding-right: 20px;
-  margin-top: -5px;
+  margin-top: -2180px;
 }
 #notes2 {
-  clear: left;
   width: 430px;
-  height: 220px;
-  padding-top: 1px;
+  height: 210px;
+  margin-top: -1930px;
 }
 #notes3 {
-  height: 50px;
 }
 #reform1 {
-  height: 300px;
-  width: 420px;
+  height: 290px;
+  width: 450px;
 }
 #reform2 {
   height: 330px;
-  width: 420px;
+  width: 450px;
   padding-top: 5px;
 }
 #reform3 {
   height: 350px;
-  width: 420px;
+  width: 450px;
   padding-top: 5px;
 }
 #reform4 {
   height: 350px;
-  width: 420px;
+  width: 450px;
   padding-top: 5px;
 }
 .reformrules {
-  float:left;
   width: 450px;
-}
-.reformparlament {
-  float:left;
-  width: 450px;
-  height: 200px;
-}
-.reformresults {
-  float:left;
-  width: 130px;
-}
-h2{
-  margin-bottom: 0;
 }
 </style>
 <div id="header"></div>
 <div id="wrapper">
     <div id="logo"></div>
   <div id="holder">
-      <div class="gonext" id="gonext">>></div>
-      <div class="goprev" id="goprev"><<</div>
       <div id="notes"></div>
-      <div class="gonext" id="gonext2">>></div>
-      <div class="goprev" id="goprev2"><<</div>
       <div id="notes2"></div>
       <div id="notes3"></div>
       <div id="reform1"></div>
       <div id="reform2"></div>
       <div id="reform3"></div>
       <div id="reform4"></div>
+      <div id="floatingbuttons">
+        <div id="floatinggoprev"></div>
+        <div id="floatinggonext"></div>
+      </div>
   </div>
 </div>
 
