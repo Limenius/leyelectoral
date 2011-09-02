@@ -769,6 +769,12 @@ $(document).ready(function(){
             var drawable = this.drawStat(drawable, 'nonvote', '#000', 'Abstención');
             this.setupPaper(drawable);
             $('#floatingbuttons').hide();
+            $('#notes2').html(ContentStore.getByKey("blank").get("value"));
+            $('#notes3').html(ContentStore.getByKey("blank").get("value"));
+            $('#reform1').html(ContentStore.getByKey("blank").get("value"));
+            $('#reform2').html(ContentStore.getByKey("blank").get("value"));
+            $('#reform3').html(ContentStore.getByKey("blank").get("value"));
+            $('#reform4').html(ContentStore.getByKey("blank").get("value"));
             $('#notes').fadeOut(300, function(){
                 $('#notes').html(ContentStore.getByKey("inicial").get("value")).fadeIn(2500);
                 $('#floatingbuttons').fadeIn(1500);
@@ -836,6 +842,7 @@ $(document).ready(function(){
         step4: function() {
             var drawable = this.drawParties();
             this.setupPaper(drawable);
+            $('#notes2').html(ContentStore.getByKey("blank").get("value"));
             $('#notes').fadeOut(300, function(){
                 $('#notes').html(ContentStore.getByKey("preparliament").get("value")).fadeIn(1500);
                 $('#notes2').html(ContentStore.getByKey("blank").get("value")).fadeIn(1500);
@@ -904,6 +911,7 @@ $(document).ready(function(){
             var drawable = this.drawParties();
             this.setupPaper(drawable);
             this.parvalues = this.parvalues || this.dhont();
+            $('#reform1').html(ContentStore.getByKey("blank").get("value"));
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
             $('#notes2').html(ContentStore.getByKey("conclusiones").get("value"));
             $('#reform1').html(ContentStore.getByKey("blank").get("value"));
@@ -922,6 +930,7 @@ $(document).ready(function(){
             this.setupPaper(drawable);
             this.parvalues = this.parvalues || this.dhont();
             this.parvalues2 = this.parvalues2 || this.hare();
+            $('#reform2').html(ContentStore.getByKey("blank").get("value"));
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
             $('#notes2').html(ContentStore.getByKey("conclusiones").get("value"));
             $('#notes3').html(ContentStore.getByKey("fin").get("value"));
@@ -944,6 +953,7 @@ $(document).ready(function(){
             this.parvalues = this.parvalues || this.dhont();
             this.parvalues2 = this.parvalues2 || this.hare();
             this.parvalues3 = this.parvalues3 || this.dhont50();
+            $('#reform3').html(ContentStore.getByKey("blank").get("value"));
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
             $('#notes2').html(ContentStore.getByKey("conclusiones").get("value"));
             $('#notes3').html(ContentStore.getByKey("fin").get("value"));
@@ -976,6 +986,7 @@ $(document).ready(function(){
             this.parvalues2 = this.parvalues2 || this.hare();
             this.parvalues3 = this.parvalues3 || this.dhont50();
             this.parvalues4 = this.parvalues4 || this.dhontUG();
+            $('#reform4').html(ContentStore.getByKey("blank").get("value"));
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
             $('#notes2').html(ContentStore.getByKey("conclusiones").get("value"));
             $('#notes3').html(ContentStore.getByKey("fin").get("value"));
