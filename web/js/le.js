@@ -194,7 +194,7 @@ $(document).ready(function(){
         initialize: function() {
             _.bindAll(this, "render", "remove", "initial", "setupPaper", "goNext", "goPrev", "goLast", "goFirst", "drawParties", "dhont", "dhont50");
             DataStore.bind('redraw', this.render);
-            this.paper = Raphael("holder", 1000, 2400);
+            this.paper = Raphael("holder", "100%", "100%");
             this.cx = 150;
             this.cy = 350;
         },
@@ -775,6 +775,12 @@ $(document).ready(function(){
             $('#reform2').html(ContentStore.getByKey("blank").get("value"));
             $('#reform3').html(ContentStore.getByKey("blank").get("value"));
             $('#reform4').html(ContentStore.getByKey("blank").get("value"));
+            $('#notes2').hide();
+            $('#notes3').hide();
+            $('#reform1').hide();
+            $('#reform2').hide();
+            $('#reform3').hide();
+            $('#reform4').hide();
             $('#notes').fadeOut(300, function(){
                 $('#notes').html(ContentStore.getByKey("inicial").get("value")).fadeIn(2500);
                 $('#floatingbuttons').fadeIn(1500);
@@ -805,7 +811,6 @@ $(document).ready(function(){
             var drawable = this.drawStat(drawable, 'invalid', '#444', 'Nulos');
             var drawable = this.drawStat(drawable, 'blank', '#eee', 'En blanco');
             this.setupPaper(drawable);
-            $('html, body').animate({scrollTop: $(document).height()}, 'slow');
             $('#notes').fadeOut(300, function(){
                 $('#notes').html(ContentStore.getByKey("abstencion").get("value")).fadeIn(1500);
             });
@@ -842,11 +847,15 @@ $(document).ready(function(){
         step4: function() {
             var drawable = this.drawParties();
             this.setupPaper(drawable);
+            
+            $('#holder').css('height','500px');
+            $('#notes').css('margin-top','-280px');
+            
             $('#notes2').html(ContentStore.getByKey("blank").get("value"));
             $('#notes').fadeOut(300, function(){
                 $('#notes').html(ContentStore.getByKey("preparliament").get("value")).fadeIn(1500);
-                $('#notes2').html(ContentStore.getByKey("blank").get("value")).fadeIn(1500);
             });
+            $('html, body').animate({scrollTop: $(document).height()}, 3500);
             var that = this;
 
             this.advance = function(){ return that.step5();};
@@ -858,7 +867,10 @@ $(document).ready(function(){
             var that = this;
 
             this.parvalues = this.parvalues || this.dhont();
+            $('#holder').css('height','805px');
+            $('#notes').css('margin-top','-585px');
 
+            $('html, body').animate({scrollTop: $(document).height()}, 3500);
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
             $('#notes2').hide('fast', function(){
                 $('#notes2').html(ContentStore.getByKey("postparliament1").get("value")).fadeIn(1500);
@@ -894,7 +906,7 @@ $(document).ready(function(){
             this.setupPaper(drawable);
 
             this.parvalues = this.parvalues || this.dhont();
-
+            
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
             $('#notes3').html(ContentStore.getByKey("blank").get("value"));
             $('#notes2').fadeOut(300, function(){
@@ -911,6 +923,7 @@ $(document).ready(function(){
             var drawable = this.drawParties();
             this.setupPaper(drawable);
             this.parvalues = this.parvalues || this.dhont();
+            
             $('#reform1').html(ContentStore.getByKey("blank").get("value"));
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
             $('#notes2').html(ContentStore.getByKey("conclusiones").get("value"));
@@ -930,6 +943,11 @@ $(document).ready(function(){
             this.setupPaper(drawable);
             this.parvalues = this.parvalues || this.dhont();
             this.parvalues2 = this.parvalues2 || this.hare();
+            
+            $('#holder').css('height','1120px');
+            $('#notes').css('margin-top','-900px');
+            $('#notes2').css('margin-top','-650px');
+            
             $('#reform2').html(ContentStore.getByKey("blank").get("value"));
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
             $('#notes2').html(ContentStore.getByKey("conclusiones").get("value"));
@@ -937,6 +955,7 @@ $(document).ready(function(){
             $('#reform1').hide('fast', function(){
                 $('#reform1').html(ContentStore.getByKey("reforma1").get("value")).fadeIn(1500);
             });
+            $('html, body').animate({scrollTop: $(document).height()}, 3500);
             this.parliament = this.paper.g.parliament(630, 680, 180, 40, this.parvalues, {});
             this.hoverParliament(this.parliament);
             this.parliament2 = this.paper.g.parliament(630, 1065, 180, 40, this.parvalues2, {});
@@ -953,6 +972,11 @@ $(document).ready(function(){
             this.parvalues = this.parvalues || this.dhont();
             this.parvalues2 = this.parvalues2 || this.hare();
             this.parvalues3 = this.parvalues3 || this.dhont50();
+            
+            $('#holder').css('height','1460px');
+            $('#notes').css('margin-top','-1240px');
+            $('#notes2').css('margin-top','-990px');
+            
             $('#reform3').html(ContentStore.getByKey("blank").get("value"));
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
             $('#notes2').html(ContentStore.getByKey("conclusiones").get("value"));
@@ -961,6 +985,7 @@ $(document).ready(function(){
             $('#reform2').hide('fast', function(){
                 $('#reform2').html(ContentStore.getByKey("reforma2").get("value")).fadeIn(1500);
             });
+            $('html, body').animate({scrollTop: $(document).height()}, 3500);
             this.parliament = this.paper.g.parliament(630, 680, 180, 40, this.parvalues, {});
             this.hoverParliament(this.parliament);
             this.parliament2 = this.paper.g.parliament(630, 1065, 180, 40, this.parvalues2, {});
@@ -986,6 +1011,11 @@ $(document).ready(function(){
             this.parvalues2 = this.parvalues2 || this.hare();
             this.parvalues3 = this.parvalues3 || this.dhont50();
             this.parvalues4 = this.parvalues4 || this.dhontUG();
+            
+            $('#holder').css('height','1805px');
+            $('#notes').css('margin-top','-1585px');
+            $('#notes2').css('margin-top','-1335px');
+            
             $('#reform4').html(ContentStore.getByKey("blank").get("value"));
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
             $('#notes2').html(ContentStore.getByKey("conclusiones").get("value"));
@@ -995,6 +1025,7 @@ $(document).ready(function(){
             $('#reform3').hide('fast', function(){
                 $('#reform3').html(ContentStore.getByKey("reforma3").get("value")).fadeIn(1500);
             });
+            $('html, body').animate({scrollTop: $(document).height()}, 3500);
             this.parliament = this.paper.g.parliament(630, 680, 180, 40, this.parvalues, {});
             this.hoverParliament(this.parliament);
             this.parliament2 = this.paper.g.parliament(630, 1065, 180, 40, this.parvalues2, {});
@@ -1018,6 +1049,11 @@ $(document).ready(function(){
             this.parvalues3 = this.parvalues3 || this.dhont50();
             this.parvalues4 = this.parvalues4 || this.dhontUG();
             this.parvalues5 = this.parvalues5 || this.dhontNacional();
+            
+            $('#holder').css('height','2120px');
+            $('#notes').css('margin-top','-1900px');
+            $('#notes2').css('margin-top','-1650px');
+            
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
             $('#notes2').html(ContentStore.getByKey("conclusiones").get("value"));
             $('#notes3').html(ContentStore.getByKey("fin").get("value"));
@@ -1027,6 +1063,7 @@ $(document).ready(function(){
             $('#reform4').hide('fast', function(){
                 $('#reform4').html(ContentStore.getByKey("reforma4").get("value")).fadeIn(1500);
             });
+            $('html, body').animate({scrollTop: $(document).height()}, 3500);
             this.parliament = this.paper.g.parliament(630, 680, 180, 40, this.parvalues, {});
             this.hoverParliament(this.parliament);
             this.parliament2 = this.paper.g.parliament(630, 1065, 180, 40, this.parvalues2, {});

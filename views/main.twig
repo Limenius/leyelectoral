@@ -25,7 +25,7 @@ body,html{
   float: left;
   margin: -215px 0;
   width: 960px;
-  height: 1700px;
+  height: 500px;
 }
 #buttons{
   position:fixed;
@@ -78,12 +78,12 @@ body,html{
   width: 475px;
   height: 270px;
   padding-right: 20px;
-  margin-top: -2180px;
+  margin-top: -280px;
 }
 #notes2 {
   width: 430px;
   height: 210px;
-  margin-top: -1930px;
+  margin-top: -335px;
 }
 #notes3 {
 }
@@ -131,7 +131,7 @@ body,html{
 </div>
 
 {% for key, explanation in explanations %}
-<div id="shortcontent-{{key}}" class="shortcontent" style="visibility:hidden">{{ explanation | raw }}</div>
+<div id="shortcontent-{{key}}" class="shortcontent" style="visibility:hidden;display:none;">{{ explanation | raw }}</div>
 {% endfor %}
 
 <script>
