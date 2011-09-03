@@ -932,7 +932,7 @@ $(document).ready(function(){
             
             $('#holder').css('height','805px');
             $('#notes').css('margin-top','-585px');
-            $('#notes2').css('margin-top','-335px');
+            $('#notes2').css('margin-top','-35px');
             
             $('html, body').animate({scrollTop: $(document).height()}, 3500);
             
@@ -960,7 +960,6 @@ $(document).ready(function(){
             
             $('#holder').css('height','1120px');
             $('#notes').css('margin-top','-900px');
-            $('#notes2').css('margin-top','-650px');
             
             $('#reform2').hide();
             
@@ -991,7 +990,6 @@ $(document).ready(function(){
             
             $('#holder').css('height','1460px');
             $('#notes').css('margin-top','-1240px');
-            $('#notes2').css('margin-top','-990px');
             
             $('#reform3').hide();
             
@@ -1032,7 +1030,6 @@ $(document).ready(function(){
             
             $('#holder').css('height','1805px');
             $('#notes').css('margin-top','-1585px');
-            $('#notes2').css('margin-top','-1335px');
             
             $('#reform4').hide();
             
@@ -1072,7 +1069,6 @@ $(document).ready(function(){
             
             $('#holder').css('height','2120px');
             $('#notes').css('margin-top','-1900px');
-            $('#notes2').css('margin-top','-1650px');
             
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
             $('#notes2').html(ContentStore.getByKey("conclusiones").get("value"));
