@@ -147,21 +147,23 @@ $(document).ready(function(){
                 });
                 var total = this.getTotal();
                 this.each(function(data) {
-                    for (var i = 0; i < data.rows.length; i++) {
+                    if(data.get("provincia") != "total") {
+                        for (var i = 0; i < data.rows.length; i++) {
 
-                        var result = _.detect(total.rows, function(row) {return row.get('oid') === data.rows[i].get("oid");})
-                        if (result) {
-                            result.set({"amount": result.get("amount") + data.rows[i].get("amount")});
-                        } else {
-                            total.addRow({
-                                label: data.rows[i].get("label"),
-                                color: data.rows[i].get("color"),
-                                amount: data.rows[i].get("amount"),
-                                oid: data.rows[i].get("oid"),
-                                statistical: data.rows[i].get("statistical"),
-                            });
-                        }
-                    };
+                            var result = _.detect(total.rows, function(row) {return row.get('oid') === data.rows[i].get("oid");})
+                            if (result) {
+                                result.set({"amount": result.get("amount") + data.rows[i].get("amount")});
+                            } else {
+                                total.addRow({
+                                    label: data.rows[i].get("label"),
+                                    color: data.rows[i].get("color"),
+                                    amount: data.rows[i].get("amount"),
+                                    oid: data.rows[i].get("oid"),
+                                    statistical: data.rows[i].get("statistical"),
+                                });
+                            }
+                        };
+                    }
                 });
             }
         }
@@ -190,7 +192,7 @@ $(document).ready(function(){
         parliament4: null,
 
         initialize: function() {
-            _.bindAll(this, "render", "remove", "initial", "setupPaper", "goNext", "goPrev", "goLast", "goFirst", "drawParties", "dhont");
+            _.bindAll(this, "render", "remove", "initial", "setupPaper", "goNext", "goPrev", "goLast", "goFirst", "drawParties", "dhont", "dhont50");
             DataStore.bind('redraw', this.render);
             this.paper = Raphael("holder", 1000, 2400);
             this.cx = 150;
@@ -282,7 +284,7 @@ $(document).ready(function(){
 
             var varpar = [];
             for (var i = 0; i < electedseats.length; i++) {
-                thisvarpar = _.detect(varpar, function(party) {
+                var thisvarpar = _.detect(varpar, function(party) {
                     return party['oid'] === electedseats[i]['oid'];
                 });
                 if (thisvarpar){
@@ -299,6 +301,109 @@ $(document).ready(function(){
 
             return _.sortBy(varpar,function (party) { return party['value']; }).reverse();
 
+        },
+
+        dhont50: function() {
+            var electedseats = [];
+            var uniqprov = [];
+            DataStore.each(function(prov){
+                if(prov.get('provincia') !== 'total') {
+                    var total = 0;
+                    _.each(prov.rows, function(row) {
+                        if(!row.get("statistical") || row.get('oid') === 'invalid' || row.get('oid') === 'blank') {
+                            total += row.get("amount");
+                        }
+                    });
+                    var minval = total*0.03;
+                    var parties = _.reject(prov.rows, function(row) {
+                        return row.get("amount") < 100 || row.get("statistical") === true;
+                    });
+                    var possiblepar = [];
+                    _.each(parties, function(party){
+                        if (!party.get("statistical")) {
+                            for (var i = 1; i <= circunscripciones[prov.get('provincia')]; i++) {
+                                possiblepar.push({
+                                    value : party.get("amount") / i,
+                                    color : party.get("color"),
+                                    oid   : party.get("oid"),
+                                    label : party.get("label"),
+                                });
+                            };
+                        }
+                    });
+                    possiblepar = _.sortBy(possiblepar, function(res) {
+                        return res["value"];
+                    }).reverse();
+
+                    for (var i = 0; i < circunscripciones[prov.get('provincia')]; i++) {
+                        electedseats.push({
+                            value: possiblepar[i]['value'],
+                            color: possiblepar[i]['color'],
+                            oid  : possiblepar[i]['oid'],
+                            label: possiblepar[i]['label'],
+                        });
+                    };
+
+                    var remainProv = [];
+
+                    for (var i = circunscripciones[prov.get('provincia')]; i < possiblepar.length; i++) {
+                        var oid = possiblepar[i]['oid'];
+                        if(!_.include(remainProv,oid)){
+                            remainProv.push(oid);
+                            if(uniqprov[oid]){
+                                uniqprov[oid]['value'] += possiblepar[i]['value'];
+                            }else{
+                                uniqprov[oid] = {
+                                    'oid' : possiblepar[i]['oid'],
+                                    'color': possiblepar[i]['color'],
+                                    'value': possiblepar[i]['value'],
+                                    'label': possiblepar[i]['label'],
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            var possiblepar = [];
+            for (var j = 1; j <= 50; j++) {
+                for (var i in uniqprov) {
+                    possiblepar.push({
+                        value : uniqprov[i]["value"] / j,
+                        color : uniqprov[i]["color"],
+                        oid   : uniqprov[i]["oid"],
+                        label : uniqprov[i]["label"],
+                    });
+                }
+            };
+            possiblepar = _.sortBy(possiblepar, function(res) {
+                return res["value"];
+            }).reverse();
+            for (var i = 0; i < 50; i++) {
+                electedseats.push({
+                    value: possiblepar[i]['value'],
+                    color: possiblepar[i]['color'],
+                    oid  : possiblepar[i]['oid'],
+                    label: possiblepar[i]['label'],
+                });
+            };
+            var varpar = [];
+            for (var i = 0; i < electedseats.length; i++) {
+                var thisvarpar = _.detect(varpar, function(party) {
+                    return party['oid'] === electedseats[i]['oid'];
+                });
+                if (thisvarpar){
+                    thisvarpar['value'] ++;
+                } else {
+                    varpar.push({
+                        'oid' :electedseats[i]['oid'],
+                        'value' : 1,
+                        'color': electedseats[i]['color'],
+                        'label': electedseats[i]['label']
+                    });
+                }
+            };
+
+            return _.sortBy(varpar,function (party) { return party['value']; }).reverse();
         },
 
         hare: function() {
@@ -357,7 +462,7 @@ $(document).ready(function(){
 
             var varpar = [];
             for (var i = 0; i < electedseats.length; i++) {
-                thisvarpar = _.detect(varpar, function(party) {
+                var thisvarpar = _.detect(varpar, function(party) {
                     return party['oid'] === electedseats[i]['oid'];
                 });
                 if (thisvarpar){
@@ -417,7 +522,7 @@ $(document).ready(function(){
 
             var varpar = [];
             for (var i = 0; i < electedseats.length; i++) {
-                thisvarpar = _.detect(varpar, function(party) {
+                var thisvarpar = _.detect(varpar, function(party) {
                     return party['oid'] === electedseats[i]['oid'];
                 });
                 if (thisvarpar){
@@ -436,7 +541,8 @@ $(document).ready(function(){
 
         },
 
-        dhont50: function() {
+
+        dhontUG: function() {
             var electedseats = [];
             DataStore.each(function(prov){
                 if(prov.get('provincia') !== 'total') {
@@ -478,9 +584,24 @@ $(document).ready(function(){
                 }
             });
 
+
+            ////
+            var prov = DataStore.getTotal();
+            var total = 0;
+            _.each(prov.rows, function(row) {
+                if(!row.get("statistical") || row.get('oid') === 'invalid' || row.get('oid') === 'blank') {
+                    total += row.get("amount");
+                }
+            });
+            var minval = 0;
+            var parties = _.reject(prov.rows, function(row) {
+                return row.get("amount") < minval || row.get("statistical") === true;
+            });
+            var possiblepar = [];
+
             var varpar = [];
             for (var i = 0; i < electedseats.length; i++) {
-                thisvarpar = _.detect(varpar, function(party) {
+                var thisvarpar = _.detect(varpar, function(party) {
                     return party['oid'] === electedseats[i]['oid'];
                 });
                 if (thisvarpar){
@@ -495,55 +616,102 @@ $(document).ready(function(){
                 }
             };
 
-            return _.sortBy(varpar,function (party) { return party['value']; }).reverse();
-
-        },
-
-        dhontUG: function() {
-            var electedseats = [];
-            DataStore.each(function(prov){
-                if(prov.get('provincia') !== 'total') {
-                    var total = 0;
-                    _.each(prov.rows, function(row) {
-                        if(!row.get("statistical") || row.get('oid') === 'invalid' || row.get('oid') === 'blank') {
-                            total += row.get("amount");
+            var possiblepar = [];
+            _.each(parties, function(party){
+                if (!party.get("statistical")) {
+                    var thisvarpar = _.detect(varpar, function(tparty) {
+                        return tparty['oid'] === party.get('oid');
+                    });
+                    var initialbox = thisvarpar ? thisvarpar['value'] +1  : 1;
+                    for (var j = initialbox; j <= initialbox+20; j++) {
+                        if(party.get("amount") > 1) {
+                            var valtopush = party.get("amount") / j;
+                            possiblepar.push({
+                                value : valtopush,
+                                color : party.get("color"),
+                                oid   : party.get("oid"),
+                                label : party.get("label"),
+                            });
                         }
-                    });
-                    var minval = total*0.03;
-                    var parties = _.reject(prov.rows, function(row) {
-                        return row.get("amount") < minval || row.get("statistical") === true;
-                    });
-                    var possiblepar = [];
-                    _.each(parties, function(party){
-                        if (!party.get("statistical")) {
-                            for (var i = 1; i <= circunscripcionesUG[prov.get('provincia')]; i++) {
-                                possiblepar.push({
-                                    value : party.get("amount") / i,
-                                    color : party.get("color"),
-                                    oid   : party.get("oid"),
-                                    label : party.get("label"),
-                                });
-                            };
-                        }
-                    });
-                    possiblepar = _.sortBy(possiblepar, function(res) {
-                        return res["value"];
-                    }).reverse();
-
-                    for (var i = 0; i < circunscripcionesUG[prov.get('provincia')]; i++) {
-                        electedseats.push({
-                            value: possiblepar[i]['value'],
-                            color: possiblepar[i]['color'],
-                            oid  : possiblepar[i]['oid'],
-                            label: possiblepar[i]['label'],
-                        });
                     };
                 }
             });
+            var possiblepar = _.reject(possiblepar, function(part) {
+                return (part["value"] == null || part["value"] == 0);
+            });
+            possiblepar = _.sortBy(possiblepar, function(res) {
+                return res["value"];
+            }).reverse();
 
-            var varpar = [];
-            for (var i = 0; i < electedseats.length; i++) {
-                thisvarpar = _.detect(varpar, function(party) {
+            for (var i = 0; i < 20; i++) {
+                electedseats.push({
+                    value: possiblepar[i]['value'],
+                    color: possiblepar[i]['color'],
+                    oid  : possiblepar[i]['oid'],
+                    label: possiblepar[i]['label'],
+                });
+            };
+
+            for (var i = 350; i < electedseats.length; i++) {
+                var thisvarpar = _.detect(varpar, function(party) {
+                    return party['oid'] === electedseats[i]['oid'];
+                });
+                if (thisvarpar){
+                    thisvarpar['value'] ++;
+                } else {
+                    varpar.push({
+                        'oid' :electedseats[i]['oid'],
+                        'value' : 1,
+                        'color': electedseats[i]['color'],
+                        'label': electedseats[i]['label']
+                    });
+                }
+            };
+
+            ////
+            var possiblepar = [];
+            _.each(parties, function(party){
+                if (!party.get("statistical")) {
+                    var thisvarpar = _.detect(varpar, function(tparty) {
+                        return tparty['oid'] === party.get('oid');
+                    });
+                    var initialbox = thisvarpar ? thisvarpar['value'] +1  : 1;
+                    for (var j = initialbox; j <= initialbox+30; j++) {
+                        if(party.get("amount") > 0) {
+                            var valtopush = party.get("amount") * party.get("amount") / j;
+                            console.log(party.get("amount"));
+                            console.log(valtopush);
+                            console.log(j);
+                            console.log(party.get("oid"));
+                            possiblepar.push({
+                                value : valtopush,
+                                color : party.get("color"),
+                                oid   : party.get("oid"),
+                                label : party.get("label"),
+                            });
+                        }
+                    };
+                }
+            });
+            var possiblepar = _.reject(possiblepar, function(part) {
+                return (part["value"] == null || part["value"] == 0);
+            });
+            possiblepar = _.sortBy(possiblepar, function(res) {
+                return res["value"];
+            }).reverse();
+
+            for (var i = 0; i < 30; i++) {
+                electedseats.push({
+                    value: possiblepar[i]['value'],
+                    color: possiblepar[i]['color'],
+                    oid  : possiblepar[i]['oid'],
+                    label: possiblepar[i]['label'],
+                });
+            };
+
+
+            for (var i = 370; i < electedseats.length; i++) {
+                var thisvarpar = _.detect(varpar, function(party) {
                     return party['oid'] === electedseats[i]['oid'];
                 });
                 if (thisvarpar){
