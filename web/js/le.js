@@ -768,6 +768,12 @@ $(document).ready(function(){
             var drawable = this.drawStat(drawable, 'blank', '#fff', 'En blanco');
             var drawable = this.drawStat(drawable, 'nonvote', '#000', 'Abstención');
             this.setupPaper(drawable);
+            
+            $('#holder').css('height','500px');
+            $('#notes').css('margin-top','-280px');
+
+            $('html, body').animate({scrollTop: $(document).height()}, 3500);
+            
             $('#floatingbuttons').hide();
             $('#notes2').html(ContentStore.getByKey("blank").get("value"));
             $('#notes3').html(ContentStore.getByKey("blank").get("value"));
@@ -924,8 +930,16 @@ $(document).ready(function(){
             this.setupPaper(drawable);
             this.parvalues = this.parvalues || this.dhont();
             
+            $('#holder').css('height','805px');
+            $('#notes').css('margin-top','-585px');
+            $('#notes2').css('margin-top','-335px');
+            
+            $('html, body').animate({scrollTop: $(document).height()}, 3500);
+            
             $('#reform1').html(ContentStore.getByKey("blank").get("value"));
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
+            $('#reform1').hide();
+            
             $('#notes2').html(ContentStore.getByKey("conclusiones").get("value"));
             $('#reform1').html(ContentStore.getByKey("blank").get("value"));
             $('#notes3').hide('fast', function(){
@@ -947,6 +961,8 @@ $(document).ready(function(){
             $('#holder').css('height','1120px');
             $('#notes').css('margin-top','-900px');
             $('#notes2').css('margin-top','-650px');
+            
+            $('#reform2').hide();
             
             $('#reform2').html(ContentStore.getByKey("blank").get("value"));
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
@@ -976,6 +992,8 @@ $(document).ready(function(){
             $('#holder').css('height','1460px');
             $('#notes').css('margin-top','-1240px');
             $('#notes2').css('margin-top','-990px');
+            
+            $('#reform3').hide();
             
             $('#reform3').html(ContentStore.getByKey("blank").get("value"));
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
@@ -1015,6 +1033,8 @@ $(document).ready(function(){
             $('#holder').css('height','1805px');
             $('#notes').css('margin-top','-1585px');
             $('#notes2').css('margin-top','-1335px');
+            
+            $('#reform4').hide();
             
             $('#reform4').html(ContentStore.getByKey("blank").get("value"));
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
@@ -1057,6 +1077,12 @@ $(document).ready(function(){
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
             $('#notes2').html(ContentStore.getByKey("conclusiones").get("value"));
             $('#notes3').html(ContentStore.getByKey("fin").get("value"));
+            $('#notes1').show();
+            $('#notes2').show();
+            $('#notes3').show();
+            $('#reform1').show();
+            $('#reform2').show();
+            $('#reform3').show();
             $('#reform1').html(ContentStore.getByKey("reforma1").get("value"));
             $('#reform2').html(ContentStore.getByKey("reforma2").get("value"));
             $('#reform3').html(ContentStore.getByKey("reforma3").get("value"));
