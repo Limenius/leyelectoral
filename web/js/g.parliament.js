@@ -140,7 +140,7 @@ Raphael.fn.g.parliament = function (cx, cy, rmax, rmin, values, opts, dy, rp) {
         var cir = paper.circle(seat[i]['posx'] * seat[i]['rrow']+ cx , -seat[i]['posy'] * seat[i]['rrow']+ cy , rp);
         cir.attr({fill: color});
         cir.attr({stroke: "#888"});
-        covers.push(paper.circle(seat[i]['posx'] * seat[i]['rrow']+ cx , -seat[i]['posy'] * seat[i]['rrow']+ cy , rp * 2 ).attr(this.g.shim));
+        //covers.push(paper.circle(seat[i]['posx'] * seat[i]['rrow']+ cx , -seat[i]['posy'] * seat[i]['rrow']+ cy , rp * 2 ).attr(this.g.shim));
         cover2legends.push(coloridx);
 
     }
@@ -171,25 +171,25 @@ Raphael.fn.g.parliament = function (cx, cy, rmax, rmin, values, opts, dy, rp) {
     legend(legends, 'flower', 'east');
     chart.covers = covers;
     chart.hover = function(fin, fout) {
-        fout = fout || function () {};
-        var that = this;
-        for (var i = 0; i < covers.length; i++) {
-            (function (cover, j) {
-                var o = {
-                    cover: cover,
-                    cx: cx,
-                    cy: cy,
-                    value: values[j],
-                    label: that.labels && that.labels[cover2legends[j]],
-                };
-                cover.mouseover(function () {
-                    fin.call(o);
-                }).mouseout(function () {
-                    fout.call(o);
-                });
-            })(covers[i], i);
-        }
-        return this;
+        //fout = fout || function () {};
+        //var that = this;
+        //for (var i = 0; i < covers.length; i++) {
+        //    (function (cover, j) {
+        //        var o = {
+        //            cover: cover,
+        //            cx: cx,
+        //            cy: cy,
+        //            value: values[j],
+        //            label: that.labels && that.labels[cover2legends[j]],
+        //        };
+        //        cover.mouseover(function () {
+        //            fin.call(o);
+        //        }).mouseout(function () {
+        //            fout.call(o);
+        //        });
+        //    })(covers[i], i);
+        //}
+        //return this;
     }
 
     return chart;
