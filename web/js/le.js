@@ -36,19 +36,59 @@ $(document).ready(function(){
 
     window.Router = Backbone.Router.extend({
         routes: {
-            "":                 "inicial",
-            "!abstencion":      "abstencion",
-            "!nulos":           "nulos",
+            "":                     "inicial",
+            "!abstencion":          "abstencion",
+            "!nulos":               "nulos",
+            "!enblanco":            "enblanco",
+            "!votospartidos":       "votospartidos",
+            "!sistemaactual":       "sistemaactual",
+            "!congresodiputados":   "congresodiputados",
+            "!votosescaño":         "votosescaño",
+            "!propuestas":          "propuestas",
+            "!reformaelectoral1":   "reforma1",
+            "!reformaelectoral2":   "reforma2",
+            "!reformaelectoral3":   "reforma3",
+            "!reformaelectoral4":   "reforma4",
         },
 
-        abstencion: function() {
-            App.step1();
-        },
         inicial: function() {
             App.initial();
         },
+        abstencion: function() {
+            App.step1();
+        },
         nulos: function() {
             App.step2();
+        },
+        enblanco: function() {
+            App.step2bis();
+        },
+        votospartidos: function() {
+            App.step3();
+        },
+        sistemaactual: function() {
+            App.step4();
+        },
+        congresodiputados: function() {
+            App.step5();
+        },
+        votosescaño: function() {
+            App.step6();
+        },
+        propuestas: function() {
+            App.stepFin();
+        },
+        reforma1: function() {
+            App.stepReform1();
+        },
+        reforma2: function() {
+            App.stepReform2();
+        },
+        reforma3: function() {
+            App.stepReform3();
+        },
+        reforma4: function() {
+            App.stepReform4();
         },
 
     });
@@ -772,7 +812,7 @@ $(document).ready(function(){
             $('#holder').css('height','500px');
             $('#notes').css('margin-top','-280px');
 
-            $('html, body').animate({scrollTop: $(document).height()}, 3500);
+            $('html, body').animate({scrollTop: $(document).height()}, 4000);
             
             $('#floatingbuttons').hide();
             $('#notes2').html(ContentStore.getByKey("blank").get("value"));
@@ -793,9 +833,9 @@ $(document).ready(function(){
             });
             var that = this;
             this.advance = function(){ return AppRouter.navigate("!abstencion", true);};
-            this.goback = function(){ return that.initial();};
-            this.golast = function(){ return that.stepReform4();};
-            this.gofirst = function(){ return that.initial();};
+            this.goback = function(){ return  AppRouter.navigate("", true);};
+            this.golast = function(){ return AppRouter.navigate("!reformaelectoral4", true);};
+            this.gofirst = function(){ return AppRouter.navigate("!inicial", true);};
         },
 
         step1: function() {
@@ -809,7 +849,7 @@ $(document).ready(function(){
             });
             var that = this;
             this.advance = function(){ return that.remove("Abstención", function(){ return AppRouter.navigate("!nulos", true);});};
-            this.goback = function(){ return that.initial();};
+            this.goback = function(){ return AppRouter.navigate("", true);};
         },
 
         step2: function() {
@@ -822,8 +862,8 @@ $(document).ready(function(){
             });
             var that = this;
 
-            this.advance = function(){ return that.remove("Nulos", function(){ return that.step2bis();});};
-            this.goback = function(){ return that.step1();};
+            this.advance = function(){ return that.remove("Nulos", function(){ return AppRouter.navigate("!enblanco", true);});};
+            this.goback = function(){ return AppRouter.navigate("!abstencion", true);};
         },
 
         step2bis: function() {
@@ -835,8 +875,8 @@ $(document).ready(function(){
             });
             var that = this;
 
-            this.advance = function(){ return that.remove("En blanco", function(){ return that.step3();});};
-            this.goback = function(){ return that.step2();};
+            this.advance = function(){ return that.remove("En blanco", function(){ return AppRouter.navigate("!sistemaactual", true);});};
+            this.goback = function(){ return AppRouter.navigate("!nulos", true);};
         },
 
         step3: function() {
@@ -847,8 +887,8 @@ $(document).ready(function(){
             });
             var that = this;
 
-            this.advance = function(){ return that.step4();};
-            this.goback = function(){ return that.step2bis();};
+            this.advance = function(){ return AppRouter.navigate("!sistemaactual", true);};
+            this.goback = function(){ return AppRouter.navigate("!enblanco", true);};
         },
         step4: function() {
             var drawable = this.drawParties();
@@ -861,11 +901,10 @@ $(document).ready(function(){
             $('#notes').fadeOut(300, function(){
                 $('#notes').html(ContentStore.getByKey("preparliament").get("value")).fadeIn(1500);
             });
-            $('html, body').animate({scrollTop: $(document).height()}, 3500);
             var that = this;
 
-            this.advance = function(){ return that.step5();};
-            this.goback = function(){ return that.step3();};
+            this.advance = function(){ return AppRouter.navigate("!congresodiputados", true);};
+            this.goback = function(){ return AppRouter.navigate("!votospartidos", true);};
         },
         step5: function() {
             var drawable = this.drawParties();
@@ -876,7 +915,7 @@ $(document).ready(function(){
             $('#holder').css('height','805px');
             $('#notes').css('margin-top','-585px');
 
-            $('html, body').animate({scrollTop: $(document).height()}, 3500);
+            $('html, body').animate({scrollTop: $(document).height()}, 4000);
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
             $('#notes2').hide('fast', function(){
                 $('#notes2').html(ContentStore.getByKey("postparliament1").get("value")).fadeIn(1500);
@@ -887,8 +926,8 @@ $(document).ready(function(){
             this.hoverParliament(this.parliament);
             var that = this;
 
-            this.advance = function(){ return that.step6();};
-            this.goback = function(){ return that.step4();};
+            this.advance = function(){ return AppRouter.navigate("!votosescaño", true);};
+            this.goback = function(){ return AppRouter.navigate("!votospartidos", true);};
         },
         hoverParliament: function(parliament) {
             parliament.hover(
@@ -922,8 +961,8 @@ $(document).ready(function(){
             this.hoverParliament(this.parliament);
             var that = this;
 
-            this.advance = function(){ return that.stepFin();};
-            this.goback = function(){ return that.step5();};
+            this.advance = function(){ return AppRouter.navigate("!propuestas", true);};
+            this.goback = function(){ return AppRouter.navigate("!sistemaactual", true);};
         },
         stepFin: function() {
             var drawable = this.drawParties();
@@ -934,7 +973,7 @@ $(document).ready(function(){
             $('#notes').css('margin-top','-585px');
             $('#notes2').css('margin-top','-35px');
             
-            $('html, body').animate({scrollTop: $(document).height()}, 3500);
+            $('html, body').animate({scrollTop: $(document).height()}, 4000);
             
             $('#reform1').html(ContentStore.getByKey("blank").get("value"));
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
@@ -949,8 +988,8 @@ $(document).ready(function(){
             this.hoverParliament(this.parliament);
             var that = this;
 
-            this.advance = function(){ return that.stepReform1();};
-            this.goback = function(){ return that.step6();};
+            this.advance = function(){ return AppRouter.navigate("!reformaelectoral1", true);};
+            this.goback = function(){ return AppRouter.navigate("!votosescaño", true);};
         },
         stepReform1: function() {
             var drawable = this.drawParties();
@@ -970,7 +1009,7 @@ $(document).ready(function(){
             $('#reform1').hide('fast', function(){
                 $('#reform1').html(ContentStore.getByKey("reforma1").get("value")).fadeIn(1500);
             });
-            $('html, body').animate({scrollTop: $(document).height()}, 3500);
+            $('html, body').animate({scrollTop: $(document).height()}, 4000);
             this.parliament = this.paper.g.parliament(630, 680, 180, 40, this.parvalues, {});
             this.hoverParliament(this.parliament);
             this.parliament2 = this.paper.g.parliament(630, 1065, 180, 40, this.parvalues2, {});
@@ -978,8 +1017,8 @@ $(document).ready(function(){
 
             var that = this;
 
-            this.advance = function(){ return that.stepReform2();};
-            this.goback = function(){ return that.stepFin();};
+            this.advance = function(){ return AppRouter.navigate("!reformaelectoral2", true);};
+            this.goback = function(){ return AppRouter.navigate("!propuestas", true);};
         },
         stepReform2: function() {
             var drawable = this.drawParties();
@@ -1001,7 +1040,7 @@ $(document).ready(function(){
             $('#reform2').hide('fast', function(){
                 $('#reform2').html(ContentStore.getByKey("reforma2").get("value")).fadeIn(1500);
             });
-            $('html, body').animate({scrollTop: $(document).height()}, 3500);
+            $('html, body').animate({scrollTop: $(document).height()}, 4000);
             this.parliament = this.paper.g.parliament(630, 680, 180, 40, this.parvalues, {});
             this.hoverParliament(this.parliament);
             this.parliament2 = this.paper.g.parliament(630, 1065, 180, 40, this.parvalues2, {});
@@ -1011,8 +1050,8 @@ $(document).ready(function(){
 
             var that = this;
 
-            this.advance = function(){ return that.stepReform3();};
-            this.goback = function(){ return that.stepReform1();};
+            this.advance = function(){ return AppRouter.navigate("!reformaelectoral3", true);};
+            this.goback = function(){ return AppRouter.navigate("!reformaelectoral1", true);};
         },
 
         render: function() {
@@ -1042,7 +1081,7 @@ $(document).ready(function(){
             $('#reform3').hide('fast', function(){
                 $('#reform3').html(ContentStore.getByKey("reforma3").get("value")).fadeIn(1500);
             });
-            $('html, body').animate({scrollTop: $(document).height()}, 3500);
+            $('html, body').animate({scrollTop: $(document).height()}, 4000);
             this.parliament = this.paper.g.parliament(630, 680, 180, 40, this.parvalues, {});
             this.hoverParliament(this.parliament);
             this.parliament2 = this.paper.g.parliament(630, 1065, 180, 40, this.parvalues2, {});
@@ -1054,8 +1093,8 @@ $(document).ready(function(){
 
             var that = this;
 
-            this.advance = function(){ return that.stepReform4();};
-            this.goback = function(){ return that.stepReform2();};
+            this.advance = function(){ return AppRouter.navigate("!reformaelectoral4", true);};
+            this.goback = function(){ return AppRouter.navigate("!reformaelectoral2", true);};
         },
 
         stepReform4: function() {
@@ -1085,7 +1124,7 @@ $(document).ready(function(){
             $('#reform4').hide('fast', function(){
                 $('#reform4').html(ContentStore.getByKey("reforma4").get("value")).fadeIn(1500);
             });
-            $('html, body').animate({scrollTop: $(document).height()}, 3500);
+            $('html, body').animate({scrollTop: $(document).height()}, 4000);
             this.parliament = this.paper.g.parliament(630, 680, 180, 40, this.parvalues, {});
             this.hoverParliament(this.parliament);
             this.parliament2 = this.paper.g.parliament(630, 1065, 180, 40, this.parvalues2, {});
@@ -1099,8 +1138,8 @@ $(document).ready(function(){
 
             var that = this;
 
-            this.advance = function(){ return that.stepReform4();};
-            this.goback = function(){ return that.stepReform3();};
+            this.advance = function(){ return AppRouter.navigate("!reformaelectoral4", true);};
+            this.goback = function(){ return AppRouter.navigate("!reformaelectoral3", true);};
         },
 
         render: function() {
