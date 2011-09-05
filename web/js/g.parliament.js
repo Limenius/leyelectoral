@@ -1,4 +1,5 @@
-Raphael.fn.g.parliament = function (cx, cy, rmax, rmin, values, opts) {
+Raphael.fn.g.parliament = function (cx, cy, rmax, rmin, values, opts, dy, rp) {
+
     var paper = this;
     var chart = this.set();
     var nrow = [];
@@ -25,64 +26,75 @@ Raphael.fn.g.parliament = function (cx, cy, rmax, rmin, values, opts) {
         total += values[i]['value'];
     }
 
-    while (ntmin > total || ntmax < total) {
-        nt = 0;
-        ntmin = 0;
-        ntmax = 0;
+    if (!rp) {
 
-        rp = ( rpmax + rpmin ) / 2;
-        nf = Math.floor((rmax - rmin) / (2 * dx * rp));
-        cdmin = 2 * dymin * rp;
-        cdmax = 2 * dymax * rp;
+        while (ntmin > total || ntmax < total) {
+            nt = 0;
+            ntmin = 0;
+            ntmax = 0;
 
-        cu = 2 * dx * rp;
+            rp = ( rpmax + rpmin ) / 2;
+            nf = Math.floor((rmax - rmin) / (2 * dx * rp));
+            cdmin = 2 * dymin * rp;
+            cdmax = 2 * dymax * rp;
 
-        for (i = 0; i < nf; i++) {
-            ntmin += Math.floor( (Math.PI * (rmin + cu * i) )/ (cdmax) );
-            ntmax += Math.floor( (Math.PI * (rmin + cu * i) )/ (cdmin) );
+            cu = 2 * dx * rp;
+
+            for (i = 0; i < nf; i++) {
+                ntmin += Math.floor( (Math.PI * (rmin + cu * i) )/ (cdmax) );
+                ntmax += Math.floor( (Math.PI * (rmin + cu * i) )/ (cdmin) );
+            }
+
+            if ( ntmin > total ) {
+                rpmin = rp;
+            }else if ( ntmax < total ) {
+                rpmax = rp;
+            }
+            lim ++;
+
+            if (lim > 20) {
+                alert(total);
+                break;
+            }
+
         }
-
-        if ( ntmin > total ) {
-            rpmin = rp;
-        }else if ( ntmax < total ) {
-            rpmax = rp;
-        }
-        lim ++;
-
-        if (lim > 20) {
-            alert(total);
-            break;
-        }
-
     }
 
-    lim = 0;
-    while (nt != total) {
-        nt = 0;
-        dy = ( dymax + dymin ) / 2;
-        nf = Math.floor((rmax - rmin) / (2 * dx * rp));
 
+    if (!dy) {
+        lim = 0;
+        while (nt != total) {
+            nt = 0;
+            dy = ( dymax + dymin ) / 2;
+            nf = Math.floor((rmax - rmin) / (2 * dx * rp));
+
+            cd = 2 * dy * rp;
+            cu = 2 * dx * rp;
+
+            for (i = 0; i < nf; i++) {
+                nt += Math.floor( (Math.PI * (rmin + cu * i) )/ cd );
+            }
+
+            if ( nt > total ) {
+                dymin = dy;
+            }else if ( nt < total ) {
+                dymax = dy;
+            }
+
+            lim ++;
+
+            if (lim > 20) {
+                alert(total);
+                break;
+            }
+        }
+    } else {
         cd = 2 * dy * rp;
         cu = 2 * dx * rp;
-
-        for (i = 0; i < nf; i++) {
-            nt += Math.floor( (Math.PI * (rmin + cu * i) )/ cd );
-        }
-
-        if ( nt > total ) {
-            dymin = dy;
-        }else if ( nt < total ) {
-            dymax = dy;
-        }
-
-        lim ++;
-
-        if (lim > 20) {
-            alert(total);
-            break;
-        }
+        nf = Math.floor((rmax - rmin) / (2 * dx * rp));
     }
 
+    //dy rp
     nt = 0;
     for (i = 0; i < nf; i++) {
         nrow.push(Math.floor( (Math.PI * (rmin + cu * i) )/ (2 * dy * rp) ));
@@ -128,7 +140,6 @@ Raphael.fn.g.parliament = function (cx, cy, rmax, rmin, values, opts) {
         var cir = paper.circle(seat[i]['posx'] * seat[i]['rrow']+ cx , -seat[i]['posy'] * seat[i]['rrow']+ cy , rp);
         cir.attr({fill: color});
         cir.attr({stroke: "#888"});
-        var cir2cover = 
         covers.push(paper.circle(seat[i]['posx'] * seat[i]['rrow']+ cx , -seat[i]['posy'] * seat[i]['rrow']+ cy , rp * 2 ).attr(this.g.shim));
         cover2legends.push(coloridx);
 

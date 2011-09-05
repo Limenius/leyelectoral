@@ -237,6 +237,11 @@ $(document).ready(function(){
             this.paper = Raphael("holder", "100%", "100%");
             this.cx = 150;
             this.cy = 350;
+            this.parvalues  = this.valpar;
+            this.parvalues2 = this.valpar2;
+            this.parvalues3 = this.valpar3;
+            this.parvalues4 = this.valpar4;
+            this.parvalues5 = this.valpar5;
         },
 
         goNext: function() {
@@ -719,10 +724,6 @@ $(document).ready(function(){
                     for (var j = initialbox; j <= initialbox+30; j++) {
                         if(party.get("amount") > 0) {
                             var valtopush = party.get("amount") * party.get("amount") / j;
-                            console.log(party.get("amount"));
-                            console.log(valtopush);
-                            console.log(j);
-                            console.log(party.get("oid"));
                             possiblepar.push({
                                 value : valtopush,
                                 color : party.get("color"),
@@ -835,7 +836,7 @@ $(document).ready(function(){
             this.advance = function(){ return AppRouter.navigate("!abstencion", true);};
             this.goback = function(){ return  AppRouter.navigate("", true);};
             this.golast = function(){ return AppRouter.navigate("!reformaelectoral4", true);};
-            this.gofirst = function(){ return AppRouter.navigate("!inicial", true);};
+            this.gofirst = function(){ return AppRouter.navigate("", true);};
         },
 
         step1: function() {
@@ -922,7 +923,7 @@ $(document).ready(function(){
                 $('#notes2').fadeIn(1500);
 
             });
-            this.parliament = this.paper.g.parliament(630, 680, 180, 40, this.parvalues, {});
+            this.parliament = this.paper.g.parliament(630, 680, 180, 40, this.parvalues, {}, 1.3796875000000002, 3.5);
             this.hoverParliament(this.parliament);
             var that = this;
 
@@ -957,7 +958,7 @@ $(document).ready(function(){
             $('#notes2').fadeOut(300, function(){
                 $('#notes2').html(ContentStore.getByKey("conclusiones").get("value")).fadeIn(1500);
             });
-            this.parliament = this.paper.g.parliament(630, 680, 180, 40, this.parvalues, {});
+            this.parliament = this.paper.g.parliament(630, 680, 180, 40, this.parvalues, {}, 1.3796875000000002, 3.5);
             this.hoverParliament(this.parliament);
             var that = this;
 
@@ -984,7 +985,7 @@ $(document).ready(function(){
             $('#notes3').hide('fast', function(){
                 $('#notes3').html(ContentStore.getByKey("fin").get("value")).fadeIn(1500);
             });
-            this.parliament = this.paper.g.parliament(630, 680, 180, 40, this.parvalues, {});
+            this.parliament = this.paper.g.parliament(630, 680, 180, 40, this.parvalues, {}, 1.3796875000000002, 3.5);
             this.hoverParliament(this.parliament);
             var that = this;
 
@@ -1010,7 +1011,7 @@ $(document).ready(function(){
                 $('#reform1').html(ContentStore.getByKey("reforma1").get("value")).fadeIn(1500);
             });
             $('html, body').animate({scrollTop: $(document).height()}, 4000);
-            this.parliament = this.paper.g.parliament(630, 680, 180, 40, this.parvalues, {});
+            this.parliament = this.paper.g.parliament(630, 680, 180, 40, this.parvalues, {}, 1.3796875000000002, 3.5);
             this.hoverParliament(this.parliament);
             this.parliament2 = this.paper.g.parliament(630, 1065, 180, 40, this.parvalues2, {});
             this.hoverParliament(this.parliament2);
@@ -1082,13 +1083,13 @@ $(document).ready(function(){
                 $('#reform3').html(ContentStore.getByKey("reforma3").get("value")).fadeIn(1500);
             });
             $('html, body').animate({scrollTop: $(document).height()}, 4000);
-            this.parliament = this.paper.g.parliament(630, 680, 180, 40, this.parvalues, {});
+            this.parliament = this.paper.g.parliament(630, 680, 180, 40, this.parvalues, {}, 1.3796875000000002, 3.5);
             this.hoverParliament(this.parliament);
-            this.parliament2 = this.paper.g.parliament(630, 1065, 180, 40, this.parvalues2, {});
-            this.hoverParliament(this.parliament2);
-            this.parliament3 = this.paper.g.parliament(630, 1410, 180, 40, this.parvalues3, {});
-            this.hoverParliament(this.parliament3);
-            this.parliament4 = this.paper.g.parliament(630, 1775, 180, 40, this.parvalues4, {});
+            this.parliament2 =  this.paper.g.parliament(630, 1065, 180, 40, this.parvalues2, {}, 1.2125, 3.5);
+            this.hoverParliamen;
+            this.parliament3 = this.paper.g.parliament(630, 1410, 180, 40, this.parvalues3, {}, 1.2125, 3.5);
+            this.hoverParliamen;
+            this.parliament4 = this.paper.g.parliament(630, 1775, 180, 40, this.parvalues4, {}, 1.2125, 3.5);
             this.hoverParliament(this.parliament4);
 
             var that = this;
@@ -1125,15 +1126,15 @@ $(document).ready(function(){
                 $('#reform4').html(ContentStore.getByKey("reforma4").get("value")).fadeIn(1500);
             });
             $('html, body').animate({scrollTop: $(document).height()}, 4000);
-            this.parliament = this.paper.g.parliament(630, 680, 180, 40, this.parvalues, {});
+            this.parliament =  this.paper.g.parliament(630, 680, 180, 40, this.parvalues, {}, 1.3796875000000002, 3.5);
             this.hoverParliament(this.parliament);
-            this.parliament2 = this.paper.g.parliament(630, 1065, 180, 40, this.parvalues2, {});
-            this.hoverParliament(this.parliament2);
-            this.parliament3 = this.paper.g.parliament(630, 1410, 180, 40, this.parvalues3, {});
-            this.hoverParliament(this.parliament3);
-            this.parliament4 = this.paper.g.parliament(630, 1775, 180, 40, this.parvalues4, {});
-            this.hoverParliament(this.parliament4);
-            this.parliament5 = this.paper.g.parliament(630, 2100, 180, 40, this.parvalues5, {});
+            this.parliament2 =  this.paper.g.parliament(630, 1065, 180, 40, this.parvalues2, {}, 1.2125, 3.5);
+            this.hoverParliamen;
+            this.parliament3 = this.paper.g.parliament(630, 1410, 180, 40, this.parvalues3, {}, 1.2125, 3.5);
+            this.hoverParliamen;
+            this.parliament4 = this.paper.g.parliament(630, 1775, 180, 40, this.parvalues4, {}, 1.2125, 3.5);
+            this.hoverParliamen;
+            this.parliament5 = this.paper.g.parliament(630, 2100, 180, 40, this.parvalues5, {}, 1.2125, 3.5);
             this.hoverParliament(this.parliament5);
 
             var that = this;
@@ -1320,5 +1321,15 @@ $(document).ready(function(){
     var circunscripcionUnica = {
         "total": 400,
     };
+
+    var valpar = [{"oid":"p-s-o-e","value":169,"color":"#d41d05","label":"PSOE"},{"oid":"p-p","value":154,"color":"#019ee5","label":"PP"},{"oid":"ciu","value":10,"color":"#000e62","label":"CiU"},{"oid":"eaj-pnv","value":6,"color":"#b2bb1e","label":"PNV"},{"oid":"esquerra","value":3,"color":"#e5aa01","label":"ERC"},{"oid":"cc-pnc","value":2,"color":"#ffec01","label":"CC"},{"oid":"i-u","value":2,"color":"#016e52","label":"IU"},{"oid":"b-n-g","value":2,"color":"#b4d0e7","label":"BNG."},{"oid":"na-bai","value":1,"color":"#8c4d97","label":"Na-Bai"},{"oid":"upyd","value":1,"color":"#e4007b","label":"UPyD"}];
+
+    var valpar2 = [{"oid":"p-s-o-e","value":179,"color":"#d41d05","label":"PSOE"},{"oid":"p-p","value":170,"color":"#019ee5","label":"PP"},{"oid":"ciu","value":14,"color":"#000e62","label":"CiU"},{"oid":"i-u","value":13,"color":"#016e52","label":"IU"},{"oid":"eaj-pnv","value":6,"color":"#b2bb1e","label":"PNV"},{"oid":"esquerra","value":6,"color":"#e5aa01","label":"ERC"},{"oid":"cc-pnc","value":3,"color":"#ffec01","label":"CC"},{"oid":"upyd","value":2,"color":"#e4007b","label":"UPyD"},{"oid":"b-n-g","value":2,"color":"#b4d0e7","label":"BNG."},{"oid":"nc-ccn","value":1,"color":"#9d5e08","label":"NC-CCN"},{"oid":"unitat-per-les-illes","value":1,"color":"#f51111","label":"U. per les Illes"},{"oid":"cha","value":1,"color":"#a8021a","label":"CHA"},{"oid":"ea","value":1,"color":"#6db23e","label":"EA"},{"oid":"na-bai","value":1,"color":"#8c4d97","label":"Na-Bai"}];
+
+    var valpar3 = [{"oid":"p-s-o-e","value":188,"color":"#d41d05","label":"PSOE"},{"oid":"p-p","value":173,"color":"#019ee5","label":"PP"},{"oid":"ciu","value":11,"color":"#000e62","label":"CiU"},{"oid":"i-u","value":9,"color":"#016e52","label":"IU"},{"oid":"eaj-pnv","value":6,"color":"#b2bb1e","label":"PNV"},{"oid":"esquerra","value":4,"color":"#e5aa01","label":"ERC"},{"oid":"upyd","value":3,"color":"#e4007b","label":"UPyD"},{"oid":"b-n-g","value":3,"color":"#b4d0e7","label":"BNG."},{"oid":"cc-pnc","value":2,"color":"#ffec01","label":"CC"},{"oid":"na-bai","value":1,"color":"#8c4d97","label":"Na-Bai"}];
+
+    var valpar4 = [{"oid":"p-s-o-e","value":192,"color":"#d41d05","label":"PSOE"},{"oid":"p-p","value":162,"color":"#019ee5","label":"PP"},{"oid":"i-u","value":14,"color":"#016e52","label":"IU"},{"oid":"ciu","value":11,"color":"#000e62","label":"CiU"},{"oid":"eaj-pnv","value":6,"color":"#b2bb1e","label":"PNV"},{"oid":"upyd","value":4,"color":"#e4007b","label":"UPyD"},{"oid":"esquerra","value":4,"color":"#e5aa01","label":"ERC"},{"oid":"b-n-g","value":3,"color":"#b4d0e7","label":"BNG."},{"oid":"cc-pnc","value":2,"color":"#ffec01","label":"CC"},{"oid":"ca","value":1,"color":"#70814d","label":"CA"},{"oid":"na-bai","value":1,"color":"#8c4d97","label":"Na-Bai"}];
+
+    var valpar5 = [{"oid":"ciu","value":12,"color":"#000e62","label":"CiU"},{"oid":"eaj-pnv","value":5,"color":"#b2bb1e","label":"PNV"},{"oid":"upyd","value":5,"color":"#e4007b","label":"UPyD"},{"oid":"esquerra","value":4,"color":"#e5aa01","label":"ERC"},{"oid":"b-n-g","value":3,"color":"#b4d0e7","label":"BNG."},{"oid":"cc-pnc","value":2,"color":"#ffec01","label":"CC"},{"oid":"na-bai","value":1,"color":"#8c4d97","label":"Na-Bai"},{"oid":"ca","value":1,"color":"#70814d","label":"CA"}];
 });
 
