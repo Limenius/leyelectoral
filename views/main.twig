@@ -12,6 +12,7 @@ body,html{
 }
 h2{
   color: #595959;
+  padding-top: 10px;
 }
 #header {
   height: 49px;
@@ -31,12 +32,13 @@ h2{
   width: 960px;
   height: 500px;
 }
-#background{
+.background{
   background-color: #fbfbfb;
   border-radius: 10px;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;    
-  padding-bottom: 5px;
+  padding: 0 20px 5px 20px;
+  margin-bottom: 15px;
 }
 #buttons{
   position:fixed;
@@ -86,7 +88,7 @@ h2{
 }
 #notes {
   width: 485px;
-  margin-left: 455px;
+  margin-left: 435px;
   height: 270px;
   padding-right: 20px;
   padding-top: 5px;
@@ -95,93 +97,30 @@ h2{
   width: 420px;
   height: 210px;
   margin-top: -35px;
-  margin-left: 20px;
-}
-#notes3 {
-  margin: 0 20px;
-}
-#reform1 {
-  height: 305px;
-  width: 420px;
-  margin-left: 20px;
-}
-#reform2 {
-  height: 300px;
-  width: 420px;
-  padding-top: 5px;
-  margin-left: 20px;
-}
-#reform3 {
-  height: 365px;
-  width: 420px;
-  padding-top: 5px;
-  margin-left: 20px;
-}
-#reform4 {
-  height: 360px;
-  width: 420px;
-  padding-top: 5px;
-  margin-left: 20px;
 }
 .reformrules {
   width: 420px;
 }
-
-.fullscreen{
-  display:block;
-
-  position:absolute;
-  top:0;
-  left:0;
-
-  width:100%;
-  height:100%;
-
-  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
-  filter: alpha(opacity=50);
-  -moz-opacity:0.5;
-  -khtml-opacity: 0.5;
-  opacity: 0.5;
-
-  background-color: white;
-  z-index: 40;
-}
-
-#innerfull{
-    margin: 0 auto;
-    position: absolute;
-    left: 45%;
-    top: 45%;
-    width: 54px;
-    height: 55px;
-    z-index: 50;
-    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
-    filter: alpha(opacity=100);
-    -moz-opacity:1;
-    -khtml-opacity: 1;
-    opacity: 1;
-}
-
 
 </style>
 <div id="header"></div>
 <div id="wrapper">
     <div id="logo"></div>
   <div id="holder">
-    <div id="background">
+    <div class="background">
       <div id="notes"></div>
       <div id="notes2"></div>
       <div id="notes3"></div>
-      <div id="reform1"></div>
-      <div id="reform2"></div>
-      <div id="reform3"></div>
-      <div id="reform4"></div>
-      <div id="buttons">
-        <div id="gofirst"></div>
-        <div id="goprev"></div>
-        <div id="gonext"></div>
-        <div id="golast"></div>
-      </div>
+    </div>
+    <div id="reform1" class="background"></div>
+    <div id="reform2" class="background"></div>
+    <div id="reform3" class="background"></div>
+    <div id="reform4" class="background"></div>
+    <div id="buttons">
+      <div id="gofirst"></div>
+      <div id="goprev"></div>
+      <div id="gonext"></div>
+      <div id="golast"></div>
     </div>
   </div>
 </div>

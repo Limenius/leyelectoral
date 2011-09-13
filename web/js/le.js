@@ -604,7 +604,7 @@ $(document).ready(function(){
                     var possiblepar = [];
                     _.each(parties, function(party){
                         if (!party.get("statistical")) {
-                            for (var i = 1; i <= circunscripciones[prov.get('provincia')]; i++) {
+                            for (var i = 1; i <= circunscripcionesUG350[prov.get('provincia')]; i++) {
                                 possiblepar.push({
                                     value : party.get("amount") / i,
                                     color : party.get("color"),
@@ -618,7 +618,7 @@ $(document).ready(function(){
                         return res["value"];
                     }).reverse();
 
-                    for (var i = 0; i < circunscripciones[prov.get('provincia')]; i++) {
+                    for (var i = 0; i < circunscripcionesUG350[prov.get('provincia')]; i++) {
                         electedseats.push({
                             value: possiblepar[i]['value'],
                             color: possiblepar[i]['color'],
@@ -987,6 +987,9 @@ $(document).ready(function(){
             this.setupPaper(drawable);
 
             this.parvalues = this.parvalues || this.dhont();
+            $('#holder').css('height','805px');
+            $('#notes').css('margin-top','-585px');
+            $('#notes2').css('margin-top','-35px');
             
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
             $('#notes3').html(ContentStore.getByKey("blank").get("value"));
@@ -1065,7 +1068,7 @@ $(document).ready(function(){
             $('html, body').animate({scrollTop: $(document).height()}, 4000);
             this.parliament = this.paper.g.parliament(625, 660, 180, 40, this.parvalues, {}, 1.3796875000000002, 3.5);
             this.hoverParliament(this.parliament);
-            this.parliament2 = this.paper.g.parliament(625, 1055, 180, 40, this.parvalues2, {});
+            this.parliament2 = this.paper.g.parliament(625, 1060, 180, 40, this.parvalues2, {});
             this.hoverParliament(this.parliament2);
 
             var that = this;
@@ -1102,9 +1105,9 @@ $(document).ready(function(){
             $('html, body').animate({scrollTop: $(document).height()}, 4000);
             this.parliament = this.paper.g.parliament(625, 660, 180, 40, this.parvalues, {});
             this.hoverParliament(this.parliament);
-            this.parliament2 = this.paper.g.parliament(625, 1055, 180, 40, this.parvalues2, {});
+            this.parliament2 = this.paper.g.parliament(625, 1060, 180, 40, this.parvalues2, {});
             this.hoverParliament(this.parliament2);
-            this.parliament3 = this.paper.g.parliament(625, 1350, 180, 40, this.parvalues3, {});
+            this.parliament3 = this.paper.g.parliament(625, 1370, 180, 40, this.parvalues3, {});
             this.hoverParliament(this.parliament3);
 
             var that = this;
@@ -1148,11 +1151,11 @@ $(document).ready(function(){
             $('html, body').animate({scrollTop: $(document).height()}, 4000);
             this.parliament = this.paper.g.parliament(625, 660, 180, 40, this.parvalues, {}, 1.3796875000000002, 3.5);
             this.hoverParliament(this.parliament);
-            this.parliament2 =  this.paper.g.parliament(625, 1055, 180, 40, this.parvalues2, {}, 1.2125, 3.5);
+            this.parliament2 =  this.paper.g.parliament(625, 1060, 180, 40, this.parvalues2, {}, 1.2125, 3.5);
             this.hoverParliamen;
-            this.parliament3 = this.paper.g.parliament(625, 1350, 180, 40, this.parvalues3, {}, 1.2125, 3.5);
+            this.parliament3 = this.paper.g.parliament(625, 1370, 180, 40, this.parvalues3, {}, 1.2125, 3.5);
             this.hoverParliamen;
-            this.parliament4 = this.paper.g.parliament(625, 1725, 180, 40, this.parvalues4, {}, 1.2125, 3.5);
+            this.parliament4 = this.paper.g.parliament(625, 1750, 180, 40, this.parvalues4, {}, 1.2125, 3.5);
             this.hoverParliament(this.parliament4);
 
             var that = this;
@@ -1191,13 +1194,13 @@ $(document).ready(function(){
             $('html, body').animate({scrollTop: $(document).height()}, 4000);
             this.parliament =  this.paper.g.parliament(625, 660, 180, 40, this.parvalues, {}, 1.3796875000000002, 3.5);
             this.hoverParliament(this.parliament);
-            this.parliament2 =  this.paper.g.parliament(625, 1055, 180, 40, this.parvalues2, {}, 1.2125, 3.5);
+            this.parliament2 =  this.paper.g.parliament(625, 1060, 180, 40, this.parvalues2, {}, 1.2125, 3.5);
             this.hoverParliamen;
-            this.parliament3 = this.paper.g.parliament(625, 1350, 180, 40, this.parvalues3, {}, 1.2125, 3.5);
+            this.parliament3 = this.paper.g.parliament(625, 1370, 180, 40, this.parvalues3, {}, 1.2125, 3.5);
             this.hoverParliamen;
-            this.parliament4 = this.paper.g.parliament(625, 1725, 180, 40, this.parvalues4, {}, 1.2125, 3.5);
+            this.parliament4 = this.paper.g.parliament(625, 1750, 180, 40, this.parvalues4, {}, 1.2125, 3.5);
             this.hoverParliamen;
-            this.parliament5 = this.paper.g.parliament(625, 2040, 180, 40, this.parvalues5, {}, 1.2125, 3.5);
+            this.parliament5 = this.paper.g.parliament(625, 2065, 180, 40, this.parvalues5, {}, 1.2125, 3.5);
             this.hoverParliament(this.parliament5);
 
             var that = this;
@@ -1325,6 +1328,60 @@ $(document).ready(function(){
         "Toledo": 6,
         "Ávila": 2,
         "Barcelona": 42,
+        "Lugo": 4,
+    };
+    var circunscripcionesUG350 = {
+        "Burgos": 4,
+        "León": 5,
+        "Palencia": 3,
+        "Salamanca": 4,
+        "Segovia": 3,
+        "Soria": 2,
+        "Valladolid": 5,
+        "Zamora": 3,
+        "Girona": 6,
+        "Lleida": 4,
+        "Tarragona": 6,
+        "Badajoz": 6,
+        "Cáceres": 4,
+        "A Coruña": 8,
+        "Ourense": 4,
+        "Pontevedra": 7,
+        "Madrid": 37,
+        "Navarra": 5,
+        "Álava": 3,
+        "Guipúzcoa": 6,
+        "Vizcaya": 8,
+        "Murcia": 10,
+        "La Rioja": 3,
+        "Alicante / Alacant": 12,
+        "Castellón / Castelló": 5,
+        "Valencia / València": 16,
+        "Ceuta": 2,
+        "Melilla": 2,
+        "Almería": 5,
+        "Cádiz": 9,
+        "Córdoba": 6,
+        "Granada": 7,
+        "Huelva": 5,
+        "Jaén": 5,
+        "Málaga": 10,
+        "Sevilla": 12,
+        "Huesca": 3,
+        "Teruel": 2,
+        "Zaragoza": 7,
+        "Asturias": 8,
+        "Illes Balears": 8,
+        "Las Palmas": 8,
+        "Santa Cruz de Tenerife": 7,
+        "Cantabria": 5,
+        "Albacete": 4,
+        "Ciudad Real": 5,
+        "Cuenca": 3,
+        "Guadalajara": 3,
+        "Toledo": 5,
+        "Ávila": 3,
+        "Barcelona": 33,
         "Lugo": 4,
     };
     var circunscripcionesUG = {
