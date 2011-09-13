@@ -923,7 +923,7 @@ $(document).ready(function(){
                 $('#notes2').fadeIn(1500);
 
             });
-            this.parliament = this.paper.g.parliament(630, 680, 180, 40, this.parvalues, {}, 1.3796875000000002, 3.5);
+            this.parliament = this.paper.g.parliament(630, 660, 180, 40, this.parvalues, {}, 1.3796875000000002, 3.5);
             this.hoverParliament(this.parliament);
             var that = this;
 
@@ -958,7 +958,7 @@ $(document).ready(function(){
             $('#notes2').fadeOut(300, function(){
                 $('#notes2').html(ContentStore.getByKey("conclusiones").get("value")).fadeIn(1500);
             });
-            this.parliament = this.paper.g.parliament(630, 680, 180, 40, this.parvalues, {}, 1.3796875000000002, 3.5);
+            this.parliament = this.paper.g.parliament(630, 660, 180, 40, this.parvalues, {}, 1.3796875000000002, 3.5);
             this.hoverParliament(this.parliament);
             var that = this;
 
@@ -985,7 +985,7 @@ $(document).ready(function(){
             $('#notes3').hide('fast', function(){
                 $('#notes3').html(ContentStore.getByKey("fin").get("value")).fadeIn(1500);
             });
-            this.parliament = this.paper.g.parliament(630, 680, 180, 40, this.parvalues, {}, 1.3796875000000002, 3.5);
+            this.parliament = this.paper.g.parliament(630, 660, 180, 40, this.parvalues, {}, 1.3796875000000002, 3.5);
             this.hoverParliament(this.parliament);
             var that = this;
 
@@ -1011,7 +1011,7 @@ $(document).ready(function(){
                 $('#reform1').html(ContentStore.getByKey("reforma1").get("value")).fadeIn(1500);
             });
             $('html, body').animate({scrollTop: $(document).height()}, 4000);
-            this.parliament = this.paper.g.parliament(630, 680, 180, 40, this.parvalues, {}, 1.3796875000000002, 3.5);
+            this.parliament = this.paper.g.parliament(630, 660, 180, 40, this.parvalues, {}, 1.3796875000000002, 3.5);
             this.hoverParliament(this.parliament);
             this.parliament2 = this.paper.g.parliament(630, 1065, 180, 40, this.parvalues2, {});
             this.hoverParliament(this.parliament2);
@@ -1042,7 +1042,7 @@ $(document).ready(function(){
                 $('#reform2').html(ContentStore.getByKey("reforma2").get("value")).fadeIn(1500);
             });
             $('html, body').animate({scrollTop: $(document).height()}, 4000);
-            this.parliament = this.paper.g.parliament(630, 680, 180, 40, this.parvalues, {});
+            this.parliament = this.paper.g.parliament(630, 660, 180, 40, this.parvalues, {});
             this.hoverParliament(this.parliament);
             this.parliament2 = this.paper.g.parliament(630, 1065, 180, 40, this.parvalues2, {});
             this.hoverParliament(this.parliament2);
@@ -1083,7 +1083,7 @@ $(document).ready(function(){
                 $('#reform3').html(ContentStore.getByKey("reforma3").get("value")).fadeIn(1500);
             });
             $('html, body').animate({scrollTop: $(document).height()}, 4000);
-            this.parliament = this.paper.g.parliament(630, 680, 180, 40, this.parvalues, {}, 1.3796875000000002, 3.5);
+            this.parliament = this.paper.g.parliament(630, 660, 180, 40, this.parvalues, {}, 1.3796875000000002, 3.5);
             this.hoverParliament(this.parliament);
             this.parliament2 =  this.paper.g.parliament(630, 1065, 180, 40, this.parvalues2, {}, 1.2125, 3.5);
             this.hoverParliamen;
@@ -1126,7 +1126,7 @@ $(document).ready(function(){
                 $('#reform4').html(ContentStore.getByKey("reforma4").get("value")).fadeIn(1500);
             });
             $('html, body').animate({scrollTop: $(document).height()}, 4000);
-            this.parliament =  this.paper.g.parliament(630, 680, 180, 40, this.parvalues, {}, 1.3796875000000002, 3.5);
+            this.parliament =  this.paper.g.parliament(630, 660, 180, 40, this.parvalues, {}, 1.3796875000000002, 3.5);
             this.hoverParliament(this.parliament);
             this.parliament2 =  this.paper.g.parliament(630, 1065, 180, 40, this.parvalues2, {}, 1.2125, 3.5);
             this.hoverParliamen;

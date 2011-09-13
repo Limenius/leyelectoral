@@ -4,7 +4,7 @@ Propuesta de reforma 3
 <div class="reformrules">
 <ul>
 <li>Se aumenta de 350 a 400 diputados</li>
-<li>20 de los adicionales se reparten entre los partidos con más votos sobrantes, para mejorar la representatividad</li>
+<li>20 de los adicionales van a los partidos con más votos sobrantes, mejorando la representatividad</li>
 <li>Los últimos 30 priman a los partidos mayoritarios, favoreciendo la gobernabilidad</li>
 </ul>
 <table style="margin: 5px 10px;">

@@ -4,7 +4,7 @@ Propuesta de reforma 1
 <div class="reformrules">
 <ul>
 <li>Se aumenta de 350 a 400 diputados</li>
-<li>Solo un diputado mínimo por provincia, en lugar de dos</li>
+<li>Un diputado mínimo por provincia, en lugar de dos</li>
 <li>Se reparte con la ley de Hare, en vez de Hont</li>
 </ul>
 <table style="margin: 5px 10px;">
