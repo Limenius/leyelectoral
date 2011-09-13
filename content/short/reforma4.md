@@ -9,8 +9,8 @@ Propuesta de reforma 4
 </ul>
 <table style="margin: 5px 10px;">
 <tr>
-<td style="padding-left: 30px;"> PSOE    </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 63.065 </td> 
-<td style="padding-left: 30px;"> UPyD    </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 153.039</td>
+<td style="padding-left: 30px;"> PSOE    </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 61.687 </td> 
+<td style="padding-left: 30px;"> UPyD    </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 61.215</td>
 </tr>
 <tr>
 <td style="padding-left: 30px;"> PP      </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 60.458 </td>

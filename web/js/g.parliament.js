@@ -147,7 +147,7 @@ Raphael.fn.g.parliament = function (cx, cy, rmax, rmin, values, opts, dy, rp) {
 
     var legend = function(labels, mark, dir){
         var x = cx + rmax + rmax / 4,
-            y = cy,
+            y = cy + 4,
             h = y + 10;
         labels = labels || [];
         dir = (dir && dir.toLowerCase && dir.toLowerCase()) || "east";
