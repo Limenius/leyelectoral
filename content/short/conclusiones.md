@@ -23,4 +23,4 @@ Estos son los votos que cuesta un escaño a cada partido:
 </tr>
 </table>
 
-Los partidos más perjudicados son los partidos minoritarios con votantes dispersos geográficamente.
+Los partidos más perjudicados son los **partidos minoritarios con votantes dispersos geográficamente**.

@@ -894,7 +894,7 @@ $(document).ready(function(){
             });
             var that = this;
 
-            this.advance = function(){ return that.remove("En blanco", function(){ return AppRouter.navigate("!sistemaactual", true);});};
+            this.advance = function(){ return that.remove("En blanco", function(){ return AppRouter.navigate("!votospartidos", true);});};
             this.goback = function(){ return AppRouter.navigate("!nulos", true);};
         },
 
@@ -954,7 +954,7 @@ $(document).ready(function(){
             $('#reform3').hide();
             $('#reform4').hide();
             $('#notes2').hide('fast', function(){
-                $('#notes2').html(ContentStore.getByKey("postparliament1").get("value")).fadeIn(1500);
+                $('#notes2').html(ContentStore.getByKey("postparliament").get("value")).fadeIn(1500);
                 $('#notes2').fadeIn(1500);
 
             });
