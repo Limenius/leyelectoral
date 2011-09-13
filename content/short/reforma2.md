@@ -8,32 +8,24 @@ Propuesta de reforma 2
 </ul>
 <table style="margin: 5px 10px;">
 <tr>
-<td style="padding-left: 30px;"> PSOE    </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 63.065 </td> 
-<td style="padding-left: 30px;"> UPyD    </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 153.039</td>
+<td style="padding-left: 30px;"> PSOE    </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 60.046 </td> 
+<td style="padding-left: 30px;"> ERC     </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 74.535 </td>
 </tr>
 <tr>
-<td style="padding-left: 30px;"> PP      </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 60.458 </td>
-<td style="padding-left: 30px;"> BNG     </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 106.271</td>
+<td style="padding-left: 30px;"> PP      </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 59.409 </td>
+<td style="padding-left: 30px;"> UPyD    </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 102.026</td>
 </tr>
 <tr>
-<td style="padding-left: 30px;"> CiU     </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 55.673 </td>
-<td style="padding-left: 30px;"> EA     </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 50.371 </td>
+<td style="padding-left: 30px;"> CiU     </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 70.857 </td>
+<td style="padding-left: 30px;"> BNG     </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 70.848</td>
 </tr>
 <tr>
-<td style="padding-left: 30px;"> IU      </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 74.605</td>
-<td style="padding-left: 30px;"> Na-Bai  </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 62.398 </td>
+<td style="padding-left: 30px;"> IU      </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 107.763</td>
+<td style="padding-left: 30px;"> CC  </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 57.315 </td>
 </tr>
 <tr>
 <td style="padding-left: 30px;"> PNV </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 51.021 </td>
-<td style="padding-left: 30px;"> NC-CCN     </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 37.968 </td>
-</tr>
-<tr>
-<td style="padding-left: 30px;"> ERC     </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 49.690 </td>
-<td style="padding-left: 30px;"> U. Illes     </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 25.576 </td>
-</tr>
-<tr>
-<td style="padding-left: 30px;"> CC  </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 58.210 </td>
-<td style="padding-left: 30px;"> CHA     </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 38.202 </td>
+<td style="padding-left: 30px;"> Na-Bai  </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 62.398 </td>
 </tr>
 </table>
 </div>
