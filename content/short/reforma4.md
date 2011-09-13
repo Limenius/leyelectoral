@@ -14,7 +14,7 @@ Circunscripción única
 </tr>
 <tr>
 <td style="padding-left: 30px;"> PP      </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 61.177 </td>
-<td style="padding-left: 30px;"> BNG     </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 106.271</td>
+<td style="padding-left: 30px;"> BNG     </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 70.848 </td>
 </tr>
 <tr>
 <td style="padding-left: 30px;"> IU      </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 60.617</td>
