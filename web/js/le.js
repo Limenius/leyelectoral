@@ -1152,7 +1152,7 @@ $(document).ready(function(){
             this.hoverParliamen;
             this.parliament3 = this.paper.g.parliament(625, 1350, 180, 40, this.parvalues3, {}, 1.2125, 3.5);
             this.hoverParliamen;
-            this.parliament4 = this.paper.g.parliament(625, 1775, 180, 40, this.parvalues4, {}, 1.2125, 3.5);
+            this.parliament4 = this.paper.g.parliament(625, 1725, 180, 40, this.parvalues4, {}, 1.2125, 3.5);
             this.hoverParliament(this.parliament4);
 
             var that = this;
@@ -1195,9 +1195,9 @@ $(document).ready(function(){
             this.hoverParliamen;
             this.parliament3 = this.paper.g.parliament(625, 1350, 180, 40, this.parvalues3, {}, 1.2125, 3.5);
             this.hoverParliamen;
-            this.parliament4 = this.paper.g.parliament(625, 1775, 180, 40, this.parvalues4, {}, 1.2125, 3.5);
+            this.parliament4 = this.paper.g.parliament(625, 1725, 180, 40, this.parvalues4, {}, 1.2125, 3.5);
             this.hoverParliamen;
-            this.parliament5 = this.paper.g.parliament(625, 2100, 180, 40, this.parvalues5, {}, 1.2125, 3.5);
+            this.parliament5 = this.paper.g.parliament(625, 2040, 180, 40, this.parvalues5, {}, 1.2125, 3.5);
             this.hoverParliament(this.parliament5);
 
             var that = this;
