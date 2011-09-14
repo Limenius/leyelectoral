@@ -1078,13 +1078,11 @@ $(document).ready(function(){
             $('#reform3').hide();
             $('#reform4').hide();
             $('#reform1').hide('fast', function(){
-                $('#reform1').html(ContentStore.getByKey("reforma1").get("value")).fadeIn(1500);
+                $('#reform1').html(ContentStore.getByKey("reforma1").get("value")).fadeIn(1000);
             });
             $('html, body').animate({scrollTop: $(document).height()}, 4000);
             this.parliament = this.paper.g.parliament(625, 460, 180, 40, this.parvalues, {}, 1.3796875000000002, 3.5);
-            this.hoverParliament(this.parliament);
             this.parliament2 = this.paper.g.parliament(625, 860, 180, 40, this.parvalues2, {});
-            this.hoverParliament(this.parliament2);
 
             var that = this;
 
@@ -1116,15 +1114,12 @@ $(document).ready(function(){
             $('#reform3').hide();
             $('#reform4').hide();
             $('#reform2').hide('fast', function(){
-                $('#reform2').html(ContentStore.getByKey("reforma2").get("value")).fadeIn(1500);
+                $('#reform2').html(ContentStore.getByKey("reforma2").get("value")).fadeIn(1000);
             });
             $('html, body').animate({scrollTop: $(document).height()}, 4000);
             this.parliament = this.paper.g.parliament(625, 460, 180, 40, this.parvalues, {});
-            this.hoverParliament(this.parliament);
             this.parliament2 = this.paper.g.parliament(625, 860, 180, 40, this.parvalues2, {});
-            this.hoverParliament(this.parliament2);
             this.parliament3 = this.paper.g.parliament(625, 1170, 180, 40, this.parvalues3, {});
-            this.hoverParliament(this.parliament3);
 
             var that = this;
 
@@ -1163,17 +1158,13 @@ $(document).ready(function(){
             $('#reform1').show();
             $('#reform2').show();
             $('#reform3').hide('fast', function(){
-                $('#reform3').html(ContentStore.getByKey("reforma3").get("value")).fadeIn(1500);
+                $('#reform3').html(ContentStore.getByKey("reforma3").get("value")).fadeIn(1000);
             });
             $('html, body').animate({scrollTop: $(document).height()}, 4000);
             this.parliament = this.paper.g.parliament(625, 460, 180, 40, this.parvalues, {}, 1.3796875000000002, 3.5);
-            this.hoverParliament(this.parliament);
             this.parliament2 =  this.paper.g.parliament(625, 860, 180, 40, this.parvalues2, {}, 1.2125, 3.5);
-            this.hoverParliamen;
             this.parliament3 = this.paper.g.parliament(625, 1170, 180, 40, this.parvalues3, {}, 1.2125, 3.5);
-            this.hoverParliamen;
             this.parliament4 = this.paper.g.parliament(625, 1530, 180, 40, this.parvalues4, {}, 1.2125, 3.5);
-            this.hoverParliament(this.parliament4);
 
             var that = this;
 
@@ -1207,19 +1198,14 @@ $(document).ready(function(){
             $('#reform2').html(ContentStore.getByKey("reforma2").get("value"));
             $('#reform3').html(ContentStore.getByKey("reforma3").get("value"));
             $('#reform4').hide('fast', function(){
-                $('#reform4').html(ContentStore.getByKey("reforma4").get("value")).fadeIn(1500);
+                $('#reform4').html(ContentStore.getByKey("reforma4").get("value")).fadeIn(1000);
             });
             $('html, body').animate({scrollTop: $(document).height()}, 4000);
             this.parliament =  this.paper.g.parliament(625, 460, 180, 40, this.parvalues, {}, 1.3796875000000002, 3.5);
-            this.hoverParliament(this.parliament);
             this.parliament2 =  this.paper.g.parliament(625, 860, 180, 40, this.parvalues2, {}, 1.2125, 3.5);
-            this.hoverParliamen;
             this.parliament3 = this.paper.g.parliament(625, 1170, 180, 40, this.parvalues3, {}, 1.2125, 3.5);
-            this.hoverParliamen;
             this.parliament4 = this.paper.g.parliament(625, 1530, 180, 40, this.parvalues4, {}, 1.2125, 3.5);
-            this.hoverParliamen;
             this.parliament5 = this.paper.g.parliament(625, 1845, 180, 40, this.parvalues5, {}, 1.2125, 3.5);
-            this.hoverParliament(this.parliament5);
 
             var that = this;
 
