@@ -22,7 +22,7 @@ h2{
   float: left;
   font-size: 18px;
   font-weight: bold;
-  line-height: 30px;
+  line-height: 34px;
   color: #fff;
   display: block;
   z-index: 10;
@@ -35,8 +35,14 @@ h2{
   cursor: pointer;
 }
 .navbaritem a:hover{
-  text-decoration: underline;
+  color: #333;
 }
+
+.current{
+  background-color: #444;
+  color: #e6e6e6;
+}
+
 #logo{
   height: 50px;
   background: url('/imgs/logo.png') no-repeat;
