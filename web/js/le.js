@@ -1183,7 +1183,7 @@ $(document).ready(function(){
             
             $('#holder').css('height','1960px');
             $('#current').css('height','540px');
-            $('#notes').css('margin-top','-1940px');
+            $('#notes').css('margin-top','-1950px');
             
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
             $('#notes2').html(ContentStore.getByKey("conclusiones").get("value"));

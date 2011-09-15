@@ -130,3 +130,15 @@ h2{
   width: 420px;
 }
 
+#text{
+  width: 900px;
+  margin: 14px auto;
+  padding: 10px 30px;
+  text-indent: 30px;
+}
+.textbackground{
+  background-color: #fbfbfb;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;    
+}

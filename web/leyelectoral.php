@@ -29,6 +29,11 @@ $app->register(new Leyelectoral\MongoExtension(), array(
     'db.options' => array('db'=>'elecciones', 'collection'=>'provincias'),
 ));
 
+$app->get('/{page}', function ($page) use ($app) {
+    return $app['twig']->render($page.'.twig', array(
+    ));
+});
+
 $app->get('/', function () use ($app, $staticPage) {
     $explanations  = array();
     $files = array();
