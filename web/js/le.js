@@ -1020,7 +1020,7 @@ $(document).ready(function(){
             var that = this;
 
             this.advance = function(){ return AppRouter.navigate("!propuestas", true);};
-            this.goback = function(){ return AppRouter.navigate("!sistemaactual", true);};
+            this.goback = function(){ return AppRouter.navigate("!congresodiputados", true);};
         },
         stepFin: function() {
             var drawable = this.drawParties();
