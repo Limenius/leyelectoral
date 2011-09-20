@@ -134,6 +134,8 @@ h2{
   width: 900px;
   margin: 14px auto;
   padding: 10px 30px 20px 30px;
+}
+#text p{
   text-indent: 30px;
 }
 .textbackground{
