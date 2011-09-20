@@ -1,0 +1,1 @@
+La configuración del Congreso es casi idéntica a la de la propuesta 3. La circunscripción única no ha sido incluida entre las propuestas porque requeriría un cambio en la Constitución, a diferencia de las propuestas que recogemos. 

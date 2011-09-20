@@ -1,0 +1,1 @@
+Siguen existiendo desigualdades en el precio del escaño, pero han disminuido notablemente. Ya no se da el caso de que un escaño cueste a un partido nueve veces más que a otro. Por otra parte, muchos más partidos obtienen representación. 

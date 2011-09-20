@@ -35,3 +35,5 @@ Propuesta de reforma 3
 </tr>
 </table>
 </div>
+<div id="reform3conclusions"></div>
+<div id="reform3conclusions2"></div>

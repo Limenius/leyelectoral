@@ -130,6 +130,14 @@ h2{
   width: 420px;
 }
 
+#reform1conclusions,#reform2conclusions,#reform3conclusions2,#reform3conclusions3{
+  height: 40px;
+}
+
+#reform3conclusions{
+  height: 60px;
+}
+
 #text{
   width: 900px;
   margin: 14px auto;

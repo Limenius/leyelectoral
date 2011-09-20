@@ -1,0 +1,1 @@
+Las desigualdades en el precio del escaño son pequeñísimas comparadas con las de nuestro sistema actual. Entra CA en el Congreso (actualmente no tiene representación a pesar de tener más votos que CC y Na-Bai). La prima a la gobernabilidad garantiza la posibilidad de crear gobierno estable.
