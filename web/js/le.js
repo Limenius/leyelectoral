@@ -988,7 +988,7 @@ $(document).ready(function(){
             var that = this;
 
             this.advance = function(){ return AppRouter.navigate("!votosescaño", true);};
-            this.goback = function(){ return AppRouter.navigate("!votospartidos", true);};
+            this.goback = function(){ return AppRouter.navigate("!sistemaactual", true);};
         },
         hoverParliament: function(parliament) {
             parliament.hover(
@@ -1248,9 +1248,9 @@ $(document).ready(function(){
             this.parvalues4 = this.parvalues4 || this.dhontUG();
             this.parvalues5 = this.parvalues5 || this.dhontNacional();
             
-            $('#holder').css('height','2570px');
+            $('#holder').css('height','2580px');
             $('#current').css('height','540px');
-            $('#notes').css('margin-top','-2560px');
+            $('#notes').css('margin-top','-2570px');
             
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
             $('#notes2').html(ContentStore.getByKey("conclusiones").get("value"));
