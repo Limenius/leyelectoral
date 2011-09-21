@@ -1,1 +1,1 @@
-La configuración del Congreso es casi idéntica a la de la propuesta 3. La circunscripción única no ha sido incluida entre las propuestas porque requeriría un cambio en la Constitución, a diferencia de las propuestas que recogemos. 
+La configuración del Congreso es casi idéntica a la de la propuesta 3. Es posible solucionar el problema de proporcionalidad incluso sin tocar el tamaño de la circunscripción (que implicaría un -teóricamente complicado- cambio en la Constitución).

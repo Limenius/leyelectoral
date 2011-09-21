@@ -1248,9 +1248,9 @@ $(document).ready(function(){
             this.parvalues4 = this.parvalues4 || this.dhontUG();
             this.parvalues5 = this.parvalues5 || this.dhontNacional();
             
-            $('#holder').css('height','2650px');
+            $('#holder').css('height','2570px');
             $('#current').css('height','540px');
-            $('#notes').css('margin-top','-2640px');
+            $('#notes').css('margin-top','-2560px');
             
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
             $('#notes2').html(ContentStore.getByKey("conclusiones").get("value"));
@@ -1261,9 +1261,11 @@ $(document).ready(function(){
             $('#reform1').show();
             $('#reform2').show();
             $('#reform3').show();
+            $('#reform4').show();
             $('#reform1').html(ContentStore.getByKey("reforma1").get("value"));
             $('#reform2').html(ContentStore.getByKey("reforma2").get("value"));
             $('#reform3').html(ContentStore.getByKey("reforma3").get("value"));
+            $('#reform4').html(ContentStore.getByKey("reforma4").get("value"));
             $('#reform1conclusions').html(ContentStore.getByKey("reforma1conclusions").get("value"));
             $('#reform2conclusions').html(ContentStore.getByKey("reforma2conclusions").get("value"));
             $('#reform3conclusions').html(ContentStore.getByKey("reforma3conclusions").get("value"));
@@ -1281,7 +1283,7 @@ $(document).ready(function(){
             this.parliament5 = this.paper.g.parliament(625, 2140, 180, 40, this.parvalues5, {}, 1.2125, 3.5);
 
             this.advance = function(){ return AppRouter.navigate("!reformaelectoral4", true);};
-            this.goback = function(){ return AppRouter.navigate("!reformaelectoral3", true);};
+            this.goback = function(){ return AppRouter.navigate("!circunscripcionunica", true);};
         },
 
         render: function() {
