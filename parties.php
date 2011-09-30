@@ -1,4 +1,4 @@
-<?
+<?php
 function random_color(){
     $c = '';
     while(strlen($c)<6){
