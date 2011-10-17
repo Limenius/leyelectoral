@@ -983,8 +983,7 @@ $(document).ready(function(){
                 $('#notes2').fadeIn(1500);
 
             });
-            this.parliament = this.paper.g.parliament(625, 460, 180, 40, this.parvalues, {}, 1.3796875000000002, 3.5);
-            this.hoverParliament(this.parliament);
+            this.parliament = this.paper.image("imgs/parliament1.png", 450, 263, 500, 229);
             var that = this;
 
             this.advance = function(){ return AppRouter.navigate("!votosescaño", true);};
@@ -1027,8 +1026,7 @@ $(document).ready(function(){
             $('#notes2').fadeOut(300, function(){
                 $('#notes2').html(ContentStore.getByKey("conclusiones").get("value")).fadeIn(1500);
             });
-            this.parliament = this.paper.g.parliament(625, 460, 180, 40, this.parvalues, {}, 1.3796875000000002, 3.5);
-            this.hoverParliament(this.parliament);
+            this.parliament = this.paper.image("imgs/parliament1.png", 450, 263, 500, 229);
             var that = this;
 
             this.advance = function(){ return AppRouter.navigate("!propuestas", true);};
@@ -1061,8 +1059,7 @@ $(document).ready(function(){
             $('#notes3').hide('fast', function(){
                 $('#notes3').html(ContentStore.getByKey("fin").get("value")).fadeIn(1500);
             });
-            this.parliament = this.paper.g.parliament(625, 460, 180, 40, this.parvalues, {}, 1.3796875000000002, 3.5);
-            this.hoverParliament(this.parliament);
+            this.parliament = this.paper.image("imgs/parliament1.png", 450, 263, 500, 229);
             var that = this;
 
             this.advance = function(){ return AppRouter.navigate("!reformaelectoral1", true);};
@@ -1095,11 +1092,11 @@ $(document).ready(function(){
             $('#reform1').hide('fast', function(){
                 $('html, body').animate({scrollTop: $(document).height()}, 3000);
                 $('#reform1').html(ContentStore.getByKey("reforma1").get("value")).fadeIn(500, function(){
-                    that.parliament2 = that.paper.g.parliament(625, 860, 180, 40, that.parvalues2, {});
+                    that.parliament2 = that.paper.image("imgs/parliament2.png", 450, 611, 500, 269);
                     $('#reform1conclusions').html(ContentStore.getByKey("reforma1conclusions").get("value")).fadeIn(1500);
                 });
             });
-            this.parliament = this.paper.g.parliament(625, 460, 180, 40, this.parvalues, {}, 1.3796875000000002, 3.5);
+            this.parliament = this.paper.image("imgs/parliament1.png", 450, 263, 500, 229);
 
             this.advance = function(){ return AppRouter.navigate("!reformaelectoral2", true);};
             this.goback = function(){ return AppRouter.navigate("!propuestas", true);};
@@ -1132,12 +1129,12 @@ $(document).ready(function(){
             $('#reform2').hide('fast', function(){
                 $('html, body').animate({scrollTop: $(document).height()}, 3000);
                 $('#reform2').html(ContentStore.getByKey("reforma2").get("value")).fadeIn(500, function(){
-                    that.parliament3 = that.paper.g.parliament(625, 1245, 180, 40, that.parvalues3, {});
+                    that.parliament3 = that.paper.image("imgs/parliament3.png", 450, 1058, 500, 209);
                     $('#reform2conclusions').html(ContentStore.getByKey("reforma2conclusions").get("value")).fadeIn(1500);
                 });
             });
-            this.parliament = this.paper.g.parliament(625, 460, 180, 40, this.parvalues, {});
-            this.parliament2 = this.paper.g.parliament(625, 860, 180, 40, this.parvalues2, {});
+            this.parliament = this.paper.image("imgs/parliament1.png", 450, 263, 500, 229);
+            this.parliament2 = this.paper.image("imgs/parliament2.png", 450, 611, 500, 269);
 
             this.advance = function(){ return AppRouter.navigate("!reformaelectoral3", true);};
             this.goback = function(){ return AppRouter.navigate("!reformaelectoral1", true);};
@@ -1179,14 +1176,14 @@ $(document).ready(function(){
             $('#reform3').hide('fast', function(){
                 $('html, body').animate({scrollTop: $(document).height()}, 3000);
                 $('#reform3').html(ContentStore.getByKey("reforma3").get("value")).fadeIn(500,function(){
-                    that.parliament4 = that.paper.g.parliament(625, 1670, 180, 40, that.parvalues4, {}, 1.2125, 3.5);
+                    that.parliament4 = that.paper.image("imgs/parliament4.png", 450, 1465, 500, 229);
                     $('#reform3conclusions').html(ContentStore.getByKey("reforma3conclusions").get("value")).fadeIn(1500);
                     $('#reform3conclusions2').html(ContentStore.getByKey("reforma3conclusions2").get("value")).fadeIn(1500);
                 });
             });
-            this.parliament = this.paper.g.parliament(625, 460, 180, 40, this.parvalues, {}, 1.3796875000000002, 3.5);
-            this.parliament2 =  this.paper.g.parliament(625, 860, 180, 40, this.parvalues2, {}, 1.2125, 3.5);
-            this.parliament3 = this.paper.g.parliament(625, 1245, 180, 40, this.parvalues3, {}, 1.2125, 3.5);
+            this.parliament = this.paper.image("imgs/parliament1.png", 450, 263, 500, 229);
+            this.parliament2 = this.paper.image("imgs/parliament2.png", 450, 611, 500, 269);
+            this.parliament3 = this.paper.image("imgs/parliament3.png", 450, 1058, 500, 209);
 
             this.advance = function(){ return AppRouter.navigate("!circunscripcionunica", true);};
             this.goback = function(){ return AppRouter.navigate("!reformaelectoral2", true);};
@@ -1226,14 +1223,14 @@ $(document).ready(function(){
             $('#reform4').hide('fast', function(){
                 $('html, body').animate({scrollTop: $(document).height()}, 3000);
                 $('#reform4').html(ContentStore.getByKey("reforma4").get("value")).fadeIn(500, function(){
-                    that.parliament5 = that.paper.g.parliament(625, 2140, 180, 40, that.parvalues5, {}, 1.2125, 3.5);
+                    that.parliament5 = that.paper.image("imgs/parliament5.png", 450, 1940, 500, 219);
                     $('#reform3conclusions3').html(ContentStore.getByKey("reforma3conclusions3").get("value")).fadeIn(1500);
                 });
             });
-            this.parliament =  this.paper.g.parliament(625, 460, 180, 40, this.parvalues, {}, 1.3796875000000002, 3.5);
-            this.parliament2 =  this.paper.g.parliament(625, 860, 180, 40, this.parvalues2, {}, 1.2125, 3.5);
-            this.parliament3 = this.paper.g.parliament(625, 1245, 180, 40, this.parvalues3, {}, 1.2125, 3.5);
-            this.parliament4 = this.paper.g.parliament(625, 1670, 180, 40, this.parvalues4, {}, 1.2125, 3.5);
+            this.parliament = this.paper.image("imgs/parliament1.png", 450, 263, 500, 229);
+            this.parliament2 = this.paper.image("imgs/parliament2.png", 450, 611, 500, 269);
+            this.parliament3 = this.paper.image("imgs/parliament3.png", 450, 1058, 500, 209);
+            this.parliament4 = this.paper.image("imgs/parliament4.png", 450, 1465, 500, 229);
 
             this.advance = function(){ return AppRouter.navigate("!conclusiones", true);};
             this.goback = function(){ return AppRouter.navigate("!reformaelectoral3", true);};
@@ -1276,11 +1273,11 @@ $(document).ready(function(){
                 $('html, body').animate({scrollTop: $(document).height()}, 3000);
                 $('#conclusions').html(ContentStore.getByKey("finalconclusions").get("value")).fadeIn(500);
             });
-            this.parliament =  this.paper.g.parliament(625, 460, 180, 40, this.parvalues, {}, 1.3796875000000002, 3.5);
-            this.parliament2 =  this.paper.g.parliament(625, 860, 180, 40, this.parvalues2, {}, 1.2125, 3.5);
-            this.parliament3 = this.paper.g.parliament(625, 1245, 180, 40, this.parvalues3, {}, 1.2125, 3.5);
-            this.parliament4 = this.paper.g.parliament(625, 1670, 180, 40, this.parvalues4, {}, 1.2125, 3.5);
-            this.parliament5 = this.paper.g.parliament(625, 2140, 180, 40, this.parvalues5, {}, 1.2125, 3.5);
+            this.parliament = this.paper.image("imgs/parliament1.png", 450, 263, 500, 229);
+            this.parliament2 = this.paper.image("imgs/parliament2.png", 450, 611, 500, 269);
+            this.parliament3 = this.paper.image("imgs/parliament3.png", 450, 1058, 500, 209);
+            this.parliament4 = this.paper.image("imgs/parliament4.png", 450, 1465, 500, 229);
+            this.parliament5 = this.paper.image("imgs/parliament5.png", 450, 1940, 500, 219);
 
             this.advance = function(){ return AppRouter.navigate("!reformaelectoral4", true);};
             this.goback = function(){ return AppRouter.navigate("!circunscripcionunica", true);};
