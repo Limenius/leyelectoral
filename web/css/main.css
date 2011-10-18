@@ -120,31 +120,42 @@ h2{
   height: 270px;
   padding-right: 20px;
   padding-top: 5px;
+  line-height: 22px;
 }
 #notes2 {
   width: 420px;
-  height: 210px;
+  height: 220px;
   margin-top: -25px;
+  line-height: 22px;
+}
+#notes3{
+  line-height: 22px;
 }
 .reformrules {
   width: 420px;
+  line-height: 22px;
 }
 
 #reform1conclusions,#reform2conclusions,#reform3conclusions2,#reform3conclusions3{
   height: 40px;
+  line-height: 22px;
 }
 
 #reform3conclusions{
   height: 60px;
+  line-height: 22px;
 }
 
 #text{
   width: 900px;
   margin: 14px auto;
   padding: 10px 30px 20px 30px;
+  line-height: 22px;
 }
 #text p{
   text-indent: 30px;
+  line-height: 22px;
+  line-height: 22px;
 }
 .textbackground{
   background-color: #fbfbfb;
