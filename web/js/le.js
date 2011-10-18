@@ -966,9 +966,9 @@ $(document).ready(function(){
             var that = this;
 
             this.parvalues = this.parvalues || this.dhont();
-            $('#holder').css('height','600px');
+            $('#holder').css('height','615px');
             $('#current').css('height','555px');
-            $('#notes').css('margin-top','-590px');
+            $('#notes').css('margin-top','-605px');
 
             $('html, body').animate({scrollTop: $(document).height()}, 4000);
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));

@@ -9,7 +9,23 @@
 {% endblock %}
 {% block content %}
 <div id="wrapper">
-  <div id="logo"></div>
+  <div id="logo">
+      <div id="sharebuttons">
+          <div id="fb">
+          <a name="fb_share"></a> 
+              <script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" 
+                  type="text/javascript">
+              </script>
+          </div>
+          <div id="twitter">
+          <a href="https://twitter.com/share" class="twitter-share-button" data-count="none" data-via="LeyElectoral">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
+          </div>
+          <div id="buzz">
+          <a title="Publicar en Google Buzz" class="google-buzz-button" href="http://www.google.com/buzz/post" data-button-style="small-button" data-locale="es"></a>
+<script type="text/javascript" src="http://www.google.com/buzz/api/button.js"></script>
+          </div>
+      </div>
+  </div>
   <div id="holder">
     <div id="current" class="background">
       <div id="notes"></div>
