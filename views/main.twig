@@ -52,6 +52,15 @@
 
 <script>
 $(document).ready(function(){
+	$(document).ready(function(){
+	
+	  $("#buttons").animate({opacity: "0.8", left: "+=200"}, 600)
+	  .animate({opacity: "0.8", left: "-=400"}, 1200)
+	  .animate({opacity: "1", left: "+=200"}, 600)
+	  return false;
+	
+	});
+	
     {% for provincia, results in votes %}
         DataStore.add({
             provincia : "{{provincia}}",
