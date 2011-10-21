@@ -4,10 +4,12 @@ body,html{
   font-family: "Trebuchet MS";
   text-align: justify;
   color: #292929;
+  line-height: 22px;
 }
 h2{
   color: #595959;
   padding-top: 10px;
+  line-height: 26px;
 }
 #header{
   height: 49px;
