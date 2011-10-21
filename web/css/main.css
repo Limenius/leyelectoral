@@ -173,24 +173,25 @@ h2{
 
 .prl{
   height: 1px;
+  visibility: hidden;
 }
 
 #prl1{
-  background: url('/imgs/parliament1.png');
+  background-image: url('/imgs/parliament1.png');
 }
 
 #prl2{
-  background: url('/imgs/parliament2.png');
+  background-image: url('/imgs/parliament2.png');
 }
 
 #prl3{
-  background: url('/imgs/parliament3.png');
+  background-image: url('/imgs/parliament3.png');
 }
 
 #prl4{
-  background: url('/imgs/parliament4.png');
+  background-image: url('/imgs/parliament4.png');
 }
 
 #prl5{
-  background: url('/imgs/parliament5.png');
+  background-image: url('/imgs/parliament5.png');
 }
