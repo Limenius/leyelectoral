@@ -1245,9 +1245,9 @@ $(document).ready(function(){
             this.parvalues4 = this.parvalues4 || this.dhontUG();
             this.parvalues5 = this.parvalues5 || this.dhontNacional();
             
-            $('#holder').css('height','2680px');
+            $('#holder').css('height','2690px');
             $('#current').css('height','555px');
-            $('#notes').css('margin-top','-2670px');
+            $('#notes').css('margin-top','-2680px');
             
             $('#notes').html(ContentStore.getByKey("preparliament").get("value"));
             $('#notes2').html(ContentStore.getByKey("conclusiones").get("value"));

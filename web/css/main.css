@@ -125,7 +125,7 @@ h2{
 }
 #notes2 {
   width: 420px;
-  height: 220px;
+  height: 223px;
   margin-top: -25px;
   line-height: 22px;
 }
@@ -169,4 +169,28 @@ h2{
   float: right;
   padding-top: 20px;
   width: 175px;
+}
+
+.prl{
+  height: 1px;
+}
+
+#prl1{
+  background: url('/imgs/parliament1.png');
+}
+
+#prl2{
+  background: url('/imgs/parliament2.png');
+}
+
+#prl3{
+  background: url('/imgs/parliament3.png');
+}
+
+#prl4{
+  background: url('/imgs/parliament4.png');
+}
+
+#prl5{
+  background: url('/imgs/parliament5.png');
 }
