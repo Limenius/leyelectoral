@@ -2,7 +2,6 @@ body,html{
   margin:0;
   background-color: #f4f4f4;
   font-family: "Trebuchet MS";
-  color: #222;
   text-align: justify;
   color: #292929;
 }
@@ -82,7 +81,7 @@ h2{
   background-image: url('/imgs/goprev.png');
 }
 #goprev:hover {
-  background-image: url('/imgs/goprevhover.png');
+  background-position: -40px 0px;
 }
 #gonext {
   width: 40px;
@@ -92,7 +91,7 @@ h2{
   background-image: url('/imgs/gonext.png');
 }
 #gonext:hover {
-  background-image: url('/imgs/gonexthover.png');
+  background-position: -40px 0px;
 }
 #golast {
   width: 40px;
@@ -102,7 +101,7 @@ h2{
   background-image: url('/imgs/golast.png');
 }
 #golast:hover {
-  background-image: url('/imgs/golasthover.png');
+  background-position: -40px 0px;
 }
 #gofirst {
   width: 40px;
@@ -112,7 +111,7 @@ h2{
   background-image: url('/imgs/gofirst.png');
 }
 #gofirst:hover {
-  background-image: url('/imgs/gofirsthover.png');
+  background-position: -40px 0px;
 }
 #notes {
   width: 485px;
@@ -167,22 +166,4 @@ h2{
 #sharebuttons{
   float: right;
   padding-top: 20px;
-}
-
-#fb{
-  float: left;
-  margin-left: 5px;
-  margin-top: 3px;
-}
-
-#twitter{
-  float: left;
-  margin-left: 5px;
-  margin-top: 5px;
-}
-
-#buzz{
-  float: left;
-  margin-left: 5px;
-  margin-top: 2px;
 }
