@@ -1223,7 +1223,7 @@ $(document).ready(function(){
             $('#reform4').hide('fast', function(){
                 $('html, body').animate({scrollTop: $(document).height()}, 3000);
                 $('#reform4').html(ContentStore.getByKey("reforma4").get("value")).fadeIn(500, function(){
-                    that.parliament5 = that.paper.image("imgs/parliament5.png", 450, 2010, 500, 219);
+                    that.parliament5 = that.paper.image("imgs/parliament5.png", 450, 1990, 500, 219);
                     $('#reform3conclusions3').html(ContentStore.getByKey("reforma3conclusions3").get("value")).fadeIn(1500);
                 });
             });
