@@ -27,7 +27,7 @@ if (($handle = fopen("2011.csv", "r")) !== FALSE) {
     while (($data = fgetcsv($handle, 2000, ",")) !== FALSE) {
         $num = count($data);
         $row++;
-        echo $rows_counter." ".$provincia_num." ".trim($data[1])."\n";
+        //echo $rows_counter." ".$provincia_num." ".trim($data[1])."\n";
         if($provincia_num != trim($data[1])){
             $rows_counter = 0;
             $provincia_num = trim($data[1]);
@@ -59,7 +59,6 @@ if (($handle = fopen("2011.csv", "r")) !== FALSE) {
             }else if($rows_counter == 4){
                 $result['VBlanco'] = trim($data[4]);
                 $provincias[$result['Provincia']] = unserialize(serialize($result));
-                $c = 0;
             }else{
                 $provincias[$result['Provincia']]['Población'] = null;
                 $provincias[$result['Provincia']]['Mesas'] = null;
@@ -70,9 +69,9 @@ if (($handle = fopen("2011.csv", "r")) !== FALSE) {
                 $provincias[$result['Provincia']]['VBlanco'] = $result['VBlanco'];
                 $provincias[$result['Provincia']]['VNulos'] = $result['VNulos'];
                 
-                $result[$partidos[$c]] = uncommize(trim($data[4]));
-                $provincias[$result['Provincia']][$partidos[$c]] = $result[$partidos[$c]];
-                $c = $c+1;
+                $partido = normalize(trim($data[3]));
+                $result[$partido] = uncommize(trim($data[4]));
+                $provincias[$result['Provincia']][$partido] = $result[$partido];
                 $connection = new Mongo();
                 $db = $connection->elecciones;
                 $collection = $db->elecciones2011;
@@ -82,7 +81,8 @@ if (($handle = fopen("2011.csv", "r")) !== FALSE) {
                 //echo $result['VNulos'].",\n";
                 //echo $result['Válidos'].",\n";
                 //echo $result['VBlanco'].",\n";
-                //echo $result['partido-popular-pp'].",\n";
+                //echo "PP: ".$result['partido-popular-pp'].",\n";
+                //echo "UPyD: ".$result['uni-oacute-n-progreso-y-democracia-upyd'].",\n";
             }
             $rows_counter++;
         }
@@ -91,6 +91,18 @@ if (($handle = fopen("2011.csv", "r")) !== FALSE) {
     foreach ($provincias as $provincia) {
         $collection = $db->provincias2011;
         $collection->save($provincia);
+        $totalpp = $totalpp + $provincia['partido-popular-pp'];
+        echo $provincia['Provincia']." PP: ".$provincia['partido-popular-pp']." ".$totalpp."\n";
+        $totalpsoe = $totalpsoe + $provincia['partido-socialista-obrero-espa-ol-psoe'];
+        echo $provincia['Provincia']." PSOE: ".$provincia['partido-socialista-obrero-espa-ol-psoe']." ".$totalpsoe."\n";
+        if(isset($provincia['izquierda-unida-los-verdes-iu-lv'])){
+            $totaliu = $totaliu + $provincia['izquierda-unida-los-verdes-iu-lv'];
+            echo $provincia['Provincia']." IU: ".$provincia['izquierda-unida-los-verdes-iu-lv']." ".$totaliu."\n";
+        }
+        if(isset($provincia['uni-oacute-n-progreso-y-democracia-upyd'])){
+            $totalupyd = $totalupyd + $provincia['uni-oacute-n-progreso-y-democracia-upyd'];
+            echo $provincia['Provincia']." UPyD: ".$provincia['uni-oacute-n-progreso-y-democracia-upyd']." ".$totalupyd."\n";
+        }
     }
     fclose($handle);
 }

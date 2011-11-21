@@ -134,22 +134,22 @@ $colors["unitat-per-les-illes"]     = "f51111";
 $colors["nc-ccn"]     = "9d5e08";
 
 $parties2011 = array(
-    "partido-popular-pp" => "Partido Popular (PP)",
-    "partido-socialista-obrero-espa-ntilde-ol-psoe" => "Partido Socialista Obrero Espa&ntilde;ol (PSOE)",
-    "converg-egrave-ncia-i-uni-oacute-ciu" => "Converg&egrave;ncia i Uni&oacute; (CiU)",
-    "izquierda-unida-los-verdes-iu-lv" => "Izquierda Unida-Los Verdes (IU-LV)",
-    "amaiur-amaiur" => "Amaiur (AMAIUR)",
-    "uni-oacute-n-progreso-y-democracia-upyd" => "Uni&oacute;n Progreso y Democracia (UPyD)",
-    "euzko-alderdi-jeltzalea-partido-nacionalista-vasco-eaj-pnv" => "Euzko Alderdi Jeltzalea-Partido Nacionalista Vasco (EAJ-PNV)",
-    "esquerra-republicana-de-catalunya-erc-ri-cat" => "Esquerra Republicana de Catalunya (ERC-RI.cat)",
-    "bloque-nacionalista-galego-bng" => "Bloque Nacionalista Galego (BNG)",
-    "coalici-oacute-n-canaria-nueva-canarias-cc-nc-pnc" => "Coalici&oacute;n Canaria - Nueva Canarias (CC-NC-PNC)",
-    "bloc-iniciativa-verds-equo-coalici-oacute-comprom-iacute-s-comprom-iacute-s-q" => "Bloc-Iniciativa-Verds-Equo-Coalici&oacute; Comprom&iacute;s (COMPROM&Iacute;S-Q)",
-    "foro-de-ciudadanos-fac" => "Foro de Ciudadanos (FAC)",
-    "geroa-bai-gbai" => "Geroa Bai (GBAI)",
-    "equo-equo" => "Equo (EQUO)",
-    "plataforma-per-catalunya-pxc" => "Plataforma per Catalunya (PxC)",
-    "partido-regionalista-de-cantabria-prc" => "Partido Regionalista de Cantabria (PRC)",
+    "partido-popular-pp" => "PP",
+    "partido-socialista-obrero-espa-ol-psoe" => "PSOE",
+    "converg-egrave-ncia-i-uni-oacute-ciu" => "CiU",
+    "izquierda-unida-los-verdes-iu-lv" => "IU",
+    "amaiur-amaiur" => "Amaiur",
+    "uni-oacute-n-progreso-y-democracia-upyd" => "UPyD",
+    "euzko-alderdi-jeltzalea-partido-nacionalista-vasco-eaj-pnv" => "PNV",
+    "esquerra-republicana-de-catalunya-erc-ri-cat" => "ERC",
+    "bloque-nacionalista-galego-bng" => "BNG",
+    "coalici-oacute-n-canaria-nueva-canarias-cc-nc-pnc" => "CC",
+    "bloc-iniciativa-verds-equo-coalici-oacute-comprom-iacute-s-comprom-iacute-s-q" => "Compromís",
+    "foro-de-ciudadanos-fac" => "FAC",
+    "geroa-bai-gbai" => "GBAI",
+    "equo-equo" => "EQUO",
+    "plataforma-per-catalunya-pxc" => "PxC",
+    "partido-regionalista-de-cantabria-prc" => "PRC",
     "otros" => "Otros",
 );
 
@@ -159,3 +159,19 @@ foreach (array_keys($parties2011) as $party){
     $colors2011[$party] = random_color();
 
 }
+
+$colors2011["partido-popular-pp"]     = "019ee5";
+$colors2011["partido-socialista-obrero-espa-ol-psoe"] = "d41d05";
+$colors2011["izquierda-unida-los-verdes-iu-lv"] = "016e52";
+$colors2011["converg-egrave-ncia-i-uni-oacute-ciu"]     = "000e62";
+$colors2011["uni-oacute-n-progreso-y-democracia-upyd"]     = "e4007b";
+$colors2011["euzko-alderdi-jeltzalea-partido-nacionalista-vasco-eaj-pnv"]     = "b2bb1e";
+$colors2011["esquerra-republicana-de-catalunya-erc-ri-cat"]     = "e5aa01";
+$colors2011["bloque-nacionalista-galego-bng"]     = "b4d0e7";
+$colors2011["coalici-oacute-n-canaria-nueva-canarias-cc-nc-pnc"]     = "ffec01";
+$colors2011["coalici-oacute-n-canaria-nueva-canarias-cc-nc-pnc"]     = "ffec01";
+$colors2011["amaiur-amaiur"]     = "20576E";
+$colors2011["equo-equo"]     = "01A29C";
+$colors2011["bloc-iniciativa-verds-equo-coalici-oacute-comprom-iacute-s-comprom-iacute-s-q"]     = "E24812";
+$colors2011["foro-de-ciudadanos-fac"]     = "003583";
+$colors2011["otros"]     = "555555";

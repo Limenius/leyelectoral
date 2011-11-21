@@ -95,7 +95,7 @@ $(document).ready(function(){
         });
         prov.addRow({
            label:    "nonvote",
-           amount:  (parseInt({{stats[provincia]['Censo']}}, 10) - parseInt({{stats[provincia]['Válidos']}}, 10)),
+           amount:  (parseInt({{stats[provincia]['Censo']}}, 10) - parseInt({{stats[provincia]['Votantes']}}, 10)),
            oid:      "nonvote",
            statistical: true
         });

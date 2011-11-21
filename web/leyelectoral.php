@@ -110,8 +110,8 @@ $app->get('/', function () use ($app, $staticPage) {
 
     }
     return $app['twig']->render('main2011.twig', array(
-        'parties'      => $app['parties'],
-        'colors'       => $app['colors'],
+        'parties'      => $app['parties2011'],
+        'colors'       => $app['colors2011'],
         'stats'        => $content,
         'votes'        => $votes,
         'explanations' => $explanations
