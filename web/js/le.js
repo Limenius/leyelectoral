@@ -983,7 +983,8 @@ $(document).ready(function(){
                 $('#notes2').fadeIn(1500);
 
             });
-            this.parliament = this.paper.image("imgs/parliament1.png", 450, 263, 500, 229);
+            //this.parliament = this.paper.image("imgs/parliament1.png", 450, 263, 500, 229);
+            this.parliament = this.paper.g.parliament(625, 460, 180, 40, this.parvalues, {}, 1.3796875000000002, 3.5);
             var that = this;
 
             this.advance = function(){ return AppRouter.navigate("!votosescaño", true);};

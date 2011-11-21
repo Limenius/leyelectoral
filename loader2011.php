@@ -17,7 +17,7 @@ $provincias = array();
 if (($handle = fopen("2011.csv", "r")) !== FALSE) {
     $data = fgetcsv($handle, 2000, ",");
     $num = count($data);
-    $provincia_num = 00;
+    $provincia_num = null;
     $rows_counter = 0;
     $partidos = array();
     for ($c=0; $c < $num; $c++) {
@@ -91,18 +91,23 @@ if (($handle = fopen("2011.csv", "r")) !== FALSE) {
     foreach ($provincias as $provincia) {
         $collection = $db->provincias2011;
         $collection->save($provincia);
-        $totalpp = $totalpp + $provincia['partido-popular-pp'];
-        echo $provincia['Provincia']." PP: ".$provincia['partido-popular-pp']." ".$totalpp."\n";
-        $totalpsoe = $totalpsoe + $provincia['partido-socialista-obrero-espa-ol-psoe'];
-        echo $provincia['Provincia']." PSOE: ".$provincia['partido-socialista-obrero-espa-ol-psoe']." ".$totalpsoe."\n";
-        if(isset($provincia['izquierda-unida-los-verdes-iu-lv'])){
-            $totaliu = $totaliu + $provincia['izquierda-unida-los-verdes-iu-lv'];
-            echo $provincia['Provincia']." IU: ".$provincia['izquierda-unida-los-verdes-iu-lv']." ".$totaliu."\n";
-        }
-        if(isset($provincia['uni-oacute-n-progreso-y-democracia-upyd'])){
-            $totalupyd = $totalupyd + $provincia['uni-oacute-n-progreso-y-democracia-upyd'];
-            echo $provincia['Provincia']." UPyD: ".$provincia['uni-oacute-n-progreso-y-democracia-upyd']." ".$totalupyd."\n";
-        }
+        echo $provincia['Provincia']."\n";
+
+        //$totalpp = 0;
+        //$totalpsoe = 0;
+        //$totaliu = 0;
+        //$totalupyd = $totalpp + $provincia['partido-popular-pp'];
+        //echo $provincia['Provincia']." PP: ".$provincia['partido-popular-pp']." ".$totalpp."\n";
+        //$totalpsoe = $totalpsoe + $provincia['partido-socialista-obrero-espa-ol-psoe'];
+        //echo $provincia['Provincia']." PSOE: ".$provincia['partido-socialista-obrero-espa-ol-psoe']." ".$totalpsoe."\n";
+        //if(isset($provincia['izquierda-unida-los-verdes-iu-lv'])){
+        //    $totaliu = $totaliu + $provincia['izquierda-unida-los-verdes-iu-lv'];
+        //    echo $provincia['Provincia']." IU: ".$provincia['izquierda-unida-los-verdes-iu-lv']." ".$totaliu."\n";
+        //}
+        //if(isset($provincia['uni-oacute-n-progreso-y-democracia-upyd'])){
+        //    $totalupyd = $totalupyd + $provincia['uni-oacute-n-progreso-y-democracia-upyd'];
+        //    echo $provincia['Provincia']." UPyD: ".$provincia['uni-oacute-n-progreso-y-democracia-upyd']." ".$totalupyd."\n";
+        //}
     }
     fclose($handle);
 }
