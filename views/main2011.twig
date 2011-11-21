@@ -1,8 +1,8 @@
 {% extends "layout.html" %}
 {% block header %}
 <div id="navbar">
-  <div class="navbaritem"><a href="/">resultados 2011</a></div>
-  <div class="current navbaritem">resultados 2008</div>
+  <div class="current navbaritem">resultados 2011</div>
+  <div class="navbaritem"><a href="/resultados2008">resultados 2008</a></div>
   <div class="navbaritem"><a href="/sabermas">saber más</a></div>
   <div class="navbaritem"><a href="/leyelectoral">leyelectoral.es</a></div>
   <div class="navbaritem"><a href="/contacto">contacto</a></div>
@@ -95,7 +95,7 @@ $(document).ready(function(){
         });
         prov.addRow({
            label:    "nonvote",
-           amount:  (parseInt({{stats[provincia]['Censo']}}, 10) - parseInt({{stats[provincia]['VCandidaturas']}}, 10)),
+           amount:  (parseInt({{stats[provincia]['Censo']}}, 10) - parseInt({{stats[provincia]['Válidos']}}, 10)),
            oid:      "nonvote",
            statistical: true
         });

@@ -14,6 +14,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 $app = new Silex\Application();
 $app['parties'] = $parties;
 $app['colors']  = $colors;
+$app['parties2011'] = $parties2011;
+$app['colors2011']  = $colors2011;
 $app['content_dir'] = __DIR__.'/../content/';
 
 $staticPage = function($page, $explanations) {
@@ -26,15 +28,10 @@ $app->register(new Silex\Extension\TwigExtension(), array(
 ));
 
 $app->register(new Leyelectoral\MongoExtension(), array(
-    'db.options' => array('db'=>'elecciones', 'collection'=>'provincias'),
+    'db.options' => array('db'=>'elecciones', 'collection'=>'provincias', 'db1'=>'elecciones', 'collection1'=>'provincias2011'),
 ));
 
-$app->get('/{page}', function ($page) use ($app) {
-    return $app['twig']->render($page.'.twig', array(
-    ));
-});
-
-$app->get('/', function () use ($app, $staticPage) {
+$app->get('/resultados2008', function () use ($app, $staticPage) {
     $explanations  = array();
     $files = array();
     if ($handle = opendir($app['content_dir'].'/short')) {
@@ -67,6 +64,52 @@ $app->get('/', function () use ($app, $staticPage) {
 
     }
     return $app['twig']->render('main.twig', array(
+        'parties'      => $app['parties'],
+        'colors'       => $app['colors'],
+        'stats'        => $content,
+        'votes'        => $votes,
+        'explanations' => $explanations
+    ));
+});
+
+$app->get('/{page}', function ($page) use ($app) {
+    return $app['twig']->render($page.'.twig', array(
+    ));
+});
+
+$app->get('/', function () use ($app, $staticPage) {
+    $explanations  = array();
+    $files = array();
+    if ($handle = opendir($app['content_dir'].'/short')) {
+        while (false !== ($file = readdir($handle))) {
+            if ($file != "." && $file != "..") {
+                array_push($files, $file);
+            }
+        }
+        closedir($handle);
+    }
+
+    foreach($files as $file){
+        $fcontent = file_get_contents($app['content_dir'].'/short/'.$file);
+        $explanations[str_replace(".md","" , $file)] = Markdown($fcontent);
+    }
+
+    $escapedFragment = $app['request']->get('_escaped_fragment_');
+
+    if ($escapedFragment) {
+    return $staticPage($escapedFragment, $explanations);}
+
+
+    $db = $app['db1']();
+    $cursor = $db->find();
+    $votes = array();
+    $content = array();
+    foreach ($cursor as $row) {
+        $votes[$row['Provincia']] = array_slice($row, 13);
+        $content[$row['Provincia']] = array_slice($row, 7, 6);
+
+    }
+    return $app['twig']->render('main2011.twig', array(
         'parties'      => $app['parties'],
         'colors'       => $app['colors'],
         'stats'        => $content,
