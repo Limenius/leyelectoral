@@ -499,12 +499,14 @@ $(document).ready(function(){
                     }).reverse();
 
                     for (var i = 0; i < circunscripciones1[prov.get('provincia')] -assigned; i++) {
-                        electedseats.push({
+                        if(possiblepar[i]){
+                            electedseats.push({
                             value: possiblepar[i]['value'],
                             color: possiblepar[i]['color'],
                             oid  : possiblepar[i]['oid'],
                             label: possiblepar[i]['label'],
                         });
+                    }
                     }
                 }
             });
@@ -1335,7 +1337,7 @@ $(document).ready(function(){
         "A Coruña": 8,
         "Ourense": 4,
         "Pontevedra": 7,
-        "Madrid": 35,
+        "Madrid": 36,
         "Navarra": 5,
         "Álava": 4,
         "Guipúzcoa": 6,
@@ -1348,7 +1350,7 @@ $(document).ready(function(){
         "Ceuta": 1,
         "Melilla": 1,
         "Almería": 6,
-        "Cádiz": 9,
+        "Cádiz": 8,
         "Córdoba": 6,
         "Granada": 7,
         "Huelva": 5,
@@ -1389,7 +1391,7 @@ $(document).ready(function(){
         "A Coruña": 10,
         "Ourense": 4,
         "Pontevedra": 8,
-        "Madrid": 44,
+        "Madrid": 48,
         "Navarra": 6,
         "Álava": 3,
         "Guipúzcoa": 6,
