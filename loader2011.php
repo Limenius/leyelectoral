@@ -108,6 +108,10 @@ if (($handle = fopen("2011.csv", "r")) !== FALSE) {
         //    $totalupyd = $totalupyd + $provincia['uni-oacute-n-progreso-y-democracia-upyd'];
         //    echo $provincia['Provincia']." UPyD: ".$provincia['uni-oacute-n-progreso-y-democracia-upyd']." ".$totalupyd."\n";
         //}
+        //if(isset($provincia['equo-equo'])){
+        //    $totalupyd = $totalupyd + $provincia['equo-equo'];
+        //    echo $provincia['Provincia']." EQUO: ".$provincia['equo-equo']." ".$totalupyd."\n";
+        //}
     }
     fclose($handle);
 }

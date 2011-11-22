@@ -129,6 +129,12 @@ h2{
   margin-top: -25px;
   line-height: 22px;
 }
+#notes2-2011 {
+  width: 420px;
+  height: 268px;
+  margin-top: -25px;
+  line-height: 22px;
+}
 #notes3{
   line-height: 22px;
 }
@@ -144,6 +150,16 @@ h2{
 
 #reform3conclusions{
   height: 60px;
+  line-height: 22px;
+}
+
+#reform3conclusions2-2011{
+  height: 60px;
+  line-height: 22px;
+}
+
+#reform3conclusions3-2011{
+  height: 120px;
   line-height: 22px;
 }
 

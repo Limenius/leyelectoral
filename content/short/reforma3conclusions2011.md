@@ -1,0 +1,1 @@
+Las desigualdades en el precio del escaño son muy pequeñas comparadas con las de nuestro sistema actual. Entran PA y PACMA en el congreso (carecían de representación pese a tener muchos más votos que GBAI). Por primera vez a EQUO le cuesta el escaño algo semejante al resto de partidos.
