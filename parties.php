@@ -150,6 +150,7 @@ $parties2011 = array(
     "equo-equo" => "EQUO",
     "plataforma-per-catalunya-pxc" => "PxC",
     "partido-regionalista-de-cantabria-prc" => "PRC",
+    "psm-iniciativaverds-entesa-equo-psm-iv-exm-equo" => "PSM-Entesa",
     "otros" => "Otros",
 );
 
@@ -171,7 +172,11 @@ $colors2011["bloque-nacionalista-galego-bng"]     = "b4d0e7";
 $colors2011["coalici-oacute-n-canaria-nueva-canarias-cc-nc-pnc"]     = "ffec01";
 $colors2011["coalici-oacute-n-canaria-nueva-canarias-cc-nc-pnc"]     = "ffec01";
 $colors2011["amaiur-amaiur"]     = "20576E";
+$colors2011["geroa-bai-gbai"]     = "D22F10";
 $colors2011["equo-equo"]     = "01A29C";
 $colors2011["bloc-iniciativa-verds-equo-coalici-oacute-comprom-iacute-s-comprom-iacute-s-q"]     = "E24812";
 $colors2011["foro-de-ciudadanos-fac"]     = "003583";
+$colors2011["plataforma-per-catalunya-pxc"]     = "F49900";
+$colors2011["partido-regionalista-de-cantabria-prc"]     = "C0C516";
+$colors2011["psm-iniciativaverds-entesa-equo-psm-iv-exm-equo"]     = "9FAA27";
 $colors2011["otros"]     = "555555";
