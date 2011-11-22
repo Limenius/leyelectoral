@@ -747,30 +747,89 @@ $(document).ready(function(){
                 return res["value"];
             }).reverse();
 
-            for (var i = 0; i < 30; i++) {
+            absoluteReached = false;
+
+            var ilast = 0;
+            for (ilast = 0; ilast < 30 && !absoluteReached; ilast++) {
+                ichair = ilast + 370;
+                electedseats.push({
+                    value: possiblepar[ilast]['value'],
+                    color: possiblepar[ilast]['color'],
+                    oid  : possiblepar[ilast]['oid'],
+                    label: possiblepar[ilast]['label'],
+                });
+
+                var thisvarpar = _.detect(varpar, function(party) {
+                    return party['oid'] === electedseats[ichair]['oid'];
+                });
+                if (thisvarpar){
+                    thisvarpar['value'] ++;
+                    if (thisvarpar['value'] == 201) {
+                        absoluteReached = true;
+                    }
+                } else {
+                    varpar.push({
+                        'oilastd' :electedseats[ichair]['oid'],
+                        'value' : 1,
+                        'color': electedseats[ichair]['color'],
+                        'label': electedseats[ichair]['label']
+                    });
+                }
+            };
+
+            var possiblepar = [];
+            _.each(parties, function(party){
+                if (!party.get("statistical")) {
+                    var thisvarpar = _.detect(varpar, function(tparty) {
+                        return tparty['oid'] === party.get('oid');
+                    });
+                    var initialbox = thisvarpar ? thisvarpar['value'] +1  : 1;
+                    for (var j = initialbox; j <= initialbox+30; j++) {
+                        if(party.get("amount") > 0) {
+                            var valtopush = party.get("amount")/ j;
+                            possiblepar.push({
+                                value : valtopush,
+                                color : party.get("color"),
+                                oid   : party.get("oid"),
+                                label : party.get("label"),
+                            });
+                        }
+                    };
+                }
+            });
+            var possiblepar = _.reject(possiblepar, function(part) {
+                return (part["value"] == null || part["value"] == 0);
+            });
+            possiblepar = _.sortBy(possiblepar, function(res) {
+                return res["value"];
+            }).reverse();
+
+            var ichair = electedseats.length;
+            //console.log(electedseats.length);
+
+            for (i = 0 ; 400 - electedseats.length; i++) {
+                //console.log(possiblepar[i]['oid']);
                 electedseats.push({
                     value: possiblepar[i]['value'],
                     color: possiblepar[i]['color'],
                     oid  : possiblepar[i]['oid'],
                     label: possiblepar[i]['label'],
                 });
-            };
 
-
-            for (var i = 370; i < electedseats.length; i++) {
                 var thisvarpar = _.detect(varpar, function(party) {
-                    return party['oid'] === electedseats[i]['oid'];
+                    return party['oid'] === electedseats[ichair]['oid'];
                 });
                 if (thisvarpar){
                     thisvarpar['value'] ++;
                 } else {
                     varpar.push({
-                        'oid' :electedseats[i]['oid'],
+                        'oilastd' :electedseats[ichair]['oid'],
                         'value' : 1,
-                        'color': electedseats[i]['color'],
-                        'label': electedseats[i]['label']
+                        'color': electedseats[ichair]['color'],
+                        'label': electedseats[ichair]['label']
                     });
                 }
+                ichair ++;
             };
 
             return _.sortBy(varpar,function (party) { return party['value']; }).reverse();
