@@ -1,3 +1,3 @@
 La configuración del Congreso es muy parecida a la de la propuesta 3. Es posible solucionar el problema de proporcionalidad incluso sin tocar el tamaño de la circunscripción (que implicaría un -teóricamente complicado- cambio en la Constitución).
 
-Tanto en la circunscripción única como en las propuestas, si comparamos con 2008, entra un número mayor de partidos en el congreso. Ello se debe a que muchos más votantes se han inclinado en estas elecciones por partidos minoritarios. En 2008 tan solo 9 partidos superaron los 70.000 votos, mientras que en 2011 han sido 15 los que han rebasado esta cifra.
+Tanto en la circunscripción única como en las propuestas, si comparamos con 2008, vemos que entra un número mayor de partidos en el congreso. El motivo es que muchos más votantes se han inclinado en estas elecciones por partidos minoritarios. En 2008 tan solo 9 partidos superaron los 70.000 votos, mientras que en 2011 han sido 16 los que han rebasado esta cifra.
