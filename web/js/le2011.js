@@ -1339,6 +1339,8 @@ $(document).ready(function(){
             this.parliament3 = this.paper.image("imgs/parliament3-2011.png", 450, 1130, 500, 280);
             this.parliament4 = this.paper.image("imgs/parliament4-2011.png", 450, 1605, 500, 315);
             this.parliament5 = this.paper.image("imgs/parliament5-2011.png", 450, 2210, 500, 315);
+            //this.parliament5 = this.paper.g.parliament(620, 2500, 180, 40, this.parvalues5, {}, 1.2125, 3.5);
+
 
             this.advance = function(){ return AppRouter.navigate("!reformaelectoral4", true);};
             this.goback = function(){ return AppRouter.navigate("!circunscripcionunica", true);};
