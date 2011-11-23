@@ -17,7 +17,7 @@ Circunscripción única
 <td style="padding-left: 30px;"> Eb     </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 97.706 </td>
 </tr>
 <tr>
-<td style="padding-left: 30px;"> IU      </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 60.029 </td>
+<td style="padding-left: 30px;"> IU      </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 57.959 </td>
 <td style="padding-left: 30px;"> Compromís    </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 125.150 </td>
 </tr>
 <tr>
