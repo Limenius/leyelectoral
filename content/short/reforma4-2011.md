@@ -14,31 +14,31 @@ Circunscripción única
 </tr>
 <tr>
 <td style="padding-left: 30px;"> PSOE    </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 58.116 </td> 
-<td style="padding-left: 30px;"> Eb     </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 97.706 </td>
-</tr>
-<tr>
-<td style="padding-left: 30px;"> IU      </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 57.959 </td>
 <td style="padding-left: 30px;"> Compromís    </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 62.575 </td>
 </tr>
 <tr>
-<td style="padding-left: 30px;"> UPyD    </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 60.013 </td>
+<td style="padding-left: 30px;"> IU      </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 57.959 </td>
 <td style="padding-left: 30px;"> CC  </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 71.775 </td>
 </tr>
 <tr>
-<td style="padding-left: 30px;"> CiU     </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 59.663 </td>
+<td style="padding-left: 30px;"> UPyD    </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 60.013 </td>
 <td style="padding-left: 30px;"> PxC     </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 59.781 </td>
 </tr>
 <tr>
-<td style="padding-left: 30px;"> PNV </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 64.703 </td>
+<td style="padding-left: 30px;"> CiU     </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 59.663 </td>
 <td style="padding-left: 30px;"> PA      </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 76.852 </td>
 </tr>
 <tr>
+<td style="padding-left: 30px;"> PNV </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 64.703 </td>
+<td style="padding-left: 30px;"> Eb     </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 97.706 </td>
+</tr>
+<tr>
 <td style="padding-left: 30px;"> Amaiur    </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 66.726 </td>
-<td style="padding-left: 30px;"> PACMA    </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 101.557 </td>
+<td style="padding-left: 30px;"> FAC    </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 99.173 </td>
 </tr>
 <tr>
 <td style="padding-left: 30px;"> ERC     </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 64.098 </td>
-<td style="padding-left: 30px;"> FAC    </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 99.173 </td>
+<td style="padding-left: 30px;"> PACMA    </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 101.557 </td>
 </tr>
 <tr>
 <td style="padding-left: 30px;"> BNG     </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 61.093 </td>
