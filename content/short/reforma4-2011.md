@@ -33,7 +33,7 @@ Circunscripción única
 <td style="padding-left: 30px;"> PA      </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 76.852 </td>
 </tr>
 <tr>
-<td style="padding-left: 30px;"> Amaiur    </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 47.661 </td>
+<td style="padding-left: 30px;"> Amaiur    </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 66.726 </td>
 <td style="padding-left: 30px;"> PACMA    </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 101.557 </td>
 </tr>
 <tr>
