@@ -18,7 +18,7 @@ Propuesta de reforma 1
 </tr>
 <tr>
 <td style="padding-left: 30px;"> IU      </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 54.220 </td>
-<td style="padding-left: 30px;"> Compromís    </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 125.150 </td>
+<td style="padding-left: 30px;"> Compromís    </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 62.575 </td>
 </tr>
 <tr>
 <td style="padding-left: 30px;"> CiU     </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 56.347 </td>

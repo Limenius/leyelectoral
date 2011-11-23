@@ -18,7 +18,7 @@ Circunscripción única
 </tr>
 <tr>
 <td style="padding-left: 30px;"> IU      </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 57.959 </td>
-<td style="padding-left: 30px;"> Compromís    </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 125.150 </td>
+<td style="padding-left: 30px;"> Compromís    </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 62.575 </td>
 </tr>
 <tr>
 <td style="padding-left: 30px;"> UPyD    </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 60.013 </td>
