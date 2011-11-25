@@ -1132,9 +1132,9 @@ $(document).ready(function(){
             this.parvalues = this.parvalues || this.dhont();
             this.parvalues2 = this.parvalues2 || this.hare();
             
-            $('#holder').css('height','1110px');
+            $('#holder').css('height','1130px');
             $('#current').css('height','605px');
-            $('#notes').css('margin-top','-1100px');
+            $('#notes').css('margin-top','-1120px');
             
             $('#reform2').hide();
             
