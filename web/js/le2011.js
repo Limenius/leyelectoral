@@ -1134,7 +1134,7 @@ $(document).ready(function(){
             
             $('#holder').css('height','1110px');
             $('#current').css('height','605px');
-            $('#notes').css('margin-top','-1120px');
+            $('#notes').css('margin-top','-1100px');
             
             $('#reform2').hide();
             
