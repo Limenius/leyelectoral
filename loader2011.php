@@ -97,7 +97,7 @@ if (($handle = fopen("2011.csv", "r")) !== FALSE) {
                 //echo $result['VBlanco'].",\n";
                 //echo "PP: ".$result['partido-popular-pp'].",\n";
                 //echo "UPyD: ".$result['uni-oacute-n-progreso-y-democracia-upyd'].",\n";
-                $totalprovincia = $totalprovincia + $result[$partido];
+                //$totalprovincia = $totalprovincia + $result[$partido];
             }
             $rows_counter++;
         }
@@ -115,7 +115,7 @@ if (($handle = fopen("2011.csv", "r")) !== FALSE) {
         //$totalequo = 0;
         //$totalpacma = 0;
         //$totaleb = 0;
-        //$totalupyd = $totalpp + $provincia['partido-popular-pp'];
+        //$totalpp = $totalpp + $provincia['partido-popular-pp'];
         //echo $provincia['Provincia']." PP: ".$provincia['partido-popular-pp']." ".$totalpp."\n";
         //$totalpsoe = $totalpsoe + $provincia['partido-socialista-obrero-espa-ol-psoe'];
         //echo $provincia['Provincia']." PSOE: ".$provincia['partido-socialista-obrero-espa-ol-psoe']." ".$totalpsoe."\n";
