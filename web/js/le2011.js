@@ -1175,9 +1175,9 @@ $(document).ready(function(){
             this.parvalues = this.parvalues || this.dhont();
             this.parvalues2 = this.parvalues2 || this.hare();
             
-            $('#holder').css('height','1130px');
+            $('#holder').css('height','1160px');
             $('#current').css('height','605px');
-            $('#notes').css('margin-top','-1120px');
+            $('#notes').css('margin-top','-1150px');
             
             $('#reform2').hide();
             
