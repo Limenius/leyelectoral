@@ -9,7 +9,7 @@ Propuesta de reforma 2
 <table style="margin: 5px 10px;">
 <tr>
 <td style="padding-left: 30px;"> PP      </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 53.617 </td>
-<td style="padding-left: 30px;"> CC  </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 71.775 </td>
+<td style="padding-left: 30px;"> ERC     </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 64.098 </td>
 </tr>
 <tr>
 <td style="padding-left: 30px;"> PSOE    </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 55.791 </td> 
@@ -17,7 +17,7 @@ Propuesta de reforma 2
 </tr>
 <tr>
 <td style="padding-left: 30px;"> IU      </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 84.041 </td>
-<td style="padding-left: 30px;"> Eb     </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 97.706 </td>
+<td style="padding-left: 30px;"> CC  </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 71.775 </td>
 </tr>
 <tr>
 <td style="padding-left: 30px;"> CiU     </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 59.663 </td>
@@ -34,9 +34,6 @@ Propuesta de reforma 2
 <tr>
 <td style="padding-left: 30px;"> PNV </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 64.703 </td>
 <td style="padding-left: 30px;"> GBAI </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 42.411 </td>
-</tr>
-<tr>
-<td style="padding-left: 30px;"> ERC     </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 64.098 </td>
 </tr>
 </table>
 </div>

@@ -1,1 +1,1 @@
-La oscilación del precio del escaño es semejante a la de la propuesta 1. En lugar de PRC, entra "Escaños en blanco" en el congreso, que posee cerca del doble de votos. El PP obtiene mayoría absoluta, como en el sistema actual.
+Los resultados son semejantes a los del sistema actual, pero se corrigen en parte las principales deficiencias de este: la ausencia de EQUO y el precio del escaño de IU y UPyD.

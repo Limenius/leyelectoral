@@ -10,11 +10,11 @@ Propuesta de reforma 3
 <table style="margin: 5px 10px;">
 <tr>
 <td style="padding-left: 30px;"> PP      </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 53.884 </td>
-<td style="padding-left: 30px;"> CC  </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 71.775 </td>
+<td style="padding-left: 30px;"> BNG     </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 91.640 </td>
 </tr>
 <tr>
 <td style="padding-left: 30px;"> PSOE    </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 63.399 </td> 
-<td style="padding-left: 30px;"> BNG     </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 91.640 </td>
+<td style="padding-left: 30px;"> CC  </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 71.775 </td>
 </tr>
 <tr>
 <td style="padding-left: 30px;"> IU      </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 64.647 </td>
@@ -22,11 +22,11 @@ Propuesta de reforma 3
 </tr>
 <tr>
 <td style="padding-left: 30px;"> UPyD    </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 67.073 </td>
-<td style="padding-left: 30px;"> PACMA    </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 101.557 </td>
+<td style="padding-left: 30px;"> Eb     </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 97.706 </td>
 </tr>
 <tr>
 <td style="padding-left: 30px;"> CiU     </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 59.663 </td>
-<td style="padding-left: 30px;"> Eb     </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 97.706 </td>
+<td style="padding-left: 30px;"> PACMA    </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 101.557 </td>
 </tr>
 <tr>
 <td style="padding-left: 30px;"> Amaiur    </td> <td style="font-weight: bold; text-align: right; padding: 0 10px;"> 47.661 </td>

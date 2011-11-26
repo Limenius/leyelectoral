@@ -467,10 +467,15 @@ $(document).ready(function(){
                     });
                     var minval = total*0.03;
                     var parties = _.reject(prov.rows, function(row) {
-                        return row.get("amount") < minval || row.get("statistical") === true;
+                        return  row.get("amount") < minval || row.get("statistical") === true;
+                    });
+                    var rejectedparties = _.reject(prov.rows, function(row) {
+                        return  !(row.get("amount") < minval || row.get("statistical") === true);
                     });
                     var quota = Math.floor(total/circunscripciones1[prov.get('provincia')]);
+                    //console.log("Quota"+quota);
                     var possiblepar = [];
+                    var possiblerejectedpar = [];
                     var assigned = 0;
                     _.each(parties, function(party){
                         if (!party.get("statistical")) {
@@ -497,6 +502,24 @@ $(document).ready(function(){
                     possiblepar = _.sortBy(possiblepar, function(res) {
                         return res["value"];
                     }).reverse();
+                    
+                    _.each(rejectedparties, function(party){
+                        if (!party.get("statistical")) {
+
+                            possiblerejectedpar.push({
+                                value: party.get("amount") % quota,
+                                color: party.get('color'),
+                                oid  : party.get('oid'),
+                                label: party.get('label'),
+                            });
+
+                        }
+                    });
+                    possiblerejectedpar = _.sortBy(possiblerejectedpar, function(res) {
+                        return res["value"];
+                    }).reverse();
+
+                    var missingseats = 0;
 
                     for (var i = 0; i < circunscripciones1[prov.get('provincia')] -assigned; i++) {
                         if(possiblepar[i]){
@@ -505,9 +528,29 @@ $(document).ready(function(){
                             color: possiblepar[i]['color'],
                             oid  : possiblepar[i]['oid'],
                             label: possiblepar[i]['label'],
-                        });
+                            });
+                        }else{
+                            missingseats = missingseats + 1;
+                            console.log(possiblepar);
+                            console.log(i);
+                            console.log(prov.get('provincia'));
+                            console.log(circunscripciones1[prov.get('provincia')] -assigned);
+                            console.log(circunscripciones1[prov.get('provincia')]);
+                            console.log("Assigned"+assigned);
+                        }
                     }
-                    }
+                    //Hay veces en las que, al combinar el mínimo del 3% con el método de Hare, resulta que después de repartir los escaños enteros (votosPartido/coutaHare) y los no enteros (un escaño más a cada partido, por los votos "restantes"), aún queda algún escaño por repartir, así que se los damos a los partidos más votados de entre los que en principio habían sido descartados por no llegar al 3%. Esta situación puede pasar en provincias grandes (el 3% son bastantes votos) si muchos votos han ido a partidos minoritarios. En 2011 se perdían 2 escaños por Barcelona y uno por Madrid. Otra posibilidad sería quitar el 3% desde el principio, pero parece más fácil que entonces se pueda dar el caso de que entre un partido con pocos votos consiga escaños (Ciutadans, por ejemplo, entraría por Barcelona en 2008, con 24.000 votos, siendo la cuota de 90.000).
+                        if(missingseats != 0){
+                            for (var j = 0; j < missingseats; j++) {
+                                console.log(possiblerejectedpar[j]);
+                                electedseats.push({
+                                value: possiblerejectedpar[j]['value'],
+                                color: possiblerejectedpar[j]['color'],
+                                oid  : possiblerejectedpar[j]['oid'],
+                                label: possiblerejectedpar[j]['label'],
+                                });
+                            }
+                        }
                 }
             });
 
@@ -1153,7 +1196,8 @@ $(document).ready(function(){
             $('#reform1').hide('fast', function(){
                 $('html, body').animate({scrollTop: $(document).height()}, 3000);
                 $('#reform1').html(ContentStore.getByKey("reforma1-2011").get("value")).fadeIn(500, function(){
-                    that.parliament2 = that.paper.image("imgs/parliament2-2011.png", 450, 670, 500, 280);
+                    that.parliament2 = that.paper.image("imgs/parliament2-2011.png", 450, 670, 500, 310);
+                    //that.parliament2 = that.paper.g.parliament(620, 930, 180, 40, that.parvalues2, {}, 1.2125, 3.5);
                     $('#reform1conclusions').html(ContentStore.getByKey("reforma1conclusions2011").get("value")).fadeIn(1500);
                 });
             });
@@ -1190,12 +1234,12 @@ $(document).ready(function(){
             $('#reform2').hide('fast', function(){
                 $('html, body').animate({scrollTop: $(document).height()}, 3000);
                 $('#reform2').html(ContentStore.getByKey("reforma2-2011").get("value")).fadeIn(500, function(){
-                    that.parliament3 = that.paper.image("imgs/parliament3-2011.png", 450, 1130, 500, 280);
+                    that.parliament3 = that.paper.image("imgs/parliament3-2011.png", 450, 1140, 500, 280);
                     $('#reform2conclusions').html(ContentStore.getByKey("reforma2conclusions2011").get("value")).fadeIn(1500);
                 });
             });
             this.parliament = this.paper.image("imgs/parliament1-2011.png", 450, 263, 500, 245);
-            this.parliament2 = this.paper.image("imgs/parliament2-2011.png", 450, 670, 500, 280);
+            this.parliament2 = this.paper.image("imgs/parliament2-2011.png", 450, 670, 500, 310);
 
             this.advance = function(){ return AppRouter.navigate("!reformaelectoral3", true);};
             this.goback = function(){ return AppRouter.navigate("!reformaelectoral1", true);};
@@ -1243,8 +1287,8 @@ $(document).ready(function(){
                 });
             });
             this.parliament = this.paper.image("imgs/parliament1-2011.png", 450, 263, 500, 245);
-            this.parliament2 = this.paper.image("imgs/parliament2-2011.png", 450, 670, 500, 280);
-            this.parliament3 = this.paper.image("imgs/parliament3-2011.png", 450, 1130, 500, 280);
+            this.parliament2 = this.paper.image("imgs/parliament2-2011.png", 450, 670, 500, 310);
+            this.parliament3 = this.paper.image("imgs/parliament3-2011.png", 450, 1140, 500, 280);
 
             this.advance = function(){ return AppRouter.navigate("!circunscripcionunica", true);};
             this.goback = function(){ return AppRouter.navigate("!reformaelectoral2", true);};
@@ -1289,8 +1333,8 @@ $(document).ready(function(){
                 });
             });
             this.parliament = this.paper.image("imgs/parliament1-2011.png", 450, 263, 500, 245);
-            this.parliament2 = this.paper.image("imgs/parliament2-2011.png", 450, 670, 500, 280);
-            this.parliament3 = this.paper.image("imgs/parliament3-2011.png", 450, 1130, 500, 280);
+            this.parliament2 = this.paper.image("imgs/parliament2-2011.png", 450, 670, 500, 310);
+            this.parliament3 = this.paper.image("imgs/parliament3-2011.png", 450, 1140, 500, 280);
             this.parliament4 = this.paper.image("imgs/parliament4-2011.png", 450, 1605, 500, 315);
 
             this.advance = function(){ return AppRouter.navigate("!conclusiones", true);};
@@ -1335,9 +1379,13 @@ $(document).ready(function(){
                 $('#conclusions').html(ContentStore.getByKey("finalconclusions").get("value")).fadeIn(500);
             });
             this.parliament = this.paper.image("imgs/parliament1-2011.png", 450, 263, 500, 245);
-            this.parliament2 = this.paper.image("imgs/parliament2-2011.png", 450, 670, 500, 280);
-            this.parliament3 = this.paper.image("imgs/parliament3-2011.png", 450, 1130, 500, 280);
+            //this.parliament1 = this.paper.g.parliament(620, 550, 180, 40, this.parvalues, {}, 1.3796875000000002, 3.5);
+            this.parliament2 = this.paper.image("imgs/parliament2-2011.png", 450, 670, 500, 310);
+            //this.parliament2 = this.paper.g.parliament(620, 950, 180, 40, this.parvalues2, {}, 1.2125, 3.5);
+            this.parliament3 = this.paper.image("imgs/parliament3-2011.png", 450, 1140, 500, 280);
+            //this.parliament3 = this.paper.g.parliament(620, 1450, 180, 40, this.parvalues3, {}, 1.2125, 3.5);
             this.parliament4 = this.paper.image("imgs/parliament4-2011.png", 450, 1605, 500, 315);
+            //this.parliament4 = this.paper.g.parliament(620, 2000, 180, 40, this.parvalues4, {}, 1.2125, 3.5);
             this.parliament5 = this.paper.image("imgs/parliament5-2011.png", 450, 2210, 500, 315);
             //this.parliament5 = this.paper.g.parliament(620, 2500, 180, 40, this.parvalues5, {}, 1.2125, 3.5);
 

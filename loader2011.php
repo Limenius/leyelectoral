@@ -19,6 +19,10 @@ if (($handle = fopen("2011.csv", "r")) !== FALSE) {
     $num = count($data);
     $provincia_num = null;
     $rows_counter = 0;
+    //$totalprovincia = 0;
+    //$totalespana = 0;
+    //$totalnulos = 0;
+    //$totalblancos = 0;
     $partidos = array();
     for ($c=0; $c < $num; $c++) {
         $partidos[$c] = normalize(trim($data[$c]));
@@ -29,6 +33,14 @@ if (($handle = fopen("2011.csv", "r")) !== FALSE) {
         $row++;
         //echo $rows_counter." ".$provincia_num." ".trim($data[1])."\n";
         if($provincia_num != trim($data[1])){
+        //Primera línea nueva provincia (censo)
+            //$totalprovincia = $totalprovincia + $result['VBlanco'] + $result['VNulos'];
+            //echo "Total ".$result['Provincia']." ".$totalprovincia."\n";
+            //$totalespana = $totalespana + $totalprovincia;
+            //$totalnulos = $totalnulos + $result['VNulos'];
+            //$totalblancos = $totalblancos + $result['VBlanco'];
+            //echo "Total España"." ".$totalespana." ".$totalnulos." ".$totalblancos."\n";
+            //$totalprovincia = 0;
             $rows_counter = 0;
             $provincia_num = trim($data[1]);
             $result = array(
@@ -50,6 +62,7 @@ if (($handle = fopen("2011.csv", "r")) !== FALSE) {
             //echo $result['Provincia'].",\n";
             $rows_counter++;
         }else{
+        //Líneas datos genéricos
             if($rows_counter == 1){
                 $result['Votantes'] = trim($data[4]);
             }else if($rows_counter == 2){
@@ -60,6 +73,7 @@ if (($handle = fopen("2011.csv", "r")) !== FALSE) {
                 $result['VBlanco'] = trim($data[4]);
                 $provincias[$result['Provincia']] = unserialize(serialize($result));
             }else{
+            //Líneas datos partidos
                 $provincias[$result['Provincia']]['Población'] = null;
                 $provincias[$result['Provincia']]['Mesas'] = null;
                 $provincias[$result['Provincia']]['Censo'] = $result['Censo'];
@@ -83,6 +97,7 @@ if (($handle = fopen("2011.csv", "r")) !== FALSE) {
                 //echo $result['VBlanco'].",\n";
                 //echo "PP: ".$result['partido-popular-pp'].",\n";
                 //echo "UPyD: ".$result['uni-oacute-n-progreso-y-democracia-upyd'].",\n";
+                $totalprovincia = $totalprovincia + $result[$partido];
             }
             $rows_counter++;
         }
@@ -91,11 +106,15 @@ if (($handle = fopen("2011.csv", "r")) !== FALSE) {
     foreach ($provincias as $provincia) {
         $collection = $db->provincias2011;
         $collection->save($provincia);
-        echo $provincia['Provincia']."\n";
+        //echo $provincia['Provincia']."\n";
 
         //$totalpp = 0;
         //$totalpsoe = 0;
         //$totaliu = 0;
+        //$totalupyd = 0;
+        //$totalequo = 0;
+        //$totalpacma = 0;
+        //$totaleb = 0;
         //$totalupyd = $totalpp + $provincia['partido-popular-pp'];
         //echo $provincia['Provincia']." PP: ".$provincia['partido-popular-pp']." ".$totalpp."\n";
         //$totalpsoe = $totalpsoe + $provincia['partido-socialista-obrero-espa-ol-psoe'];
@@ -111,6 +130,14 @@ if (($handle = fopen("2011.csv", "r")) !== FALSE) {
         //if(isset($provincia['equo-equo'])){
         //    $totalupyd = $totalupyd + $provincia['equo-equo'];
         //    echo $provincia['Provincia']." EQUO: ".$provincia['equo-equo']." ".$totalupyd."\n";
+        //}
+        //if(isset($provincia['partido-animalista-pacma'])){
+        //    $totalpacma = $totalpacma + $provincia['partido-animalista-pacma'];
+        //    echo $provincia['Provincia']." PACMA: ".$provincia['partido-animalista-pacma']." ".$totalpacma."\n";
+        //}
+        //if(isset($provincia['esca-os-en-blanco-eb'])){
+        //    $totaleb = $totaleb + $provincia['esca-os-en-blanco-eb'];
+        //    echo $provincia['Provincia']." Eb: ".$provincia['esca-os-en-blanco-eb']." ".$totaleb."\n";
         //}
     }
     fclose($handle);
