@@ -531,18 +531,18 @@ $(document).ready(function(){
                             });
                         }else{
                             missingseats = missingseats + 1;
-                            console.log(possiblepar);
-                            console.log(i);
-                            console.log(prov.get('provincia'));
-                            console.log(circunscripciones1[prov.get('provincia')] -assigned);
-                            console.log(circunscripciones1[prov.get('provincia')]);
-                            console.log("Assigned"+assigned);
+                            //console.log(possiblepar);
+                            //console.log(i);
+                            //console.log(prov.get('provincia'));
+                            //console.log(circunscripciones1[prov.get('provincia')] -assigned);
+                            //console.log(circunscripciones1[prov.get('provincia')]);
+                            //console.log("Assigned"+assigned);
                         }
                     }
                     //Hay veces en las que, al combinar el mínimo del 3% con el método de Hare, resulta que después de repartir los escaños enteros (votosPartido/coutaHare) y los no enteros (un escaño más a cada partido, por los votos "restantes"), aún queda algún escaño por repartir, así que se los damos a los partidos más votados de entre los que en principio habían sido descartados por no llegar al 3%. Esta situación puede pasar en provincias grandes (el 3% son bastantes votos) si muchos votos han ido a partidos minoritarios. En 2011 se perdían 2 escaños por Barcelona y uno por Madrid. Otra posibilidad sería quitar el 3% desde el principio, pero parece más fácil que entonces se pueda dar el caso de que entre un partido con pocos votos consiga escaños (Ciutadans, por ejemplo, entraría por Barcelona en 2008, con 24.000 votos, siendo la cuota de 90.000).
                         if(missingseats != 0){
                             for (var j = 0; j < missingseats; j++) {
-                                console.log(possiblerejectedpar[j]);
+                                //console.log(possiblerejectedpar[j]);
                                 electedseats.push({
                                 value: possiblerejectedpar[j]['value'],
                                 color: possiblerejectedpar[j]['color'],
