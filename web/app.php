@@ -2,16 +2,18 @@
 
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-require_once __DIR__.'/../silex.phar';
-require_once __DIR__.'/../MongoDb.php';
+require_once __DIR__.'/../vendor/autoload.php';
 require_once __DIR__.'/../parties.php';
-require_once __DIR__.'/../markdown.php';
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Lalbert\Silex\Provider\MongoDBServiceProvider;
+use \Michelf\Markdown;
 
 $app = new Silex\Application();
+$app['debug'] = true;
 $app['parties'] = $parties;
 $app['colors']  = $colors;
 $app['parties2011'] = $parties2011;
@@ -22,14 +24,21 @@ $staticPage = function($page, $explanations) {
     return $page;
 };
 
-$app->register(new Silex\Extension\TwigExtension(), array(
-    'twig.path'       => __DIR__.'/../views',
-    'twig.class_path' => __DIR__.'/../vendor/twig/lib',
+$app->register(new Silex\Provider\TwigServiceProvider(), array(
+    'twig.path' => __DIR__.'/../views',
 ));
 
-$app->register(new Leyelectoral\MongoExtension(), array(
-    'db.options' => array('db'=>'elecciones', 'collection'=>'provincias', 'db1'=>'elecciones', 'collection1'=>'provincias2011'),
-));
+$app->register(new MongoDBServiceProvider(), [
+    'mongodb.config' => [
+        'server' => 'mongodb://localhost:27017',
+        'options' => [],
+        'driverOptions' => [],
+    ]
+]);
+
+//$app->register(new Leyelectoral\MongoServiceProvider(), array(
+//    'db.options' => array('db'=>'elecciones', 'collection'=>'provincias', 'db1'=>'elecciones', 'collection1'=>'provincias2011'),
+//));
 
 $app->get('/resultados2008', function () use ($app, $staticPage) {
     $explanations  = array();
@@ -45,7 +54,7 @@ $app->get('/resultados2008', function () use ($app, $staticPage) {
 
     foreach($files as $file){
         $fcontent = file_get_contents($app['content_dir'].'/short/'.$file);
-        $explanations[str_replace(".md","" , $file)] = Markdown($fcontent);
+        $explanations[str_replace(".md","" , $file)] = Markdown::defaultTransform($fcontent);
     }
 
     $escapedFragment = $app['request']->get('_escaped_fragment_');
@@ -53,9 +62,11 @@ $app->get('/resultados2008', function () use ($app, $staticPage) {
     if ($escapedFragment) {
     return $staticPage($escapedFragment, $explanations);}
 
+    $cursor = $app['mongodb']
+        ->elecciones
+        ->provincias
+        ->find();
 
-    $db = $app['db']();
-    $cursor = $db->find();
     $votes = array();
     $content = array();
     foreach ($cursor as $row) {
@@ -77,7 +88,7 @@ $app->get('/{page}', function ($page) use ($app) {
     ));
 });
 
-$app->get('/', function () use ($app, $staticPage) {
+$app->get('/', function (Request $request) use ($app, $staticPage) {
     $explanations  = array();
     $files = array();
     if ($handle = opendir($app['content_dir'].'/short')) {
@@ -91,17 +102,20 @@ $app->get('/', function () use ($app, $staticPage) {
 
     foreach($files as $file){
         $fcontent = file_get_contents($app['content_dir'].'/short/'.$file);
-        $explanations[str_replace(".md","" , $file)] = Markdown($fcontent);
+        $explanations[str_replace(".md","" , $file)] = Markdown::defaultTransform($fcontent);
     }
 
-    $escapedFragment = $app['request']->get('_escaped_fragment_');
+    $escapedFragment = $request->get('_escaped_fragment_');
 
     if ($escapedFragment) {
     return $staticPage($escapedFragment, $explanations);}
 
 
-    $db = $app['db1']();
-    $cursor = $db->find();
+    $cursor = $app['mongodb']
+        ->elecciones
+        ->provincias2011
+        ->find();
+
     $votes = array();
     $content = array();
     foreach ($cursor as $row) {
@@ -118,13 +132,13 @@ $app->get('/', function () use ($app, $staticPage) {
     ));
 });
 
-$app->error(function (\Exception $e) {
-    if ($e instanceof NotFoundHttpException) {
-        return new Response('La página que buscas no está aquí.', 404);
-    }
-
-    $code = ($e instanceof HttpException) ? $e->getStatusCode() : 500;
-    return new Response('Algo ha fallado en nuestra sala de máquinas.', $code);
-});
+//$app->error(function (\Exception $e) {
+//    if ($e instanceof NotFoundHttpException) {
+//        return new Response('La página que buscas no está aquí.', 404);
+//    }
+//
+//    $code = ($e instanceof HttpException) ? $e->getStatusCode() : 500;
+//    return new Response('Algo ha fallado en nuestra sala de máquinas.', $code);
+//});
 
 $app->run();
