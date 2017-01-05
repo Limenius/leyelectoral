@@ -119,8 +119,9 @@ $app->get('/', function (Request $request) use ($app, $staticPage) {
     $votes = array();
     $content = array();
     foreach ($cursor as $row) {
-        $votes[$row['Provincia']] = array_slice($row, 13);
-        $content[$row['Provincia']] = array_slice($row, 7, 6);
+        $prov = iterator_to_array($row);
+        $votes[$row['Provincia']] = array_slice($prov, 13);
+        $content[$row['Provincia']] = array_slice($prov, 7, 6);
 
     }
     return $app['twig']->render('main2011.twig', array(
