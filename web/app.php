@@ -40,7 +40,7 @@ $app->register(new MongoDBServiceProvider(), [
 //    'db.options' => array('db'=>'elecciones', 'collection'=>'provincias', 'db1'=>'elecciones', 'collection1'=>'provincias2011'),
 //));
 
-$app->get('/resultados2008', function () use ($app, $staticPage) {
+$app->get('/resultados2008', function (Request $request) use ($app, $staticPage) {
     $explanations  = array();
     $files = array();
     if ($handle = opendir($app['content_dir'].'/short')) {
@@ -57,7 +57,7 @@ $app->get('/resultados2008', function () use ($app, $staticPage) {
         $explanations[str_replace(".md","" , $file)] = Markdown::defaultTransform($fcontent);
     }
 
-    $escapedFragment = $app['request']->get('_escaped_fragment_');
+    $escapedFragment = $request->get('_escaped_fragment_');
 
     if ($escapedFragment) {
     return $staticPage($escapedFragment, $explanations);}
@@ -70,8 +70,9 @@ $app->get('/resultados2008', function () use ($app, $staticPage) {
     $votes = array();
     $content = array();
     foreach ($cursor as $row) {
-        $votes[$row['Provincia']] = array_slice($row, 13);
-        $content[$row['Provincia']] = array_slice($row, 7, 6);
+        $prov = iterator_to_array($row);
+        $votes[$row['Provincia']] = array_slice($prov, 13);
+        $content[$row['Provincia']] = array_slice($prov, 7, 6);
 
     }
     return $app['twig']->render('main.twig', array(
@@ -122,7 +123,6 @@ $app->get('/', function (Request $request) use ($app, $staticPage) {
         $prov = iterator_to_array($row);
         $votes[$row['Provincia']] = array_slice($prov, 13);
         $content[$row['Provincia']] = array_slice($prov, 7, 6);
-
     }
     return $app['twig']->render('main2011.twig', array(
         'parties'      => $app['parties2011'],

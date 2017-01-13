@@ -69,12 +69,14 @@ $(document).ready(function(){
         });
         var prov = DataStore.detect(function(data){ return data.get('provincia') == '{{provincia}}'; });
         {% for party, result in results %}
+            {% if parties[party] is defined %}
             prov.addRow({
                 label: "{{parties[party]|raw}}",
                 amount: parseInt({{result}}, 10),
                 oid: "{{party}}",
                 color: "#{{colors[party]}}"
              });
+            {% endif %}
         {% endfor %}
         prov.addRow({
            label:    "total",
